@@ -140,7 +140,6 @@ export default function IntroductionPage() {
       <div className="text-center">
         <Button asChild size="lg" className="shadow-lg text-base md:text-lg">
           <Link href="/leitura/1">
-            <span className="mr-2 text-xl md:text-2xl" role="img" aria-label="pointer">👉</span>
             INICIAR MINHA JORNADA: DIA 1
             <ArrowRight className="ml-2 h-5 w-5" />
           </Link>

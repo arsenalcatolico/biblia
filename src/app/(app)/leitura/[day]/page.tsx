@@ -82,8 +82,17 @@ export default function ReadingPage() {
     try {
       await markDayAsComplete(day);
       setIsCompleted(true);
+      toast({
+        title: "Parabéns!",
+        description: "Mais um passo dado em sua jornada de fé.",
+        className: 'bg-green-600 border-green-700 text-white dark:bg-green-700 dark:border-green-800',
+        duration: 3000,
+      });
       if (day < 365) {
-        router.push(`/leitura/${day + 1}`);
+        // Add a small delay to allow the user to see the toast before navigating
+        setTimeout(() => {
+          router.push(`/leitura/${day + 1}`);
+        }, 500);
       }
     } catch (e) {
       toast({
@@ -209,14 +218,14 @@ export default function ReadingPage() {
             <div className="w-full space-y-4">
                <Alert className="border-green-500 bg-green-100 text-green-900 dark:bg-green-900/30 dark:text-green-200">
                   <PartyPopper className="h-5 w-5 text-green-600 dark:text-green-400" />
-                  <AlertTitle className="font-bold">Parabéns!</AlertTitle>
+                  <AlertTitle className="font-bold">Leitura Concluída!</AlertTitle>
                   <AlertDescription>
-                    Mais um passo dado em sua jornada de fé. Que a Palavra de Deus continue iluminando seus dias!
+                    Que a Palavra de Deus continue iluminando seus dias!
                   </AlertDescription>
                 </Alert>
               <Button size="lg" disabled className="w-full shadow-lg bg-green-600 hover:bg-green-600/90">
                 <CheckCircle className="mr-2 h-5 w-5" />
-                Leitura Concluída
+                Concluído
               </Button>
               <Button onClick={handleUnmarkAsComplete} variant="destructive" size="sm" className="w-full">
                 <Undo2 className="mr-2 h-4 w-4"/>

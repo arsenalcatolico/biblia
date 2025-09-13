@@ -93,7 +93,7 @@ export default function ReadingPage() {
         ),
         description: (
             <p className="text-base">
-                A sua jornada de fé é uma maratona, não uma corrida de 100 metros. Que a Palavra de Deus ilumine seus dias!
+                Que a Palavra de Deus ilumine seu dia!
             </p>
         ),
         duration: 5000,

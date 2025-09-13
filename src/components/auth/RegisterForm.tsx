@@ -39,12 +39,26 @@ export function RegisterForm() {
       router.push('/');
       router.refresh();
     } catch (error: any) {
+       let description = 'Ocorreu um erro. Tente novamente.';
+       if (error.code) {
+         switch (error.code) {
+           case 'auth/email-already-in-use':
+             description = 'Este e-mail já está em uso.';
+             break;
+           case 'auth/weak-password':
+             description = 'A senha é muito fraca. Tente uma mais forte.';
+             break;
+           case 'auth/invalid-email':
+             description = 'O e-mail fornecido não é válido.';
+             break;
+           default:
+             description = `Erro: ${error.message}`;
+         }
+       }
        toast({
         variant: 'destructive',
         title: 'Erro no registro',
-        description: error.code === 'auth/email-already-in-use' 
-            ? 'Este e-mail já está em uso.' 
-            : 'Ocorreu um erro. Tente novamente.',
+        description: description,
       });
     } finally {
       setIsLoading(false);

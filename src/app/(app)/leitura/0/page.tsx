@@ -26,7 +26,7 @@ export default function IntroductionPage() {
             <Button variant="ghost" size="icon" onClick={decreaseFontSize} aria-label="Diminuir fonte">
               <Minus className="h-5 w-5" />
             </Button>
-            <span className="w-24 text-center text-sm font-medium text-muted-foreground">Tamanho da Letra</span>
+            <span className="w-20 text-center text-sm font-medium text-muted-foreground">Tamanho da Letra</span>
             <Button variant="ghost" size="icon" onClick={increaseFontSize} aria-label="Aumentar fonte">
               <Plus className="h-5 w-5" />
             </Button>

@@ -120,7 +120,7 @@ export default function ReadingPage() {
 
   const ReadingHeader = ({ title }: { title: string }) => (
     <header className="sticky top-0 z-10 bg-background/80 backdrop-blur-sm border-b mb-4 py-2">
-      <div className="mx-auto flex max-w-3xl items-center justify-center gap-4 px-2">
+      <div className="mx-auto flex items-center justify-center gap-4 max-w-3xl px-2">
         <h1 className="text-xl font-bold font-headline text-primary">{title}</h1>
         <div className="flex items-center gap-2">
            <div className="flex h-10 items-center justify-center rounded-md border bg-secondary">
@@ -203,15 +203,16 @@ export default function ReadingPage() {
           </CardContent>
         </Card>
         
-        <div className="flex justify-center items-center gap-2">
+        <div className="flex flex-col items-center gap-2">
           {isCompleted ? (
             <>
-              <Button size="lg" disabled className="flex-grow shadow-lg bg-green-600 hover:bg-green-600/90">
+              <Button size="lg" disabled className="w-full shadow-lg bg-green-600 hover:bg-green-600/90">
                 <CheckCircle className="mr-2 h-5 w-5" />
                 Leitura Concluída
               </Button>
-              <Button onClick={handleUnmarkAsComplete} variant="outline" size="lg" aria-label="Desmarcar leitura">
-                <Undo2 className="h-5 w-5"/>
+              <Button onClick={handleUnmarkAsComplete} variant="outline" size="sm">
+                <Undo2 className="mr-2 h-4 w-4"/>
+                Desmarcar leitura
               </Button>
             </>
           ) : (
@@ -254,3 +255,5 @@ export default function ReadingPage() {
     </>
   );
 }
+
+    

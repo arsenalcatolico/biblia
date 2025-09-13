@@ -22,7 +22,9 @@ export function FooterNav() {
     <footer className="fixed bottom-0 left-0 right-0 z-50 border-t bg-background/95 backdrop-blur-sm">
       <nav className="mx-auto flex h-16 max-w-md items-center justify-around">
         {navItems.map((item) => {
-          const href = item.href === '/leitura' ? `/leitura/${Math.min(365, lastCompletedDay + 1)}` : item.href;
+          const startDay = lastCompletedDay > 0 ? lastCompletedDay + 1 : 0;
+          const nextDay = Math.min(365, startDay);
+          const href = item.href === '/leitura' ? `/leitura/${nextDay}` : item.href;
           const isActive = (pathname === '/' && item.href === '/') || 
                            (item.href !== '/' && pathname.startsWith(item.href));
 

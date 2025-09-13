@@ -13,7 +13,8 @@ export default function HomePage() {
   const { completedDays, lastCompletedDay, loading } = useProgress();
 
   const progressPercentage = (completedDays.length / 365) * 100;
-  const nextDay = Math.min(365, lastCompletedDay + 1);
+  const startDay = lastCompletedDay > 0 ? lastCompletedDay + 1 : 0;
+  const nextDay = Math.min(365, startDay);
 
   if (loading) {
     return (
@@ -30,7 +31,7 @@ export default function HomePage() {
           <h1 className="text-3xl font-bold font-headline text-primary">
             Olá, {user?.displayName || user?.email?.split('@')[0] || 'leitor'}!
           </h1>
-          <p className="text-muted-foreground">Pronto para a leitura de hoje?</p>
+          <p className="text-muted-foreground">Pronto para a jornada de hoje?</p>
         </header>
 
         <Card className="shadow-md">
@@ -51,7 +52,7 @@ export default function HomePage() {
         <div className="text-center">
           <Button asChild size="lg" className="shadow-lg">
             <Link href={`/leitura/${nextDay}`}>
-              {lastCompletedDay > 0 ? 'Continuar Leitura' : 'Começar Leitura'} (Dia {nextDay})
+              {lastCompletedDay > 0 ? `Continuar: Dia ${nextDay}` : 'Começar a Jornada'}
               <ArrowRight className="ml-2 h-5 w-5" />
             </Link>
           </Button>

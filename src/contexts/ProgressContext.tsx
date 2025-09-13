@@ -2,12 +2,13 @@
 
 import React, { createContext, useContext, useState, useEffect, ReactNode, useCallback } from 'react';
 import { useAuth } from './AuthContext';
-import { doc, setDoc, arrayUnion, onSnapshot } from 'firebase/firestore';
+import { doc, setDoc, arrayUnion, onSnapshot, arrayRemove } from 'firebase/firestore';
 import { db } from '@/lib/firebase/config';
 
 interface ProgressContextType {
   completedDays: number[];
   markDayAsComplete: (day: number) => Promise<void>;
+  unmarkDayAsComplete: (day: number) => Promise<void>;
   lastCompletedDay: number;
   loading: boolean; // True only on initial load without local data
 }
@@ -95,10 +96,30 @@ export const ProgressProvider = ({ children }: { children: ReactNode }) => {
         throw error;
     }
   }, [user, completedDays]);
+  
+  const unmarkDayAsComplete = useCallback(async (day: number) => {
+    if (!user) throw new Error("User not authenticated");
+    
+    // Optimistic UI update
+    const newCompletedDays = completedDays.filter(d => d !== day);
+    setCompletedDays(newCompletedDays);
+    setLocalProgress(user.uid, newCompletedDays);
+
+    // Sync with Firestore
+    const userProgressRef = doc(db, 'progress', user.uid);
+    try {
+        await setDoc(userProgressRef, {
+            completed: arrayRemove(day)
+        }, { merge: true });
+    } catch (error) {
+        console.error("Failed to sync unmark progress with Firestore:", error);
+        throw error;
+    }
+  }, [user, completedDays]);
 
   const lastCompletedDay = completedDays.length > 0 ? Math.max(0, ...completedDays) : 0;
 
-  const value = { completedDays, markDayAsComplete, lastCompletedDay, loading };
+  const value = { completedDays, markDayAsComplete, unmarkDayAsComplete, lastCompletedDay, loading };
 
   return (
     <ProgressContext.Provider value={value}>

@@ -7,7 +7,7 @@ import { useSettings } from '@/contexts/SettingsContext';
 import { useProgress } from '@/contexts/ProgressContext';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Loader2, CheckCircle, ArrowLeft, ArrowRight, Sun, Moon, Minus, Plus } from 'lucide-react';
+import { Loader2, CheckCircle, ArrowLeft, ArrowRight, Sun, Moon, Minus, Plus, Undo2 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import {
@@ -40,7 +40,7 @@ export default function ReadingPage() {
   const [isNextDayAlertOpen, setIsNextDayAlertOpen] = useState(false);
 
   const { theme, setTheme, fontSize, increaseFontSize, decreaseFontSize } = useSettings();
-  const { completedDays, markDayAsComplete } = useProgress();
+  const { completedDays, markDayAsComplete, unmarkDayAsComplete } = useProgress();
 
   const isCompleted = completedDays.includes(day);
 
@@ -83,6 +83,22 @@ export default function ReadingPage() {
         variant: 'destructive',
         title: 'Erro',
         description: "Não foi possível salvar seu progresso.",
+      });
+    }
+  };
+
+  const handleUnmarkAsComplete = async () => {
+    try {
+      await unmarkDayAsComplete(day);
+      toast({
+        title: 'Progresso atualizado',
+        description: `O dia ${day} foi desmarcado.`,
+      });
+    } catch (e) {
+      toast({
+        variant: 'destructive',
+        title: 'Erro',
+        description: "Não foi possível atualizar seu progresso.",
       });
     }
   };
@@ -187,17 +203,22 @@ export default function ReadingPage() {
           </CardContent>
         </Card>
         
-        <div className="flex justify-center">
-          <Button onClick={handleMarkAsComplete} size="lg" disabled={isCompleted} className="shadow-lg w-full">
-            {isCompleted ? (
-              <>
+        <div className="flex justify-center items-center gap-2">
+          {isCompleted ? (
+            <>
+              <Button size="lg" disabled className="flex-grow shadow-lg bg-green-600 hover:bg-green-600/90">
                 <CheckCircle className="mr-2 h-5 w-5" />
                 Leitura Concluída
-              </>
-            ) : (
-              'Concluir Leitura e Avançar'
-            )}
-          </Button>
+              </Button>
+              <Button onClick={handleUnmarkAsComplete} variant="outline" size="lg" aria-label="Desmarcar leitura">
+                <Undo2 className="h-5 w-5"/>
+              </Button>
+            </>
+          ) : (
+            <Button onClick={handleMarkAsComplete} size="lg" className="shadow-lg w-full">
+              Concluir Leitura e Avançar
+            </Button>
+          )}
         </div>
 
         <div className="flex items-center justify-between">

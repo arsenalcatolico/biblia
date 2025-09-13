@@ -18,7 +18,7 @@ export default function HowItWorksPage() {
 
   const ReadingControls = () => (
     <header className="sticky top-0 z-10 bg-background/80 backdrop-blur-sm border-b mb-8 py-2">
-      <div className="mx-auto flex items-center justify-center gap-4 max-w-3xl px-2">
+      <div className="mx-auto flex items-center justify-center gap-4 max-w-3xl px-4">
         <h1 className="text-xl font-bold font-headline text-primary dark:text-primary-foreground">Como Funciona</h1>
         <div className="flex items-center gap-2">
           <div className="flex h-10 items-center justify-center rounded-md border bg-secondary">

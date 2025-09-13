@@ -119,15 +119,15 @@ export default function IntroductionPage() {
 
            <Separator className="my-6" />
 
-          <section className="text-center">
-            <h2 className="font-headline text-2xl font-semibold text-primary">
+          <section>
+            <h2 className="text-left font-headline text-2xl font-semibold text-primary">
               Antes de começar
             </h2>
-            <p>
+            <p className="text-justify">
               Respire fundo, faça silêncio e peça ao Espírito Santo que ilumine
               sua mente e seu coração.
             </p>
-            <p>
+            <p className="text-justify">
               Agora, prepare-se: em 365 dias você não apenas vai ler a Bíblia
               inteira — você vai encontrá-la viva, guiado pela Igreja,
               transformado pelo amor de Deus.

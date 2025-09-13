@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { ReadingDay } from '@/types';
 import { useSettings } from '@/contexts/SettingsContext';
@@ -107,7 +107,6 @@ export default function ReadingPage() {
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
                 <DropdownMenuItem onClick={() => setTheme('light')}>Claro</DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setTheme('beige')}>Bege</DropdownMenuItem>
                 <DropdownMenuItem onClick={() => setTheme('dark')}>Noturno</DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>

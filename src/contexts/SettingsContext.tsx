@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext, useState, useEffect, ReactNode, useCallback } from 'react';
 
-type Theme = 'light' | 'beige' | 'dark';
+type Theme = 'light' | 'dark';
 const FONT_SIZES = ['text-sm', 'text-base', 'text-lg', 'text-xl', 'text-2xl'];
 const FONT_SIZE_DEFAULT_INDEX = 1;
 
@@ -24,7 +24,7 @@ export const SettingsProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     setIsMounted(true);
     const storedTheme = localStorage.getItem('theme') as Theme | null;
-    if (storedTheme && ['light', 'beige', 'dark'].includes(storedTheme)) {
+    if (storedTheme && ['light', 'dark'].includes(storedTheme)) {
       setThemeState(storedTheme);
     }
     const storedFontSizeIndex = localStorage.getItem('fontSizeIndex');
@@ -38,10 +38,8 @@ export const SettingsProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     if(isMounted) {
-      document.body.classList.remove('theme-beige', 'dark');
-      if (theme === 'beige') {
-        document.body.classList.add('theme-beige');
-      } else if (theme === 'dark') {
+      document.body.classList.remove('dark');
+      if (theme === 'dark') {
         document.body.classList.add('dark');
       }
       localStorage.setItem('theme', theme);

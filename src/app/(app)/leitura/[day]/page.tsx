@@ -27,7 +27,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+
+const SHOW_CONGRATS_TOAST = 'showCongratsToast';
 
 export default function ReadingPage() {
   const router = useRouter();
@@ -49,6 +50,31 @@ export default function ReadingPage() {
   useEffect(() => {
     setIsCompleted(completedDays.includes(day));
   }, [completedDays, day]);
+
+  useEffect(() => {
+    try {
+      if (localStorage.getItem(SHOW_CONGRATS_TOAST) === 'true') {
+        toast({
+          title: (
+            <div className="flex items-center gap-2 font-bold text-lg">
+              <PartyPopper className="h-6 w-6" />
+              Parabéns!
+            </div>
+          ),
+          description: (
+              <p className="text-base">
+                  Que a Palavra de Deus ilumine seu dia!
+              </p>
+          ),
+          duration: 5000,
+           className: "border-green-500 bg-green-100 text-green-900 dark:bg-green-900/30 dark:text-green-200",
+        });
+        localStorage.removeItem(SHOW_CONGRATS_TOAST);
+      }
+    } catch (error) {
+        console.error("Could not access local storage", error);
+    }
+  }, [toast]);
 
 
   useEffect(() => {
@@ -84,26 +110,15 @@ export default function ReadingPage() {
       await markDayAsComplete(day);
       setIsCompleted(true);
       
-      toast({
-        title: (
-          <div className="flex items-center gap-2 font-bold text-lg">
-            <PartyPopper className="h-6 w-6" />
-            Parabéns!
-          </div>
-        ),
-        description: (
-            <p className="text-base">
-                Que a Palavra de Deus ilumine seu dia!
-            </p>
-        ),
-        duration: 5000,
-         className: "border-green-500 bg-green-100 text-green-900 dark:bg-green-900/30 dark:text-green-200",
-      });
+      try {
+        localStorage.setItem(SHOW_CONGRATS_TOAST, 'true');
+      } catch (error) {
+        console.error("Could not access local storage", error);
+      }
+
 
       if (day < 365) {
-        setTimeout(() => {
-          router.push(`/leitura/${day + 1}`);
-        }, 5000);
+        router.push(`/leitura/${day + 1}`);
       }
     } catch (e) {
       toast({

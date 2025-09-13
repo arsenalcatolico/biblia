@@ -17,11 +17,11 @@ import { cn } from "@/lib/utils";
 export default function IntroductionPage() {
   const { theme, setTheme, fontSize, increaseFontSize, decreaseFontSize } = useSettings();
 
-  const ReadingControls = () => (
+  const ReadingControls = ({ title }: { title: string }) => (
     <header className="sticky top-0 z-10 bg-background/80 backdrop-blur-sm border-b mb-4 py-2">
-      <div className="container mx-auto flex items-center justify-between">
-        <h1 className="text-xl font-bold font-headline text-primary">Introdução</h1>
-        <div className="flex items-center gap-2">
+      <div className="container mx-auto flex items-center">
+        <h1 className="text-xl font-bold font-headline text-primary">{title}</h1>
+        <div className="flex items-center gap-2 ml-auto">
           <div className="flex h-10 items-center justify-center rounded-md border bg-secondary">
             <Button variant="ghost" size="icon" onClick={decreaseFontSize} aria-label="Diminuir fonte">
               <Minus className="h-5 w-5" />
@@ -51,7 +51,7 @@ export default function IntroductionPage() {
 
   return (
     <>
-      <ReadingControls />
+      <ReadingControls title="Introdução" />
       <div className={cn("container mx-auto max-w-3xl space-y-6 px-2", fontSize)}>
         <Card>
           <CardHeader className="p-0">

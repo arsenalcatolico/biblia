@@ -83,11 +83,11 @@ export default function ReadingPage() {
     }
   };
 
-  const ReadingHeader = () => (
+  const ReadingHeader = ({ title }: { title: string }) => (
     <header className="sticky top-0 z-10 bg-background/80 backdrop-blur-sm border-b mb-4 py-2">
-      <div className="container mx-auto flex items-center justify-between">
-        <h1 className="text-xl font-bold font-headline text-primary">Dia {day}</h1>
-        <div className="flex items-center gap-2">
+      <div className="container mx-auto flex items-center">
+        <h1 className="text-xl font-bold font-headline text-primary">{title}</h1>
+        <div className="flex items-center gap-2 ml-auto">
            <div className="flex h-10 items-center justify-center rounded-md border bg-secondary">
               <Button variant="ghost" size="icon" onClick={decreaseFontSize} aria-label="Diminuir fonte">
                 <Minus className="h-5 w-5" />
@@ -118,7 +118,7 @@ export default function ReadingPage() {
   if (loading) {
     return (
       <>
-        <ReadingHeader />
+        <ReadingHeader title={`Dia ${day}`} />
         <div className="flex h-64 items-center justify-center">
           <Loader2 className="h-8 w-8 animate-spin text-primary" />
         </div>
@@ -139,7 +139,7 @@ export default function ReadingPage() {
 
   return (
     <>
-      <ReadingHeader />
+      <ReadingHeader title={`Dia ${day}`} />
       <div className={cn("container mx-auto max-w-3xl space-y-6 px-2", fontSize)}>
         <Card>
           <CardHeader className="p-0">

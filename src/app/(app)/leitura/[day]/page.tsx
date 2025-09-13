@@ -32,7 +32,7 @@ const SHOW_CONGRATS_TOAST = 'showCongratsToast';
 
 export default function ReadingPage() {
   const router = useRouter();
-  const params = use(useParams());
+  const params = useParams();
   const { toast } = useToast();
   
   const day = parseInt(params.day as string, 10);
@@ -297,3 +297,5 @@ export default function ReadingPage() {
     </>
   );
 }
+
+    

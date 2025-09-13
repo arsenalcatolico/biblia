@@ -41,6 +41,7 @@ export default function HowItWorksPage() {
             <DropdownMenuContent align="end">
               <DropdownMenuItem onClick={() => setTheme('light')}>Claro</DropdownMenuItem>
               <DropdownMenuItem onClick={() => setTheme('dark')}>Noturno</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setTheme('beige')}>Bege</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>

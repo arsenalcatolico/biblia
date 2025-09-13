@@ -210,7 +210,7 @@ export default function ReadingPage() {
                 <CheckCircle className="mr-2 h-5 w-5" />
                 Leitura Concluída
               </Button>
-              <Button onClick={handleUnmarkAsComplete} variant="outline" size="sm" className="w-full border-destructive text-destructive hover:bg-destructive/10 hover:text-destructive">
+              <Button onClick={handleUnmarkAsComplete} variant="destructive" size="sm" className="w-full">
                 <Undo2 className="mr-2 h-4 w-4"/>
                 Desmarcar leitura
               </Button>

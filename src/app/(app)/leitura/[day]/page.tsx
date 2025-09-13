@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from 'react';
-import { useParams, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { ReadingDay } from '@/types';
 import { useSettings } from '@/contexts/SettingsContext';
 import { useProgress } from '@/contexts/ProgressContext';
@@ -17,8 +17,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-export default function ReadingPage() {
-  const params = useParams();
+export default function ReadingPage({ params }: { params: { day: string } }) {
   const router = useRouter();
   const { toast } = useToast();
   
@@ -186,7 +185,7 @@ export default function ReadingPage() {
         </div>
 
         <div className="flex items-center justify-between">
-          <Button onClick={() => navigateDay(-1)} disabled={day < 1} variant="outline">
+          <Button onClick={() => navigateDay(-1)} disabled={day <= 0} variant="outline">
             <ArrowLeft className="mr-2 h-4 w-4" /> 
             {day === 1 ? 'Introdução' : 'Dia Anterior'}
           </Button>

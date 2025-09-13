@@ -3,7 +3,7 @@
 import { useAuth } from "@/contexts/AuthContext";
 import { useProgress } from "@/contexts/ProgressContext";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { ArrowRight, BookOpen, Loader2 } from "lucide-react";
 import Link from "next/link";
@@ -47,16 +47,15 @@ export default function HomePage() {
               {Math.round(progressPercentage)}%
             </p>
           </CardContent>
+          <CardFooter className="pt-4">
+             <Button asChild size="lg" className="shadow-lg w-full">
+              <Link href={`/leitura/${nextDay}`}>
+                {lastCompletedDay > 0 ? `Continuar: Dia ${nextDay}` : 'Começar a Jornada'}
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Link>
+            </Button>
+          </CardFooter>
         </Card>
-
-        <div className="text-center">
-          <Button asChild size="lg" className="shadow-lg">
-            <Link href={`/leitura/${nextDay}`}>
-              {lastCompletedDay > 0 ? `Continuar: Dia ${nextDay}` : 'Começar a Jornada'}
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Link>
-          </Button>
-        </div>
 
         <Card className="bg-primary/5">
           <CardHeader className="flex-row items-center gap-4 space-y-0">

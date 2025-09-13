@@ -90,10 +90,6 @@ export default function ReadingPage() {
   const handleUnmarkAsComplete = async () => {
     try {
       await unmarkDayAsComplete(day);
-      toast({
-        title: 'Progresso atualizado',
-        description: `O dia ${day} foi desmarcado.`,
-      });
     } catch (e) {
       toast({
         variant: 'destructive',

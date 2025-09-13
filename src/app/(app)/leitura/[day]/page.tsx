@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from 'react';
-import { useRouter, useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { ReadingDay } from '@/types';
 import { useSettings } from '@/contexts/SettingsContext';
 import { useProgress } from '@/contexts/ProgressContext';
@@ -169,7 +169,7 @@ export default function ReadingPage() {
         </Card>
         
         <div className="flex justify-center">
-          <Button onClick={handleMarkAsComplete} size="lg" disabled={isCompleted} className="shadow-lg px-16">
+          <Button onClick={handleMarkAsComplete} size="lg" disabled={isCompleted} className="shadow-lg w-full">
             {isCompleted ? (
               <>
                 <CheckCircle className="mr-2 h-5 w-5" />

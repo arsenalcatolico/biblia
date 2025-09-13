@@ -88,7 +88,7 @@ export default function ReadingPage() {
         title: (
           <div className="flex items-center gap-2 font-bold">
             <PartyPopper className="h-5 w-5" />
-            Leitura Concluída!
+            Parabéns!
           </div>
         ),
         description: "A sua jornada de fé é uma maratona, não uma corrida de 100 metros. Que a Palavra de Deus ilumine seus dias!",
@@ -288,3 +288,4 @@ export default function ReadingPage() {
     
 
     
+

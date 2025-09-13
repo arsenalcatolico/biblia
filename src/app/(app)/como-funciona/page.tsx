@@ -5,7 +5,7 @@ export default function HowItWorksPage() {
   return (
     <div className="container mx-auto max-w-3xl px-4 space-y-8">
       <header className="text-center">
-        <h1 className="text-3xl font-bold font-headline text-primary">Como Funciona o Plano</h1>
+        <h1 className="text-3xl font-bold font-headline text-primary dark:text-primary-foreground">Como Funciona o Plano</h1>
         <p className="text-muted-foreground">Sua jornada de um ano com a Palavra de Deus.</p>
       </header>
 

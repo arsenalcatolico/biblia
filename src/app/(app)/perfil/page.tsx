@@ -29,7 +29,7 @@ export default function ProfilePage() {
   return (
     <div className="container mx-auto max-w-3xl px-4 space-y-8">
       <header className="text-center">
-        <h1 className="text-3xl font-bold font-headline text-primary">Seu Perfil</h1>
+        <h1 className="text-3xl font-bold font-headline text-primary dark:text-primary-foreground">Seu Perfil</h1>
         <p className="text-muted-foreground">Gerencie sua conta e veja seu progresso.</p>
       </header>
 

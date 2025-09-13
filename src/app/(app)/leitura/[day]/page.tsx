@@ -85,10 +85,7 @@ export default function ReadingPage() {
 
   const ReadingHeader = () => (
     <header className="sticky top-0 z-10 bg-background/80 backdrop-blur-sm border-b mb-4 py-2">
-      <div className="container mx-auto flex items-center justify-between">
-        <h1 className="text-xl font-bold font-headline text-primary">
-          Dia {day}
-        </h1>
+      <div className="container mx-auto flex items-center justify-center">
         <div className="flex items-center gap-1 sm:gap-2">
            <div className="flex h-10 items-center justify-center rounded-md border bg-secondary">
               <Button variant="ghost" size="icon" onClick={decreaseFontSize} aria-label="Diminuir fonte">
@@ -132,7 +129,6 @@ export default function ReadingPage() {
   if (error || !reading) {
     return (
       <>
-        <ReadingHeader />
         <div className="container mx-auto text-center">
           <p className="text-destructive">{error}</p>
           <Button onClick={() => router.push('/')} className="mt-4">Voltar ao Início</Button>
@@ -148,7 +144,7 @@ export default function ReadingPage() {
         <Card>
           <CardHeader>
             <CardTitle className="font-headline text-2xl text-primary text-left">{reading.leitura_dia}</CardTitle>
-            {reading.intro && <CardDescription className="text-left">{reading.intro}</CardDescription>}
+            {reading.intro && <CardDescription className="text-left text-base">{reading.intro}</CardDescription>}
           </CardHeader>
           <CardContent className="space-y-4 prose prose-lg max-w-none dark:prose-invert">
             
@@ -173,7 +169,7 @@ export default function ReadingPage() {
         </Card>
         
         <div className="flex justify-center">
-          <Button onClick={handleMarkAsComplete} size="lg" disabled={isCompleted} className="shadow-lg">
+          <Button onClick={handleMarkAsComplete} size="lg" disabled={isCompleted} className="shadow-lg px-16">
             {isCompleted ? (
               <>
                 <CheckCircle className="mr-2 h-5 w-5" />

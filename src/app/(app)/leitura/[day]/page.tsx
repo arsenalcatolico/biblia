@@ -21,7 +21,7 @@ export default function ReadingPage({ params }: { params: { day: string } }) {
   const router = useRouter();
   const { toast } = useToast();
   
-  const day = parseInt(params.day as string, 10);
+  const day = parseInt(params.day, 10);
 
   const [reading, setReading] = useState<ReadingDay | null>(null);
   const [loading, setLoading] = useState(true);

@@ -3,7 +3,7 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode, useCallback } from 'react';
 
 type Theme = 'light' | 'dark';
-const FONT_SIZES = ['text-sm', 'text-base', 'text-lg', 'text-xl', 'text-2xl'];
+const FONT_SIZES = ['text-sm', 'text-base', 'text-lg', 'text-xl', 'text-2xl', 'text-3xl', 'text-4xl'];
 const FONT_SIZE_DEFAULT_INDEX = 1;
 
 interface SettingsContextType {
@@ -17,54 +17,66 @@ interface SettingsContextType {
 const SettingsContext = createContext<SettingsContextType | undefined>(undefined);
 
 export const SettingsProvider = ({ children }: { children: ReactNode }) => {
-  const [theme, setThemeState] = useState<Theme>('light');
+  const [theme, setTheme] = useState<Theme>('light');
   const [fontSizeIndex, setFontSizeIndex] = useState(FONT_SIZE_DEFAULT_INDEX);
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
     setIsMounted(true);
-    const storedTheme = localStorage.getItem('theme') as Theme | null;
-    if (storedTheme && ['light', 'dark'].includes(storedTheme)) {
-      setThemeState(storedTheme);
-    }
-    const storedFontSizeIndex = localStorage.getItem('fontSizeIndex');
-    if (storedFontSizeIndex) {
-      const index = parseInt(storedFontSizeIndex, 10);
-      if(index >= 0 && index < FONT_SIZES.length) {
-        setFontSizeIndex(index);
+    try {
+      const storedTheme = localStorage.getItem('theme') as Theme | null;
+      if (storedTheme && ['light', 'dark'].includes(storedTheme)) {
+        setTheme(storedTheme);
       }
+      
+      const storedFontSizeIndex = localStorage.getItem('fontSizeIndex');
+      if (storedFontSizeIndex) {
+        const index = parseInt(storedFontSizeIndex, 10);
+        if(!isNaN(index) && index >= 0 && index < FONT_SIZES.length) {
+          setFontSizeIndex(index);
+        }
+      }
+    } catch (error) {
+      console.error("Failed to access localStorage", error);
     }
   }, []);
 
   useEffect(() => {
-    if(isMounted) {
+    if (isMounted) {
       document.body.classList.remove('dark');
       if (theme === 'dark') {
         document.body.classList.add('dark');
       }
-      localStorage.setItem('theme', theme);
+      try {
+        localStorage.setItem('theme', theme);
+      } catch (error) {
+        console.error("Failed to save theme to localStorage", error);
+      }
     }
   }, [theme, isMounted]);
 
-  const setTheme = (newTheme: Theme) => {
-    setThemeState(newTheme);
-  };
-  
+  useEffect(() => {
+    if (isMounted) {
+       try {
+        localStorage.setItem('fontSizeIndex', fontSizeIndex.toString());
+      } catch (error) {
+        console.error("Failed to save fontSizeIndex to localStorage", error);
+      }
+    }
+  }, [fontSizeIndex, isMounted]);
+
   const increaseFontSize = useCallback(() => {
-    setFontSizeIndex(prevIndex => {
-      const newIndex = Math.min(FONT_SIZES.length - 1, prevIndex + 1);
-      localStorage.setItem('fontSizeIndex', newIndex.toString());
-      return newIndex;
-    });
+    setFontSizeIndex(prevIndex => Math.min(prevIndex + 1, FONT_SIZES.length - 1));
   }, []);
 
   const decreaseFontSize = useCallback(() => {
-    setFontSizeIndex(prevIndex => {
-      const newIndex = Math.max(0, prevIndex - 1);
-      localStorage.setItem('fontSizeIndex', newIndex.toString());
-      return newIndex;
-    });
+    setFontSizeIndex(prevIndex => Math.max(0, prevIndex - 1));
   }, []);
+
+  if (!isMounted) {
+    // Render nothing or a placeholder on the server to avoid hydration mismatch
+    return null;
+  }
 
   const value = {
     theme,
@@ -73,10 +85,6 @@ export const SettingsProvider = ({ children }: { children: ReactNode }) => {
     increaseFontSize,
     decreaseFontSize,
   };
-
-  if (!isMounted) {
-    return null;
-  }
 
   return <SettingsContext.Provider value={value}>{children}</SettingsContext.Provider>;
 };

@@ -8,6 +8,15 @@ export default {
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
+  safelist: [
+    'text-sm',
+    'text-base',
+    'text-lg',
+    'text-xl',
+    'text-2xl',
+    'text-3xl',
+    'text-4xl',
+  ],
   theme: {
     container: {
       center: true,

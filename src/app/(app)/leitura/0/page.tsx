@@ -15,28 +15,28 @@ export default function IntroductionPage() {
           </CardTitle>
         </CardHeader>
         <CardContent className="prose prose-lg max-w-none space-y-4 dark:prose-invert">
-          <p>
+          <p className="text-justify">
             Quantas vezes você começou a ler a Bíblia cheio de entusiasmo… mas
             parou em Levítico? Ou ficou perdido entre genealogias e leis
             antigas, sem entender o que tudo aquilo tinha a ver com sua vida?
           </p>
-          <p>
+          <p className="text-justify">
             Se isso já aconteceu com você, não está sozinho. A maioria dos
             planos trata a Bíblia como um livro comum: página por página, sem
             contexto, até que o leitor desanima.
           </p>
-          <p>
+          <p className="text-justify">
             Mas a Bíblia não é um romance. É uma biblioteca de 73 livros,
             escrita ao longo de séculos, e só ganha sentido quando lida como a
             grande história de salvação que culmina em Jesus Cristo.
           </p>
-          <p>
+          <p className="text-justify">
             Este método é diferente. Ele não segue a Bíblia página por página.
             Os livros e capítulos foram reorganizados para contar a história da
             salvação de forma cristocêntrica, mostrando como tudo se conecta em
             Cristo e como a Igreja interpreta a Palavra de Deus.
           </p>
-          <p>
+          <p className="text-justify">
             E não é apenas uma escolha prática: é o modo como a Igreja recomenda
             que a Escritura seja lida. O Concílio Vaticano II, na Constituição
             Dogmática Dei Verbum, ensina que a Bíblia deve ser lida “com o mesmo
@@ -47,15 +47,15 @@ export default function IntroductionPage() {
 
           <Separator className="my-6" />
 
-          <h2 className="font-headline text-2xl font-semibold text-primary">
+          <h2 className="text-left font-headline text-2xl font-semibold text-primary">
             Por que este método é único
           </h2>
 
           <section>
-            <h3 className="font-headline text-xl font-semibold">
+            <h3 className="text-left font-headline text-xl font-semibold">
               Começando pela certeza do amor de Deus
             </h3>
-            <p>
+            <p className="text-justify">
               A primeira leitura é a 1ª Carta de São João, porque a primeira
               necessidade da alma é sentir o amor de Deus. Antes de aprender
               regras, histórias ou teologia, você precisa experimentar a certeza
@@ -66,10 +66,10 @@ export default function IntroductionPage() {
           </section>
 
           <section>
-            <h3 className="font-headline text-xl font-semibold">
+            <h3 className="text-left font-headline text-xl font-semibold">
               Cristocêntrico
             </h3>
-            <p>
+            <p className="text-justify">
               Depois, você conhece os Evangelhos, o ápice da história da
               salvação: Jesus Cristo. Assim, ao ler o Antigo Testamento, você vê
               promessas sendo cumpridas e a grande história de amor de Deus se
@@ -78,10 +78,10 @@ export default function IntroductionPage() {
           </section>
 
           <section>
-            <h3 className="font-headline text-xl font-semibold">
+            <h3 className="text-left font-headline text-xl font-semibold">
               Com a Igreja
             </h3>
-            <p>
+            <p className="text-justify">
               Cada leitura vem acompanhada de explicações do Catecismo. Você
               nunca fica sozinho diante do texto, porque a própria Igreja
               fundada por Cristo guia sua compreensão. Existe apenas uma ÚNICA
@@ -90,10 +90,10 @@ export default function IntroductionPage() {
           </section>
 
           <section>
-            <h3 className="font-headline text-xl font-semibold">
+            <h3 className="text-left font-headline text-xl font-semibold">
               Fiel à Tradição
             </h3>
-            <p>
+            <p className="text-justify">
               As leituras foram preparadas a partir da tradução direta da
               Vulgata Clementina, confirmada pelo Concílio de Trento e utilizada
               oficialmente pela Igreja por mais de 400 anos. Esta foi a resposta
@@ -106,10 +106,10 @@ export default function IntroductionPage() {
           </section>
 
           <section>
-            <h3 className="font-headline text-xl font-semibold">
+            <h3 className="text-left font-headline text-xl font-semibold">
               Prático e acessível
             </h3>
-            <p>
+            <p className="text-justify">
               Tudo está pronto: leituras diárias de 15 minutos, com 3 a 4
               capítulos e Catecismo. Tamanho de letras ajustável, interface
               limpa, sem confusão. É só abrir o app e começar — sem perder

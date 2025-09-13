@@ -9,13 +9,13 @@ export default function HowItWorksPage() {
       </header>
 
       <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 font-headline">
-            <BookMarked className="h-6 w-6 text-primary" />
+        <CardHeader className="p-6">
+          <CardTitle className="flex items-center gap-4 font-headline text-2xl">
+            <BookMarked className="h-8 w-8 text-primary" />
             Um Plano de 365 Dias
           </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4 text-muted-foreground">
+        <CardContent className="space-y-4 text-muted-foreground px-6 pb-6">
           <p>
             Este aplicativo foi projetado para guiá-lo através de toda a Bíblia Católica em um ano. Cada dia, você receberá uma seleção de leituras do Antigo e do Novo Testamento, de forma a ter uma visão panorâmica e integrada da História da Salvação.
           </p>
@@ -23,13 +23,13 @@ export default function HowItWorksPage() {
       </Card>
       
       <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 font-headline">
-            <Clock className="h-6 w-6 text-primary" />
+        <CardHeader className="p-6">
+          <CardTitle className="flex items-center gap-4 font-headline text-2xl">
+            <Clock className="h-8 w-8 text-primary" />
             Aproximadamente 15 Minutos por Dia
           </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4 text-muted-foreground">
+        <CardContent className="space-y-4 text-muted-foreground px-6 pb-6">
           <p>
             Sabemos que a vida é corrida. Por isso, o plano é pensado para ser concluído em cerca de 15 a 20 minutos diários. Este pequeno investimento de tempo se transformará em um imenso crescimento espiritual, permitindo que a Palavra de Deus ilumine sua rotina.
           </p>
@@ -37,13 +37,13 @@ export default function HowItWorksPage() {
       </Card>
 
       <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 font-headline">
-            <Cross className="h-6 w-6 text-primary" />
+        <CardHeader className="p-6">
+          <CardTitle className="flex items-center gap-4 font-headline text-2xl">
+            <Cross className="h-8 w-8 text-primary" />
             Bíblia + Catecismo: A Fé da Igreja
           </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4 text-muted-foreground">
+        <CardContent className="space-y-4 text-muted-foreground px-6 pb-6">
           <p>
             Como católicos, não lemos a Bíblia isoladamente. "A Escritura deve ser lida e interpretada à luz do mesmo Espírito pelo qual foi escrita" (Catecismo, 111).
           </p>
@@ -54,13 +54,13 @@ export default function HowItWorksPage() {
       </Card>
 
       <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 font-headline">
-            <BookLock className="h-6 w-6 text-primary" />
+        <CardHeader className="p-6">
+          <CardTitle className="flex items-center gap-4 font-headline text-2xl">
+            <BookLock className="h-8 w-8 text-primary" />
             Fiel à Tradição
           </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4 text-muted-foreground">
+        <CardContent className="space-y-4 text-muted-foreground px-6 pb-6">
           <p>
              As leituras foram feitas a partir da tradução direta da Vulgata Clementina, confirmada pelo Concílio de Trento e usada oficialmente pela Igreja por séculos. É a mesma Bíblia que sustentou papas, santos e mártires — não versões modernas que alteram o sentido original.
           </p>
@@ -68,13 +68,13 @@ export default function HowItWorksPage() {
       </Card>
       
       <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 font-headline">
-            <Smartphone className="h-6 w-6 text-primary" />
+        <CardHeader className="p-6">
+          <CardTitle className="flex items-center gap-4 font-headline text-2xl">
+            <Smartphone className="h-8 w-8 text-primary" />
             Experiência Simples e Acessível
           </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4 text-muted-foreground">
+        <CardContent className="space-y-4 text-muted-foreground px-6 pb-6">
           <p>
             Nada de marcações ou cálculos. Cada dia já vem pronto: capítulos, explicação e Catecismo reunidos em um só lugar. Você pode ajustar o tamanho do texto, ler no celular em qualquer lugar e manter a constância com praticidade.
           </p>

@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useEffect, useState } from 'react';
@@ -83,8 +84,8 @@ export default function ReadingPage() {
       await markDayAsComplete(day);
       setIsCompleted(true);
       toast({
-        title: "Parabéns!",
-        description: "Mais um passo dado em sua jornada de fé.",
+        title: "🎉 Leitura Concluída!",
+        description: "Que a Palavra de Deus continue iluminando seus dias!",
         className: 'bg-green-600 border-green-700 text-white dark:bg-green-700 dark:border-green-800',
         duration: 5000,
       });
@@ -271,3 +272,5 @@ export default function ReadingPage() {
     </>
   );
 }
+
+    

@@ -83,10 +83,10 @@ export default function ReadingPage() {
     }
   };
 
-  const ReadingHeader = () => (
+  const ReadingHeader = ({ dayLabel }: { dayLabel: string }) => (
     <header className="sticky top-0 z-10 bg-background/80 backdrop-blur-sm border-b mb-4 py-2">
-      <div className="container mx-auto flex items-center justify-center">
-        <div className="flex items-center gap-1 sm:gap-2">
+      <div className="container mx-auto grid grid-cols-3 items-center">
+        <div className="flex items-center gap-1 sm:gap-2 justify-start">
            <div className="flex h-10 items-center justify-center rounded-md border bg-secondary">
               <Button variant="ghost" size="icon" onClick={decreaseFontSize} aria-label="Diminuir fonte">
                 <Minus className="h-5 w-5" />
@@ -96,7 +96,11 @@ export default function ReadingPage() {
                 <Plus className="h-5 w-5" />
               </Button>
            </div>
-
+        </div>
+        <div className="text-center">
+            <span className="font-bold text-primary">{dayLabel}</span>
+        </div>
+        <div className="flex justify-end">
            <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" size="icon">
@@ -118,7 +122,7 @@ export default function ReadingPage() {
   if (loading) {
     return (
       <>
-        <ReadingHeader />
+        <ReadingHeader dayLabel={`Dia ${day}`} />
         <div className="flex h-64 items-center justify-center">
           <Loader2 className="h-8 w-8 animate-spin text-primary" />
         </div>
@@ -139,7 +143,7 @@ export default function ReadingPage() {
 
   return (
     <>
-      <ReadingHeader />
+      <ReadingHeader dayLabel={`Dia ${day}`} />
       <div className={cn("container mx-auto max-w-3xl space-y-6 px-2", fontSize)}>
         <Card>
           <CardHeader className="p-0 pt-6 px-2">

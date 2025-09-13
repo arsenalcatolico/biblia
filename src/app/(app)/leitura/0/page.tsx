@@ -17,41 +17,45 @@ import { cn } from "@/lib/utils";
 export default function IntroductionPage() {
   const { theme, setTheme, fontSize, increaseFontSize, decreaseFontSize } = useSettings();
 
-  const ReadingControls = () => (
-     <div className="sticky top-0 z-10 bg-background/80 backdrop-blur-sm border-b mb-4 py-2">
-        <div className="container mx-auto flex items-center justify-center">
-            <div className="flex items-center gap-1 sm:gap-2">
-                <div className="flex h-10 items-center justify-center rounded-md border bg-secondary">
-                    <Button variant="ghost" size="icon" onClick={decreaseFontSize} aria-label="Diminuir fonte">
-                        <Minus className="h-5 w-5" />
-                    </Button>
-                    <span className="w-24 text-center text-sm font-medium text-muted-foreground">Tamanho da Letra</span>
-                    <Button variant="ghost" size="icon" onClick={increaseFontSize} aria-label="Aumentar fonte">
-                        <Plus className="h-5 w-5" />
-                    </Button>
-                </div>
-
-                <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="icon">
-                        <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-                        <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-                        <span className="sr-only">Alternar tema</span>
-                        </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                        <DropdownMenuItem onClick={() => setTheme('light')}>Claro</DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => setTheme('dark')}>Noturno</DropdownMenuItem>
-                    </DropdownMenuContent>
-                </DropdownMenu>
-            </div>
+  const ReadingControls = ({ dayLabel }: { dayLabel: string }) => (
+    <div className="sticky top-0 z-10 bg-background/80 backdrop-blur-sm border-b mb-4 py-2">
+      <div className="container mx-auto grid grid-cols-3 items-center">
+        <div className="flex items-center gap-1 sm:gap-2 justify-start">
+          <div className="flex h-10 items-center justify-center rounded-md border bg-secondary">
+            <Button variant="ghost" size="icon" onClick={decreaseFontSize} aria-label="Diminuir fonte">
+              <Minus className="h-5 w-5" />
+            </Button>
+            <span className="w-24 text-center text-sm font-medium text-muted-foreground">Tamanho da Letra</span>
+            <Button variant="ghost" size="icon" onClick={increaseFontSize} aria-label="Aumentar fonte">
+              <Plus className="h-5 w-5" />
+            </Button>
+          </div>
         </div>
+        <div className="text-center">
+          <span className="font-bold text-primary">{dayLabel}</span>
+        </div>
+        <div className="flex justify-end">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size="icon">
+                <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+                <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+                <span className="sr-only">Alternar tema</span>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem onClick={() => setTheme('light')}>Claro</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setTheme('dark')}>Noturno</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+      </div>
     </div>
   );
 
   return (
     <>
-      <ReadingControls />
+      <ReadingControls dayLabel="Introdução" />
       <div className={cn("container mx-auto max-w-3xl space-y-6 px-2", fontSize)}>
         <Card>
           <CardHeader className="p-0 pt-6 px-2">

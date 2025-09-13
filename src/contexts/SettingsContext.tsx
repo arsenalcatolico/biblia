@@ -17,7 +17,7 @@ interface SettingsContextType {
 const SettingsContext = createContext<SettingsContextType | undefined>(undefined);
 
 export const SettingsProvider = ({ children }: { children: ReactNode }) => {
-  const [theme, setTheme] = useState<Theme>('light');
+  const [theme, setThemeState] = useState<Theme>('light');
   const [fontSizeIndex, setFontSizeIndex] = useState(FONT_SIZE_DEFAULT_INDEX);
   const [isMounted, setIsMounted] = useState(false);
 
@@ -26,7 +26,7 @@ export const SettingsProvider = ({ children }: { children: ReactNode }) => {
     try {
       const storedTheme = localStorage.getItem('theme') as Theme | null;
       if (storedTheme && ['light', 'dark'].includes(storedTheme)) {
-        setTheme(storedTheme);
+        setThemeState(storedTheme);
       }
       
       const storedFontSizeIndex = localStorage.getItem('fontSizeIndex');
@@ -41,17 +41,23 @@ export const SettingsProvider = ({ children }: { children: ReactNode }) => {
     }
   }, []);
 
-  useEffect(() => {
+  const setTheme = useCallback((newTheme: Theme) => {
+    setThemeState(newTheme);
     if (isMounted) {
-      document.body.classList.remove('dark');
-      if (theme === 'dark') {
-        document.body.classList.add('dark');
-      }
+      document.body.classList.remove('dark', 'light');
+      document.body.classList.add(newTheme);
       try {
-        localStorage.setItem('theme', theme);
+        localStorage.setItem('theme', newTheme);
       } catch (error) {
         console.error("Failed to save theme to localStorage", error);
       }
+    }
+  }, [isMounted]);
+
+  useEffect(() => {
+    if (isMounted) {
+      document.body.classList.remove('dark', 'light');
+      document.body.classList.add(theme);
     }
   }, [theme, isMounted]);
 

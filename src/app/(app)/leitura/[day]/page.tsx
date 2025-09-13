@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, use } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { ReadingDay } from '@/types';
 import { useSettings } from '@/contexts/SettingsContext';
@@ -32,10 +32,8 @@ const SHOW_CONGRATS_TOAST = 'showCongratsToast';
 
 export default function ReadingPage() {
   const router = useRouter();
-  const params = useParams();
+  const day = parseInt((useParams() || {}).day as string, 10);
   const { toast } = useToast();
-  
-  const day = parseInt(params.day as string, 10);
 
   const [reading, setReading] = useState<ReadingDay | null>(null);
   const [loading, setLoading] = useState(true);
@@ -184,7 +182,6 @@ export default function ReadingPage() {
               <DropdownMenuContent align="end">
                 <DropdownMenuItem onClick={() => setTheme('light')}>Claro</DropdownMenuItem>
                 <DropdownMenuItem onClick={() => setTheme('dark')}>Noturno</DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setTheme('beige')}>Bege</DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
         </div>

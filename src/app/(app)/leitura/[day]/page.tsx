@@ -90,7 +90,7 @@ export default function ReadingPage() {
           Dia {day}
         </h1>
         <div className="flex items-center gap-1 sm:gap-2">
-           <div className="flex h-10 items-center justify-center rounded-md border">
+           <div className="flex h-10 items-center justify-center rounded-md border bg-secondary">
               <Button variant="ghost" size="icon" onClick={decreaseFontSize} aria-label="Diminuir fonte">
                 <Minus className="h-5 w-5" />
               </Button>

@@ -85,7 +85,7 @@ export default function ReadingPage() {
 
   const ReadingHeader = ({ title }: { title: string }) => (
     <header className="sticky top-0 z-10 bg-background/80 backdrop-blur-sm border-b mb-4 py-2">
-      <div className="mx-auto flex items-center max-w-3xl px-1">
+      <div className="mx-auto flex items-center max-w-3xl px-2">
         <h1 className="text-xl font-bold font-headline text-primary">{title}</h1>
         <div className="flex items-center gap-2 ml-auto">
            <div className="flex h-10 items-center justify-center rounded-md border bg-secondary">

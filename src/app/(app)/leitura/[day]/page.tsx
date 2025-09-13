@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { ReadingDay } from '@/types';
 import { useSettings } from '@/contexts/SettingsContext';
@@ -23,7 +23,7 @@ export default function ReadingPage() {
   const router = useRouter();
   const { toast } = useToast();
   
-  const day = useMemo(() => parseInt(params.day as string, 10), [params.day]);
+  const day = parseInt(params.day as string, 10);
 
   const [reading, setReading] = useState<ReadingDay | null>(null);
   const [loading, setLoading] = useState(true);

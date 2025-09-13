@@ -230,7 +230,7 @@ export default function ReadingPage() {
             <div className="w-full space-y-4">
                <Alert className="border-green-500 bg-green-100 text-green-900 dark:bg-green-900/30 dark:text-green-200">
                 <PartyPopper className="h-5 w-5 text-green-700 dark:text-green-300" />
-                <AlertTitle className="font-bold text-green-900 dark:text-green-200">Parabéns!</AlertTitle>
+                <AlertTitle className="font-bold text-green-900 dark:text-green-200">Leitura Concluída!</AlertTitle>
                 <AlertDescription className="text-green-800 dark:text-green-200/90">
                   Mais um passo dado em sua jornada de fé. Que a Palavra de Deus continue iluminando seus dias!
                 </AlertDescription>

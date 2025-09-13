@@ -91,7 +91,8 @@ export default function ReadingPage() {
     try {
       await unmarkDayAsComplete(day);
     } catch (error) {
-       // Error is already logged in the context
+      // O erro já é tratado no contexto
+      console.error("Falha ao desmarcar dia:", error);
     }
   };
 
@@ -247,5 +248,3 @@ export default function ReadingPage() {
     </>
   );
 }
-
-    

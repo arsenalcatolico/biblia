@@ -1,5 +1,4 @@
 
-
 "use client";
 
 import { useEffect, useState } from 'react';
@@ -93,14 +92,14 @@ export default function ReadingPage() {
           </div>
         ),
         description: "Que a Palavra de Deus continue iluminando seus dias!",
-        duration: 3000,
+        duration: 5000,
          className: "border-green-500 bg-green-100 text-green-900 dark:bg-green-900/30 dark:text-green-200",
       });
 
       if (day < 365) {
         setTimeout(() => {
           router.push(`/leitura/${day + 1}`);
-        }, 1500);
+        }, 5000);
       }
     } catch (e) {
       toast({
@@ -229,6 +228,13 @@ export default function ReadingPage() {
         <div className="flex flex-col items-center gap-2">
           {isCompleted ? (
             <div className="w-full space-y-4">
+               <Alert className="border-green-500 bg-green-100 text-green-900 dark:bg-green-900/30 dark:text-green-200">
+                <PartyPopper className="h-5 w-5 text-green-700 dark:text-green-300" />
+                <AlertTitle className="font-bold text-green-900 dark:text-green-200">Parabéns!</AlertTitle>
+                <AlertDescription className="text-green-800 dark:text-green-200/90">
+                  Mais um passo dado em sua jornada de fé. Que a Palavra de Deus continue iluminando seus dias!
+                </AlertDescription>
+              </Alert>
               <Button size="lg" disabled className="w-full shadow-lg bg-green-600 hover:bg-green-600/90">
                 <CheckCircle className="mr-2 h-5 w-5" />
                 Concluído
@@ -245,12 +251,12 @@ export default function ReadingPage() {
           )}
         </div>
 
-        <div className="flex items-center justify-between">
-          <Button onClick={() => navigateDay(-1)} disabled={day <= 0} variant="outline">
+        <div className="flex items-center gap-4">
+          <Button onClick={() => navigateDay(-1)} disabled={day <= 0} variant="outline" className="flex-1">
             <ArrowLeft className="mr-2 h-4 w-4" /> 
             {day === 1 ? 'Introdução' : 'Dia Anterior'}
           </Button>
-          <Button onClick={handleNextDayClick} disabled={day >= 365} variant="outline">
+          <Button onClick={handleNextDayClick} disabled={day >= 365} variant="outline" className="flex-1">
             Próximo Dia <ArrowRight className="ml-2 h-4 w-4" />
           </Button>
         </div>

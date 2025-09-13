@@ -90,8 +90,8 @@ export default function ReadingPage() {
         <h1 className="text-xl font-bold font-headline text-primary">
           Dia {day}
         </h1>
-        <div className="flex items-center gap-2">
-            <span className="text-sm font-medium text-muted-foreground hidden sm:inline">Tamanho da Fonte</span>
+        <div className="flex items-center gap-1 sm:gap-2">
+            <span className="text-sm font-medium text-muted-foreground sm:inline">Tamanho da Fonte</span>
            <Button variant="ghost" size="icon" onClick={decreaseFontSize} aria-label="Diminuir fonte">
              <Minus className="h-5 w-5" />
            </Button>

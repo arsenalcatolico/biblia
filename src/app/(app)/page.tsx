@@ -29,7 +29,7 @@ export default function HomePage() {
       <div className="space-y-8">
         <header>
           <h1 className="text-3xl font-bold font-headline text-primary dark:text-primary-foreground">
-            Olá, {user?.displayName || user?.email?.split('@')[0] || 'leitor'}!
+            Olá, Católico(a)!
           </h1>
           <p className="text-muted-foreground">Pronto para a jornada de hoje?</p>
         </header>

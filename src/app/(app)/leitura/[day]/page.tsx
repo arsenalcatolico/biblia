@@ -142,11 +142,11 @@ export default function ReadingPage() {
       <ReadingHeader />
       <div className={cn("container mx-auto max-w-3xl space-y-6 px-2", fontSize)}>
         <Card>
-          <CardHeader>
+          <CardHeader className="p-0 pt-6 px-2">
             <CardTitle className="font-headline text-2xl text-primary text-left">{reading.leitura_dia}</CardTitle>
             {reading.intro && <CardDescription className="text-left text-base">{reading.intro}</CardDescription>}
           </CardHeader>
-          <CardContent className="space-y-4 prose prose-lg max-w-none dark:prose-invert">
+          <CardContent className="space-y-4 prose prose-lg max-w-none dark:prose-invert p-0 pt-6 px-2">
             
             <section>
               <h2 className="font-headline text-xl font-semibold text-left">Texto Bíblico</h2>

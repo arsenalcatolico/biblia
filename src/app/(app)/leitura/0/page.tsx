@@ -54,12 +54,12 @@ export default function IntroductionPage() {
       <ReadingControls />
       <div className={cn("container mx-auto max-w-3xl space-y-6 px-2", fontSize)}>
         <Card>
-          <CardHeader>
-            <CardTitle className="text-left font-headline text-3xl text-primary">
+          <CardHeader className="p-0 pt-6">
+            <CardTitle className="text-left font-headline text-3xl text-primary px-2">
               Seja bem-vindo à sua Jornada de Fé!
             </CardTitle>
           </CardHeader>
-          <CardContent className="prose prose-lg max-w-none space-y-4 dark:prose-invert">
+          <CardContent className="prose prose-lg max-w-none space-y-4 dark:prose-invert p-0 pt-6 px-2">
             <p className="text-justify">
               Quantas vezes você começou a ler a Bíblia cheio de entusiasmo… mas
               parou em Levítico? Ou ficou perdido entre genealogias e leis

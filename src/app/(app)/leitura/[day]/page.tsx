@@ -78,7 +78,7 @@ export default function ReadingPage() {
 
   const navigateDay = (offset: number) => {
     const newDay = day + offset;
-    if (newDay >= 1 && newDay <= 365) {
+    if (newDay >= 0 && newDay <= 365) {
       router.push(`/leitura/${newDay}`);
     }
   };
@@ -186,8 +186,9 @@ export default function ReadingPage() {
         </div>
 
         <div className="flex items-center justify-between">
-          <Button onClick={() => navigateDay(-1)} disabled={day <= 1} variant="outline">
-            <ArrowLeft className="mr-2 h-4 w-4" /> Dia Anterior
+          <Button onClick={() => navigateDay(-1)} disabled={day < 1} variant="outline">
+            <ArrowLeft className="mr-2 h-4 w-4" /> 
+            {day === 1 ? 'Introdução' : 'Dia Anterior'}
           </Button>
           <Button onClick={() => navigateDay(1)} disabled={day >= 365} variant="outline">
             Próximo Dia <ArrowRight className="ml-2 h-4 w-4" />

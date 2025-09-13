@@ -48,7 +48,7 @@ export default function HomePage() {
             </p>
           </CardContent>
           <CardFooter className="p-6 pt-0">
-             <Button asChild size="lg" className="shadow-lg w-full">
+             <Button asChild size="lg" className="shadow-lg w-full text-base">
               <Link href={`/leitura/${nextDay}`}>
                 {lastCompletedDay > 0 ? `Continuar: Dia ${nextDay}` : 'Começar a Jornada'}
                 <ArrowRight className="ml-2 h-5 w-5" />

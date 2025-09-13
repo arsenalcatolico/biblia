@@ -221,7 +221,7 @@ export default function ReadingPage() {
           </AlertDialogHeader>
           <AlertDialogFooter className="flex-col-reverse sm:flex-row gap-2">
             <AlertDialogCancel>Cancelar</AlertDialogCancel>
-            <AlertDialogAction variant="outline" onClick={() => navigateDay(1)}>
+            <AlertDialogAction variant="secondary" onClick={() => navigateDay(1)}>
               Avançar sem concluir
             </AlertDialogAction>
             <AlertDialogAction onClick={handleMarkAsComplete}>

@@ -55,7 +55,7 @@ export default function IntroductionPage() {
       <div className={cn("container mx-auto max-w-3xl space-y-6 px-2", fontSize)}>
         <Card>
           <CardHeader>
-            <CardTitle className="text-center font-headline text-3xl text-primary">
+            <CardTitle className="text-left font-headline text-3xl text-primary">
               Seja bem-vindo à sua Jornada de Fé!
             </CardTitle>
           </CardHeader>

@@ -147,25 +147,25 @@ export default function ReadingPage() {
       <div className={cn("container mx-auto max-w-3xl space-y-6 px-2", fontSize)}>
         <Card>
           <CardHeader>
-            <CardTitle className="font-headline text-2xl text-primary">{reading.leitura_dia}</CardTitle>
-            {reading.intro && <CardDescription>{reading.intro}</CardDescription>}
+            <CardTitle className="font-headline text-2xl text-primary text-left">{reading.leitura_dia}</CardTitle>
+            {reading.intro && <CardDescription className="text-left">{reading.intro}</CardDescription>}
           </CardHeader>
           <CardContent className="space-y-4 prose prose-lg max-w-none dark:prose-invert">
             
             <section>
-              <h2 className="font-headline text-xl font-semibold">Texto Bíblico</h2>
-              {reading.texto_biblico.split('\n').filter(p => p.trim()).map((paragraph, i) => <p key={`tb-${i}`}>{paragraph}</p>)}
+              <h2 className="font-headline text-xl font-semibold text-left">Texto Bíblico</h2>
+              {reading.texto_biblico.split('\n').filter(p => p.trim()).map((paragraph, i) => <p key={`tb-${i}`} className="text-justify">{paragraph}</p>)}
             </section>
             
             <section>
-              <h2 className="font-headline text-xl font-semibold">Explicação Católica</h2>
-              {reading.explicacao_catolica.split('\n').filter(p => p.trim()).map((paragraph, i) => <p key={`ec-${i}`}>{paragraph}</p>)}
+              <h2 className="font-headline text-xl font-semibold text-left">Explicação Católica</h2>
+              {reading.explicacao_catolica.split('\n').filter(p => p.trim()).map((paragraph, i) => <p key={`ec-${i}`} className="text-justify">{paragraph}</p>)}
             </section>
 
             {reading.conclusao && (
               <section>
-                <h2 className="font-headline text-xl font-semibold">Conclusão e Meditação</h2>
-                {reading.conclusao.split('\n').filter(p => p.trim()).map((paragraph, i) => <p key={`c-${i}`}>{paragraph}</p>)}
+                <h2 className="font-headline text-xl font-semibold text-left">Conclusão e Meditação</h2>
+                {reading.conclusao.split('\n').filter(p => p.trim()).map((paragraph, i) => <p key={`c-${i}`} className="text-justify">{paragraph}</p>)}
               </section>
             )}
 

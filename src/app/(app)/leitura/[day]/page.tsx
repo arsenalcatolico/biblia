@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { ReadingDay } from '@/types';
 import { useSettings } from '@/contexts/SettingsContext';
@@ -142,7 +142,7 @@ export default function ReadingPage() {
   return (
     <>
       <ReadingHeader />
-      <div className={cn("container mx-auto max-w-3xl space-y-6", fontSize)}>
+      <div className={cn("container mx-auto max-w-3xl space-y-6 px-2", fontSize)}>
         <Card>
           <CardHeader>
             <CardTitle className="font-headline text-2xl text-primary">{reading.leitura_dia}</CardTitle>

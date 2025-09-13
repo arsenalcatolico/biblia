@@ -37,7 +37,7 @@ export default function HomePage() {
         <Card className="shadow-md">
           <CardHeader className="p-6">
             <CardTitle>Seu Progresso</CardTitle>
-            <CardDescription>
+            <CardDescription className="text-base">
               Você completou {completedDays.length} de 365 dias.
             </CardDescription>
           </CardHeader>

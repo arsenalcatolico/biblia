@@ -86,13 +86,12 @@ export default function ReadingPage() {
         title: "Parabéns!",
         description: "Mais um passo dado em sua jornada de fé.",
         className: 'bg-green-600 border-green-700 text-white dark:bg-green-700 dark:border-green-800',
-        duration: 3000,
+        duration: 5000,
       });
       if (day < 365) {
-        // Add a small delay to allow the user to see the toast before navigating
         setTimeout(() => {
           router.push(`/leitura/${day + 1}`);
-        }, 500);
+        }, 1500);
       }
     } catch (e) {
       toast({

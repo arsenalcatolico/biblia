@@ -137,7 +137,7 @@ export default function IntroductionPage() {
         </CardContent>
       </Card>
 
-      <div className="text-center">
+      <div className="flex justify-center">
         <Button asChild size="lg" className="shadow-lg text-base md:text-lg">
           <Link href="/leitura/1">
             INICIAR MINHA JORNADA: DIA 1

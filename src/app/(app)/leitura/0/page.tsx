@@ -10,7 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useSettings } from "@/contexts/SettingsContext";
-import { ArrowRight, Moon, Sun, Plus, Minus } from "lucide-react";
+import { ArrowRight, Moon, Sun, Plus, Minus, Home } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 
@@ -181,11 +181,17 @@ export default function IntroductionPage() {
           </CardContent>
         </Card>
 
-        <div className="flex justify-center">
+        <div className="flex flex-col items-center gap-4">
           <Button asChild size="lg" className="shadow-lg text-base md:text-lg">
             <Link href="/leitura/1">
               INICIAR MINHA JORNADA: DIA 1
               <ArrowRight className="ml-2 h-5 w-5" />
+            </Link>
+          </Button>
+          <Button asChild variant="outline">
+            <Link href="/">
+              <Home className="mr-2 h-4 w-4" />
+               Voltar ao Início
             </Link>
           </Button>
         </div>

@@ -94,7 +94,7 @@ export default function ReadingPage() {
            <Button variant="ghost" size="icon" onClick={decreaseFontSize} aria-label="Diminuir fonte">
              <Minus className="h-5 w-5" />
            </Button>
-            <span className="text-sm font-medium text-muted-foreground">Tamanho da Fonte</span>
+            <span className="w-28 text-center text-sm font-medium text-muted-foreground">Tamanho da Fonte</span>
            <Button variant="ghost" size="icon" onClick={increaseFontSize} aria-label="Aumentar fonte">
              <Plus className="h-5 w-5" />
            </Button>

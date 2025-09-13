@@ -35,19 +35,19 @@ export default function HomePage() {
         </header>
 
         <Card className="shadow-md">
-          <CardHeader>
+          <CardHeader className="p-6">
             <CardTitle>Seu Progresso</CardTitle>
             <CardDescription>
               Você completou {completedDays.length} de 365 dias.
             </CardDescription>
           </CardHeader>
-          <CardContent>
+          <CardContent className="p-6 pt-0">
             <Progress value={progressPercentage} className="w-full" />
             <p className="mt-2 text-right text-sm font-medium text-primary">
               {Math.round(progressPercentage)}%
             </p>
           </CardContent>
-          <CardFooter className="pt-4">
+          <CardFooter className="p-6 pt-0">
              <Button asChild size="lg" className="shadow-lg w-full">
               <Link href={`/leitura/${nextDay}`}>
                 {lastCompletedDay > 0 ? `Continuar: Dia ${nextDay}` : 'Começar a Jornada'}
@@ -58,7 +58,7 @@ export default function HomePage() {
         </Card>
 
         <Card className="bg-primary/5">
-          <CardHeader className="flex-row items-center gap-4 space-y-0">
+          <CardHeader className="flex-row items-center gap-4 space-y-0 p-6">
              <div className="rounded-full bg-primary/10 p-3">
                 <BookOpen className="h-6 w-6 text-primary"/>
              </div>
@@ -67,7 +67,7 @@ export default function HomePage() {
                  <CardDescription>Sua jornada diária com a Palavra.</CardDescription>
             </div>
           </CardHeader>
-          <CardContent>
+          <CardContent className="p-6 pt-0">
             <p className="text-muted-foreground">
                 Cada dia é uma nova oportunidade de se aproximar de Deus através da leitura da Bíblia e da meditação. O plano de 1 ano foi criado para guiá-lo por toda a Sagrada Escritura de forma estruturada e enriquecedora.
             </p>

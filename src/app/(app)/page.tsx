@@ -64,11 +64,11 @@ export default function HomePage() {
              </div>
              <div>
                 <CardTitle className="text-xl">Leitura do Dia</CardTitle>
-                 <CardDescription>Sua jornada diária com a Palavra.</CardDescription>
+                 <CardDescription className="text-base">Sua jornada diária com a Palavra.</CardDescription>
             </div>
           </CardHeader>
           <CardContent className="p-6 pt-0">
-            <p className="text-muted-foreground">
+            <p className="text-muted-foreground text-base">
                 Cada dia é uma nova oportunidade de se aproximar de Deus através da leitura da Bíblia e da meditação. O plano de 1 ano foi criado para guiá-lo por toda a Sagrada Escritura de forma estruturada e enriquecedora.
             </p>
           </CardContent>

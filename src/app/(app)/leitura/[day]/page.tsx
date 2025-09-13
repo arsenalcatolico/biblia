@@ -90,12 +90,8 @@ export default function ReadingPage() {
   const handleUnmarkAsComplete = async () => {
     try {
       await unmarkDayAsComplete(day);
-    } catch (e) {
-      toast({
-        variant: 'destructive',
-        title: 'Erro',
-        description: "Não foi possível atualizar seu progresso.",
-      });
+    } catch (error) {
+       // Error is already logged in the context
     }
   };
 
@@ -251,3 +247,5 @@ export default function ReadingPage() {
     </>
   );
 }
+
+    

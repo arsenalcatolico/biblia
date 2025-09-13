@@ -83,12 +83,6 @@ export default function ReadingPage() {
     try {
       await markDayAsComplete(day);
       setIsCompleted(true);
-      toast({
-        title: "🎉 Leitura Concluída!",
-        description: "Que a Palavra de Deus continue iluminando seus dias!",
-        className: "border-green-500 bg-green-100 text-green-900 dark:bg-green-900/30 dark:text-green-200 dark:border-green-800",
-        duration: 5000,
-      });
       if (day < 365) {
         setTimeout(() => {
           router.push(`/leitura/${day + 1}`);

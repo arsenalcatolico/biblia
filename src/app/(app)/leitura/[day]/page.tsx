@@ -86,7 +86,7 @@ export default function ReadingPage() {
       toast({
         title: "🎉 Leitura Concluída!",
         description: "Que a Palavra de Deus continue iluminando seus dias!",
-        className: 'bg-green-600 border-green-700 text-white dark:bg-green-700 dark:border-green-800',
+        className: "border-green-500 bg-green-100 text-green-900 dark:bg-green-900/30 dark:text-green-200 dark:border-green-800",
         duration: 5000,
       });
       if (day < 365) {
@@ -110,6 +110,11 @@ export default function ReadingPage() {
     } catch (error) {
       setIsCompleted(true); // Revert on error
       console.error("Falha ao desmarcar dia:", error);
+      toast({
+        variant: 'destructive',
+        title: 'Erro',
+        description: "Não foi possível desmarcar a leitura.",
+      });
     }
   };
 

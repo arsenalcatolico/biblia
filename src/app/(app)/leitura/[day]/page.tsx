@@ -86,12 +86,16 @@ export default function ReadingPage() {
       
       toast({
         title: (
-          <div className="flex items-center gap-2 font-bold">
-            <PartyPopper className="h-5 w-5" />
+          <div className="flex items-center gap-2 font-bold text-lg">
+            <PartyPopper className="h-6 w-6" />
             Parabéns!
           </div>
         ),
-        description: "A sua jornada de fé é uma maratona, não uma corrida de 100 metros. Que a Palavra de Deus ilumine seus dias!",
+        description: (
+            <p className="text-base">
+                A sua jornada de fé é uma maratona, não uma corrida de 100 metros. Que a Palavra de Deus ilumine seus dias!
+            </p>
+        ),
         duration: 5000,
          className: "border-green-500 bg-green-100 text-green-900 dark:bg-green-900/30 dark:text-green-200",
       });

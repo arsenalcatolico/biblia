@@ -91,7 +91,7 @@ export default function ReadingPage() {
             Leitura Concluída!
           </div>
         ),
-        description: "Que a Palavra de Deus continue iluminando seus dias!",
+        description: "A sua jornada de fé é uma maratona, não uma corrida de 100 metros. Que a Palavra de Deus ilumine seus dias!",
         duration: 5000,
          className: "border-green-500 bg-green-100 text-green-900 dark:bg-green-900/30 dark:text-green-200",
       });
@@ -284,5 +284,7 @@ export default function ReadingPage() {
     </>
   );
 }
+
+    
 
     

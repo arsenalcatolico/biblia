@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useEffect, useState, useMemo } from 'react';
@@ -44,19 +45,12 @@ export default function ReadingPage() {
       setLoading(true);
       setError(null);
       try {
-        // Check cache first
-        const cachedReading = localStorage.getItem(`reading-day-${day}`);
-        if (cachedReading) {
-          setReading(JSON.parse(cachedReading));
-        } else {
-          const response = await fetch(`/leituras/dia_${day}.json`);
-          if (!response.ok) {
-            throw new Error('Não foi possível carregar a leitura.');
-          }
-          const data: ReadingDay = await response.json();
-          setReading(data);
-          localStorage.setItem(`reading-day-${day}`, JSON.stringify(data));
+        const response = await fetch(`/leituras/dia_${day}.json`);
+        if (!response.ok) {
+          throw new Error('Não foi possível carregar a leitura.');
         }
+        const data: ReadingDay = await response.json();
+        setReading(data);
       } catch (e: any) {
         setError(e.message);
         setReading(null);
@@ -71,10 +65,6 @@ export default function ReadingPage() {
   const handleMarkAsComplete = async () => {
     try {
       await markDayAsComplete(day);
-      toast({
-        title: `Dia ${day} concluído!`,
-        description: "Seu progresso foi salvo.",
-      });
       if (day < 365) {
         router.push(`/leitura/${day + 1}`);
       }
@@ -162,18 +152,18 @@ export default function ReadingPage() {
             
             <section>
               <h2 className="font-headline text-xl font-semibold">Texto Bíblico</h2>
-              <p>{reading.texto_biblico}</p>
+              {reading.texto_biblico.split('\n').filter(p => p.trim()).map((paragraph, i) => <p key={`tb-${i}`}>{paragraph}</p>)}
             </section>
             
             <section>
               <h2 className="font-headline text-xl font-semibold">Explicação Católica</h2>
-              <p>{reading.explicacao_catolica}</p>
+              {reading.explicacao_catolica.split('\n').filter(p => p.trim()).map((paragraph, i) => <p key={`ec-${i}`}>{paragraph}</p>)}
             </section>
 
             {reading.conclusao && (
               <section>
                 <h2 className="font-headline text-xl font-semibold">Conclusão e Meditação</h2>
-                <p>{reading.conclusao}</p>
+                {reading.conclusao.split('\n').filter(p => p.trim()).map((paragraph, i) => <p key={`c-${i}`}>{paragraph}</p>)}
               </section>
             )}
 

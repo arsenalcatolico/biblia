@@ -34,13 +34,13 @@ export default function ProfilePage() {
       </header>
 
       <Card>
-        <CardHeader>
+        <CardHeader className="p-6">
           <CardTitle className="flex items-center gap-2">
             <Mail className="h-5 w-5 text-primary" />
             Informações da Conta
           </CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent className="p-6 pt-0">
           <p className="text-muted-foreground">
             Você está logado como: <span className="font-semibold text-foreground">{user.email}</span>
           </p>
@@ -48,13 +48,13 @@ export default function ProfilePage() {
       </Card>
 
       <Card>
-        <CardHeader>
+        <CardHeader className="p-6">
           <CardTitle className="flex items-center gap-2">
             <BarChart3 className="h-5 w-5 text-primary" />
             Estatísticas
           </CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent className="p-6 pt-0">
           {progressLoading ? (
              <div className="flex items-center justify-center p-4">
                 <Loader2 className="h-6 w-6 animate-spin text-primary" />

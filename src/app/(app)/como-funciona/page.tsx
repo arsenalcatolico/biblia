@@ -56,7 +56,7 @@ export default function HowItWorksPage() {
       <div className={cn("container mx-auto max-w-3xl space-y-8 px-4", fontSize)}>
         <Card>
           <CardHeader className="p-6">
-            <CardTitle className="flex items-center gap-4 font-headline text-2xl">
+            <CardTitle className="flex items-center gap-4 font-headline text-2xl dark:text-primary-foreground">
               <BookMarked className="h-8 w-8 text-primary" />
               Um Plano de 365 Dias
             </CardTitle>
@@ -70,7 +70,7 @@ export default function HowItWorksPage() {
         
         <Card>
           <CardHeader className="p-6">
-            <CardTitle className="flex items-center gap-4 font-headline text-2xl">
+            <CardTitle className="flex items-center gap-4 font-headline text-2xl dark:text-primary-foreground">
               <Clock className="h-8 w-8 text-primary" />
               Aproximadamente 15 Minutos por Dia
             </CardTitle>
@@ -84,7 +84,7 @@ export default function HowItWorksPage() {
 
         <Card>
           <CardHeader className="p-6">
-            <CardTitle className="flex items-center gap-4 font-headline text-2xl">
+            <CardTitle className="flex items-center gap-4 font-headline text-2xl dark:text-primary-foreground">
               <Cross className="h-8 w-8 text-primary" />
               Bíblia + Catecismo: A Fé da Igreja
             </CardTitle>
@@ -101,7 +101,7 @@ export default function HowItWorksPage() {
 
         <Card>
           <CardHeader className="p-6">
-            <CardTitle className="flex items-center gap-4 font-headline text-2xl">
+            <CardTitle className="flex items-center gap-4 font-headline text-2xl dark:text-primary-foreground">
               <BookLock className="h-8 w-8 text-primary" />
               Fiel à Tradição
             </CardTitle>
@@ -115,7 +115,7 @@ export default function HowItWorksPage() {
         
         <Card>
           <CardHeader className="p-6">
-            <CardTitle className="flex items-center gap-4 font-headline text-2xl">
+            <CardTitle className="flex items-center gap-4 font-headline text-2xl dark:text-primary-foreground">
               <Smartphone className="h-8 w-8 text-primary" />
               Experiência Simples e Acessível
             </CardTitle>

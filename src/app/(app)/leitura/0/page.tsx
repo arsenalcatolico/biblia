@@ -7,7 +7,7 @@ import Link from "next/link";
 
 export default function IntroductionPage() {
   return (
-    <div className="container mx-auto max-w-3xl space-y-6 px-4">
+    <div className="container mx-auto max-w-3xl space-y-6 px-2">
       <Card>
         <CardHeader>
           <CardTitle className="text-center font-headline text-3xl text-primary">

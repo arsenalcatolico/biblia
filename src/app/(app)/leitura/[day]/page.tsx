@@ -42,7 +42,12 @@ export default function ReadingPage() {
   const { theme, setTheme, fontSize, increaseFontSize, decreaseFontSize } = useSettings();
   const { completedDays, markDayAsComplete, unmarkDayAsComplete } = useProgress();
 
-  const isCompleted = completedDays.includes(day);
+  const [isCompleted, setIsCompleted] = useState(completedDays.includes(day));
+
+  useEffect(() => {
+    setIsCompleted(completedDays.includes(day));
+  }, [completedDays, day]);
+
 
   useEffect(() => {
     if (isNaN(day) || day < 1 || day > 365) {
@@ -75,6 +80,7 @@ export default function ReadingPage() {
   const handleMarkAsComplete = async () => {
     try {
       await markDayAsComplete(day);
+      setIsCompleted(true);
       if (day < 365) {
         router.push(`/leitura/${day + 1}`);
       }
@@ -89,9 +95,10 @@ export default function ReadingPage() {
 
   const handleUnmarkAsComplete = async () => {
     try {
+      setIsCompleted(false); // Instant UI update
       await unmarkDayAsComplete(day);
     } catch (error) {
-      // O erro já é tratado no contexto
+      setIsCompleted(true); // Revert on error
       console.error("Falha ao desmarcar dia:", error);
     }
   };

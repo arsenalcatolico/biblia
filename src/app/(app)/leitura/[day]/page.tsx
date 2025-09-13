@@ -11,6 +11,16 @@ import { Loader2, CheckCircle, ArrowLeft, ArrowRight, Sun, Moon, Minus, Plus } f
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog"
+import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
@@ -27,6 +37,7 @@ export default function ReadingPage() {
   const [reading, setReading] = useState<ReadingDay | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [isNextDayAlertOpen, setIsNextDayAlertOpen] = useState(false);
 
   const { theme, setTheme, fontSize, increaseFontSize, decreaseFontSize } = useSettings();
   const { completedDays, markDayAsComplete } = useProgress();
@@ -83,9 +94,17 @@ export default function ReadingPage() {
     }
   };
 
+  const handleNextDayClick = () => {
+    if (isCompleted || day >= 365) {
+      navigateDay(1);
+    } else {
+      setIsNextDayAlertOpen(true);
+    }
+  };
+
   const ReadingHeader = ({ title }: { title: string }) => (
     <header className="sticky top-0 z-10 bg-background/80 backdrop-blur-sm border-b mb-4 py-2">
-      <div className="mx-auto flex items-center justify-center gap-4 max-w-3xl px-2">
+      <div className="mx-auto flex max-w-3xl items-center justify-center gap-4 px-2">
         <h1 className="text-xl font-bold font-headline text-primary">{title}</h1>
         <div className="flex items-center gap-2">
            <div className="flex h-10 items-center justify-center rounded-md border bg-secondary">
@@ -186,11 +205,31 @@ export default function ReadingPage() {
             <ArrowLeft className="mr-2 h-4 w-4" /> 
             {day === 1 ? 'Introdução' : 'Dia Anterior'}
           </Button>
-          <Button onClick={() => navigateDay(1)} disabled={day >= 365} variant="outline">
+          <Button onClick={handleNextDayClick} disabled={day >= 365} variant="outline">
             Próximo Dia <ArrowRight className="ml-2 h-4 w-4" />
           </Button>
         </div>
       </div>
+      
+      <AlertDialog open={isNextDayAlertOpen} onOpenChange={setIsNextDayAlertOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Avançar sem concluir?</AlertDialogTitle>
+            <AlertDialogDescription>
+              Você não marcou esta leitura como concluída. Como deseja prosseguir?
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter className="flex-col-reverse sm:flex-row gap-2">
+            <AlertDialogCancel>Cancelar</AlertDialogCancel>
+            <AlertDialogAction variant="outline" onClick={() => navigateDay(1)}>
+              Avançar sem concluir
+            </AlertDialogAction>
+            <AlertDialogAction onClick={handleMarkAsComplete}>
+              Concluir e avançar
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </>
   );
 }

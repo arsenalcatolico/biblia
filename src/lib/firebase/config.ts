@@ -3,27 +3,13 @@ import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig: FirebaseOptions = {
-  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
-  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+  "projectId": "studio-5010099105-88d5f",
+  "appId": "1:7414441357:web:9227f0a59aba91134e09c4",
+  "storageBucket": "studio-5010099105-88d5f.firebasestorage.app",
+  "apiKey": "AIzaSyAhMjINnIcW1MD8nE5MSvFCbm4t7yCL-Lc",
+  "authDomain": "studio-5010099105-88d5f.firebaseapp.com",
+  "messagingSenderId": "7414441357"
 };
-
-// Check that all required environment variables are set
-if (
-    !firebaseConfig.apiKey ||
-    !firebaseConfig.authDomain ||
-    !firebaseConfig.projectId ||
-    !firebaseConfig.storageBucket ||
-    !firebaseConfig.messagingSenderId ||
-    !firebaseConfig.appId
-) {
-    // In a production environment, you might want to throw an error.
-    // For this example, we'll log a warning.
-    console.warn("Firebase configuration is missing. Please check your .env.local file.");
-}
 
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 const auth = getAuth(app);

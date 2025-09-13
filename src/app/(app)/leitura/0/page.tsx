@@ -17,10 +17,10 @@ import { cn } from "@/lib/utils";
 export default function IntroductionPage() {
   const { theme, setTheme, fontSize, increaseFontSize, decreaseFontSize } = useSettings();
 
-  const ReadingControls = ({ dayLabel }: { dayLabel: string }) => (
+  const ReadingControls = () => (
     <div className="sticky top-0 z-10 bg-background/80 backdrop-blur-sm border-b mb-4 py-2">
-      <div className="container mx-auto grid grid-cols-3 items-center">
-        <div className="flex items-center gap-1 sm:gap-2 justify-start">
+      <div className="container mx-auto flex items-center justify-center">
+        <div className="flex items-center gap-4 sm:gap-8">
           <div className="flex h-10 items-center justify-center rounded-md border bg-secondary">
             <Button variant="ghost" size="icon" onClick={decreaseFontSize} aria-label="Diminuir fonte">
               <Minus className="h-5 w-5" />
@@ -30,12 +30,7 @@ export default function IntroductionPage() {
               <Plus className="h-5 w-5" />
             </Button>
           </div>
-        </div>
-        <div className="text-center">
-          <span className="font-bold text-primary">{dayLabel}</span>
-        </div>
-        <div className="flex justify-end">
-          <DropdownMenu>
+           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" size="icon">
                 <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
@@ -55,11 +50,12 @@ export default function IntroductionPage() {
 
   return (
     <>
-      <ReadingControls dayLabel="Introdução" />
+      <ReadingControls />
       <div className={cn("container mx-auto max-w-3xl space-y-6 px-2", fontSize)}>
+        <h1 className="text-3xl font-bold font-headline text-primary text-left">Introdução</h1>
         <Card>
-          <CardHeader className="p-0 pt-6 px-2">
-            <CardTitle className="text-left font-headline text-3xl text-primary">
+          <CardHeader className="p-0">
+            <CardTitle className="text-left font-headline text-3xl text-primary px-2 pt-6">
               Seja bem-vindo à sua Jornada de Fé!
             </CardTitle>
           </CardHeader>

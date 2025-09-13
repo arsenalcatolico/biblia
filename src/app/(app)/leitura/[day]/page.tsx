@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useParams } from 'next/navigation';
 import { ReadingDay } from '@/types';
 import { useSettings } from '@/contexts/SettingsContext';
 import { useProgress } from '@/contexts/ProgressContext';
@@ -17,11 +17,12 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-export default function ReadingPage({ params }: { params: { day: string } }) {
+export default function ReadingPage() {
   const router = useRouter();
+  const params = useParams();
   const { toast } = useToast();
   
-  const day = parseInt(params.day, 10);
+  const day = parseInt(params.day as string, 10);
 
   const [reading, setReading] = useState<ReadingDay | null>(null);
   const [loading, setLoading] = useState(true);

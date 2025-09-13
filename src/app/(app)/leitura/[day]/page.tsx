@@ -7,7 +7,7 @@ import { useSettings } from '@/contexts/SettingsContext';
 import { useProgress } from '@/contexts/ProgressContext';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Loader2, CheckCircle, ArrowLeft, ArrowRight, Sun, Moon, Minus, Plus, Undo2 } from 'lucide-react';
+import { Loader2, CheckCircle, ArrowLeft, ArrowRight, Sun, Moon, Minus, Plus, Undo2, PartyPopper } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import {
@@ -26,6 +26,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 export default function ReadingPage() {
   const router = useRouter();
@@ -205,7 +206,14 @@ export default function ReadingPage() {
         
         <div className="flex flex-col items-center gap-2">
           {isCompleted ? (
-            <>
+            <div className="w-full space-y-4">
+               <Alert className="border-green-500 bg-green-100 text-green-900 dark:bg-green-900/30 dark:text-green-200">
+                  <PartyPopper className="h-5 w-5 text-green-600 dark:text-green-400" />
+                  <AlertTitle className="font-bold">Parabéns!</AlertTitle>
+                  <AlertDescription>
+                    Mais um passo dado em sua jornada de fé. Que a Palavra de Deus continue iluminando seus dias!
+                  </AlertDescription>
+                </Alert>
               <Button size="lg" disabled className="w-full shadow-lg bg-green-600 hover:bg-green-600/90">
                 <CheckCircle className="mr-2 h-5 w-5" />
                 Leitura Concluída
@@ -214,7 +222,7 @@ export default function ReadingPage() {
                 <Undo2 className="mr-2 h-4 w-4"/>
                 Desmarcar leitura
               </Button>
-            </>
+            </div>
           ) : (
             <Button onClick={handleMarkAsComplete} size="lg" className="shadow-lg w-full">
               Concluir Leitura e Avançar

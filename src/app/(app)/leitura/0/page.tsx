@@ -188,7 +188,7 @@ export default function IntroductionPage() {
               <ArrowRight className="ml-2 h-5 w-5" />
             </Link>
           </Button>
-          <Button asChild variant="outline">
+          <Button asChild variant="secondary">
             <Link href="/">
               <Home className="mr-2 h-4 w-4" />
                Voltar ao Início

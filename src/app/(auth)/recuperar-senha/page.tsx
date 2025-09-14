@@ -7,7 +7,7 @@ export default function PasswordRecoveryPage() {
     <Card className="shadow-lg">
       <CardHeader className="text-center p-6">
         <CardTitle className="text-3xl font-headline text-primary">Bíblia Católica em 1 Ano</CardTitle>
-        <CardDescription className="text-lg">Recupere sua senha para continuar.</CardDescription>
+        <CardDescription className="text-3xl font-semibold">Explicada</CardDescription>
       </CardHeader>
       <CardContent className="p-6 pt-0">
         <PasswordRecoveryForm />

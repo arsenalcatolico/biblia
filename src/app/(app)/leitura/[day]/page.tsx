@@ -28,6 +28,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Separator } from '@/components/ui/separator';
 
 const SHOW_CONGRATS_TOAST = 'showCongratsToast';
 
@@ -238,6 +239,12 @@ export default function ReadingPage() {
           return text.substring(startIndex + start.length, endIndex).trim();
       };
       
+      const cleanMeditationNumber = (text: string | undefined) => {
+        if (!text) return undefined;
+        // Removes "3. ", "4. ", etc. from the beginning of the meditation text
+        return text.replace(/^\d+\.\s*/, '').trim();
+      }
+
       const hasSpecialStructure = explanation.includes("Aprofundamento Catequético e Apologético");
       
       if (hasSpecialStructure) {
@@ -250,7 +257,7 @@ export default function ReadingPage() {
           return {
               synthesis: undefined,
               catechetical: undefined,
-              meditation: meditation?.replace(/^\d+\.\s*/, '').trim(),
+              meditation: cleanMeditationNumber(meditation),
               heart,
               keyPassage: cleanText(keyPassage),
               doctrine: cleanText(doctrine),
@@ -265,7 +272,7 @@ export default function ReadingPage() {
       return {
           synthesis: cleanText(synthesis),
           catechetical: cleanText(catechetical),
-          meditation: meditation?.replace(/^\d+\.\s*/, '').trim(),
+          meditation: cleanMeditationNumber(meditation),
           heart: undefined,
           keyPassage: undefined,
           doctrine: undefined,
@@ -373,10 +380,13 @@ export default function ReadingPage() {
                           </div>
                       )}
                       {meditation && (
-                          <div className="mt-4">
-                            <p className="text-justify leading-loose"><strong>Para Meditar</strong></p>
-                            {meditation.split('\n').map((p, i) => p.trim() && <p key={`m-${i}`} className="text-justify leading-loose">{p}</p>)}
-                          </div>
+                          <>
+                            <Separator className="my-6" />
+                            <div className="mt-4">
+                              <p className="text-justify leading-loose"><strong>Para Meditar</strong></p>
+                              {meditation.split('\n').map((p, i) => p.trim() && <p key={`m-${i}`} className="text-justify leading-loose">{p}</p>)}
+                            </div>
+                          </>
                       )}
                   </div>
                 ) : (
@@ -394,10 +404,13 @@ export default function ReadingPage() {
                       </div>
                     )}
                     {meditation && (
-                      <div className="mt-4">
-                        <p className="text-justify leading-loose"><strong>Para Meditar</strong></p>
-                        {meditation.split('\n').map((p, i) => p.trim() && <p key={`m-${i}`} className="text-justify leading-loose">{p}</p>)}
-                      </div>
+                      <>
+                        <Separator className="my-6" />
+                        <div className="mt-4">
+                          <p className="text-justify leading-loose"><strong>Para Meditar</strong></p>
+                          {meditation.split('\n').map((p, i) => p.trim() && <p key={`m-${i}`} className="text-justify leading-loose">{p}</p>)}
+                        </div>
+                      </>
                     )}
                   </div>
                 )}

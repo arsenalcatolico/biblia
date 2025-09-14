@@ -216,10 +216,21 @@ export default function ReadingPage() {
     <>
       <ReadingHeader title={`Dia ${day}`} />
       <div className={cn("container mx-auto max-w-3xl space-y-6 px-2", fontSize)}>
+        
+        {reading.intro_titulo && reading.intro && (
+          <Card className="bg-accent/10 border-accent">
+            <CardHeader className="p-6">
+              <CardTitle className="font-headline text-xl text-accent-foreground/90">{reading.intro_titulo}</CardTitle>
+            </CardHeader>
+            <CardContent className="px-6 pb-6 text-accent-foreground/80">
+              <p className="text-justify leading-loose">{reading.intro}</p>
+            </CardContent>
+          </Card>
+        )}
+
         <Card>
           <CardHeader className="p-0">
             <CardTitle className="font-headline text-2xl text-primary dark:text-primary-foreground text-left px-2 pt-6">{reading.leitura_dia}</CardTitle>
-            {reading.intro && <CardDescription className="text-left text-base px-2 pt-2">{reading.intro}</CardDescription>}
           </CardHeader>
           <CardContent className="space-y-4 prose prose-lg max-w-none dark:prose-invert p-0 pt-6 px-2">
             
@@ -295,3 +306,5 @@ export default function ReadingPage() {
     </>
   );
 }
+
+    

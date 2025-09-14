@@ -193,9 +193,15 @@ export default function ReadingPage() {
   const isChapterTitle = (text: string) => {
     return /^([IVXLCDM]+\s)?([A-Za-zçãéúíóâêô]+\s?)+(\d+)?(\s\(.*\))?$/.test(text.trim());
   };
+  
+  const explanationSpecialSubtitles = [
+    "O Coração da Leitura",
+    "Aprofundamento Catequético e Apologético"
+  ];
 
   const isExplanationSubtitle = (text: string) => {
-    return /^\d+\.\s?.+$/.test(text.trim());
+    const trimmedText = text.trim();
+    return /^\d+\.\s?.+$/.test(trimmedText) || explanationSpecialSubtitles.includes(trimmedText);
   };
   
   const formatExplanationParagraph = (paragraph: string, index: number) => {
@@ -357,3 +363,4 @@ export default function ReadingPage() {
     
 
     
+

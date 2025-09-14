@@ -27,7 +27,7 @@ export default function HomePage() {
   return (
     <div className="container mx-auto max-w-3xl px-4">
       <div className="space-y-8">
-        <header>
+        <header className="text-center">
           <h1 className="text-3xl font-bold font-headline text-primary dark:text-primary-foreground">
             Olá, Católico(a)!
           </h1>

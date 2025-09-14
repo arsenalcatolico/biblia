@@ -194,6 +194,10 @@ export default function ReadingPage() {
     return /^(I|II|III)?\s?[A-Za-zçãéúíóâêô]+\s\d+$/.test(text.trim());
   }
 
+  const isExplanationSubtitle = (text: string) => {
+    return /^\d+\.\s?.+$/.test(text.trim());
+  }
+
   if (loading) {
     return (
       <>
@@ -254,7 +258,16 @@ export default function ReadingPage() {
             
             <section>
               <h2 className="font-headline text-xl font-semibold text-left">Explicação Católica</h2>
-              {reading.explicacao_catolica.split('\n').filter(p => p.trim()).map((paragraph, i) => <p key={`ec-${i}`} className="text-justify leading-loose">{paragraph}</p>)}
+              {reading.explicacao_catolica.split('\n').map((paragraph, i) => {
+                const trimmedParagraph = paragraph.trim();
+                 if (!trimmedParagraph) {
+                    return <br key={`br-ec-${i}`} />;
+                }
+                if (isExplanationSubtitle(trimmedParagraph)) {
+                  return <p key={`ec-h-${i}`} className="text-justify leading-loose"><strong>{trimmedParagraph}</strong></p>
+                }
+                return <p key={`ec-p-${i}`} className="text-justify leading-loose">{trimmedParagraph}</p>
+              })}
             </section>
 
             {reading.conclusao && (

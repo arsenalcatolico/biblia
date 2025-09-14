@@ -195,23 +195,23 @@ export default function ReadingPage() {
   };
   
   const formatExplanationContent = (paragraph: string, index: number) => {
-      const trimmedParagraph = paragraph.trim();
-      if (!trimmedParagraph) {
-          return <br key={`br-ec-${index}`} />;
-      }
-      
-      const match = trimmedParagraph.match(/^(.+?:)(.*)$/);
-      if (match) {
-          const subtitle = match[1];
-          const content = match[2];
-          return (
-              <p key={`ec-p-${index}`} className="text-justify leading-loose">
-                  <strong><em>{subtitle}</em></strong>{content}
-              </p>
-          );
-      }
+    const trimmedParagraph = paragraph.trim();
+    if (!trimmedParagraph) {
+        return null; // Don't render empty paragraphs
+    }
+    
+    const match = trimmedParagraph.match(/^(.+?:)(.*)$/);
+    if (match) {
+        const subtitle = match[1];
+        const content = match[2];
+        return (
+            <p key={`ec-p-${index}`} className="text-justify leading-loose">
+                <strong><em>{subtitle}</em></strong>{content}
+            </p>
+        );
+    }
 
-      return <p key={`ec-p-${index}`} className="text-justify leading-loose">{trimmedParagraph}</p>;
+    return <p key={`ec-p-${index}`} className="text-justify leading-loose">{trimmedParagraph}</p>;
   }
 
   const getExplanationParts = (explanation: string) => {
@@ -334,32 +334,34 @@ export default function ReadingPage() {
                 {hasSpecialStructure ? (
                   <div className="space-y-4">
                       {heart && (
-                          <div className="space-y-4">
+                          <div>
                               <p className="text-justify leading-loose"><strong>O Coração da Leitura</strong></p>
                               {heart.split('\n').map((p, i) => p.trim() && <p key={`h-${i}`} className="text-justify leading-loose">{p}</p>)}
                           </div>
                       )}
+                      
                       <p className="text-justify leading-loose"><strong>Aprofundamento Catequético e Apologético</strong></p>
+
                       {keyPassage && (
-                          <div className="space-y-4">
+                          <div>
                               <p className="text-justify leading-loose"><strong>1. Passagem-Chave:</strong></p>
                               {keyPassage.split('\n').map((p, i) => p.trim() && <p key={`kp-${i}`} className="text-justify leading-loose">{p}</p>)}
                           </div>
                       )}
                       {doctrine && (
-                          <div className="space-y-4">
+                          <div>
                               <p className="text-justify leading-loose"><strong>2. Doutrina e Catecismo:</strong></p>
-                              {doctrine.split('\n').map((p, i) => p.trim() && <p key={`d-${i}`} className="text-justify leading-loose">{p}</p>)}
+                              {doctrine.split('\n').map((p, i) => formatExplanationContent(p, i))}
                           </div>
                       )}
                       {apologetics && (
-                          <div className="space-y-4">
+                          <div>
                               <p className="text-justify leading-loose"><strong>3. Conexão Apologética (Defendendo a Fé):</strong></p>
-                              {apologetics.split('\n').map((p, i) => p.trim() && <p key={`a-${i}`} className="text-justify leading-loose">{p}</p>)}
+                              {apologetics.split('\n').map((p, i) => formatExplanationContent(p, i))}
                           </div>
                       )}
                       {meditation && (
-                          <div className="space-y-4">
+                          <div className="mt-4">
                               <p className="text-justify leading-loose"><strong>Para Meditar</strong></p>
                               {meditation.split('\n').map((p, i) => p.trim() && <p key={`m-${i}`} className="text-justify leading-loose">{p}</p>)}
                           </div>
@@ -374,13 +376,13 @@ export default function ReadingPage() {
                       </div>
                     )}
                     {catechetical && (
-                      <div className="mt-4">
+                      <div>
                         <p className="text-justify leading-loose"><strong>2. Explicação Catequética</strong></p>
                         {catechetical.split('\n').map((p, i) => formatExplanationContent(p, i))}
                       </div>
                     )}
                     {meditation && (
-                      <div className="mt-4">
+                      <div>
                         <p className="text-justify leading-loose"><strong>3. Para Meditar</strong></p>
                         {meditation.split('\n').map((p, i) => p.trim() && <p key={`m-${i}`} className="text-justify leading-loose">{p}</p>)}
                       </div>
@@ -457,3 +459,4 @@ export default function ReadingPage() {
     </>
   );
 }
+

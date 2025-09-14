@@ -190,6 +190,10 @@ export default function ReadingPage() {
     </header>
   );
 
+  const isChapterTitle = (text: string) => {
+    return /^(I|II|III)?\s?[A-Za-zçãéúíóâêô]+\s\d+$/.test(text.trim());
+  }
+
   if (loading) {
     return (
       <>
@@ -219,10 +223,10 @@ export default function ReadingPage() {
         
         {reading.intro_titulo && reading.intro && (
           <Card className="bg-accent/10 border-accent">
-            <CardHeader className="p-6 pb-2">
+            <CardHeader className="p-6 pb-2 px-2">
               <CardTitle className="font-headline text-xl text-accent-foreground/90">{reading.intro_titulo}</CardTitle>
             </CardHeader>
-            <CardContent className="px-6 pb-6 text-accent-foreground/80">
+            <CardContent className="px-2 pb-6 text-accent-foreground/80">
               <p className="text-justify leading-loose">{reading.intro}</p>
             </CardContent>
           </Card>
@@ -236,7 +240,16 @@ export default function ReadingPage() {
             
             <section>
               <h2 className="font-headline text-xl font-semibold text-left">Texto Bíblico</h2>
-              {reading.texto_biblico.split('\n').filter(p => p.trim()).map((paragraph, i) => <p key={`tb-${i}`} className="text-justify leading-loose">{paragraph}</p>)}
+              {reading.texto_biblico.split('\n').map((paragraph, i) => {
+                const trimmedParagraph = paragraph.trim();
+                if (!trimmedParagraph) {
+                    return <br key={`br-${i}`} />;
+                }
+                if (isChapterTitle(trimmedParagraph)) {
+                  return <p key={`tb-h-${i}`} className="text-justify leading-loose"><strong>{trimmedParagraph}</strong></p>
+                }
+                return <p key={`tb-p-${i}`} className="text-justify leading-loose">{trimmedParagraph}</p>
+              })}
             </section>
             
             <section>

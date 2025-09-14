@@ -209,12 +209,9 @@ export default function ReadingPage() {
       if (!trimmedParagraph) {
           return <br key={`br-ec-${index}`} />;
       }
-      if (isExplanationSubtitle(trimmedParagraph)) {
-        return <p key={`ec-h-${index}`} className="text-justify leading-loose"><strong>{trimmedParagraph}</strong></p>
-      }
-
+      
       const match = trimmedParagraph.match(/^(.+?:)(.*)$/);
-      if (match) {
+      if (match && !isExplanationSubtitle(trimmedParagraph)) {
           const subtitle = match[1];
           const content = match[2];
           return (
@@ -230,13 +227,18 @@ export default function ReadingPage() {
   const getExplanationParts = (explanation: string) => {
     const sections = explanation.split(/\n(?=\d\.\s)/);
     
-    const synthesis = sections.find(s => s.startsWith("1. Síntese da Leitura"))?.replace(/^1\.\s*Síntese da Leitura\s*\n?/, "") || "";
+    let synthesis = sections.find(s => s.trim().startsWith("1. Síntese da Leitura")) || "";
+    synthesis = synthesis.replace(/^1\.\s*Síntese da Leitura\s*\n?/, "").trim();
     
-    let catechetical: string | undefined = sections.find(s => s.startsWith("2. Explicação Catequética")) || sections.find(s => s.startsWith("Aprofundamento Catequético e Apologético"));
-    catechetical = catechetical?.replace(/^2\.\s*Explicação Catequética\s*\n?/, "").replace(/^Aprofundamento Catequético e Apologético\s*\n?/, "");
+    let catechetical: string | undefined = sections.find(s => s.trim().startsWith("2. Explicação Catequética")) || sections.find(s => s.trim().startsWith("Aprofundamento Catequético e Apologético"));
+    if (catechetical) {
+      catechetical = catechetical.replace(/^2\.\s*Explicação Catequética\s*\n?/, "").replace(/^Aprofundamento Catequético e Apologético\s*\n?/, "").trim();
+    }
 
-    let meditation: string | undefined = sections.find(s => s.startsWith("3. Para Meditar")) || sections.find(s => s.startsWith("4. Para Meditar")) || sections.find(s => s.startsWith("Para Meditar"));
-    meditation = meditation?.replace(/^\d\.\s*Para Meditar\s*\n?/, "").replace(/^Para Meditar\s*\n?/, "");
+    let meditation: string | undefined = sections.find(s => s.trim().startsWith("3. Para Meditar")) || sections.find(s => s.trim().startsWith("4. Para Meditar")) || sections.find(s => s.trim().startsWith("Para Meditar"));
+    if (meditation) {
+      meditation = meditation.replace(/^\d\.\s*Para Meditar\s*\n?/, "").replace(/^Para Meditar\s*\n?/, "").trim();
+    }
     
     return {
       synthesis,
@@ -323,14 +325,26 @@ export default function ReadingPage() {
                 
                 {catechetical && (
                   <div>
-                    <p className="text-justify leading-loose"><strong>2. Explicação Catequética</strong></p>
+                    <p className="text-justify leading-loose">
+                      <strong>
+                        {explanationSpecialSubtitles.some(s => reading.explicacao_catolica.includes(s)) 
+                          ? 'Aprofundamento Catequético e Apologético' 
+                          : '2. Explicação Catequética'}
+                      </strong>
+                    </p>
                     {catechetical.split('\n').map((p, i) => formatExplanationContent(p, i))}
                   </div>
                 )}
 
                 {meditation && (
                    <div>
-                    <p className="text-justify leading-loose"><strong>3. Para Meditar</strong></p>
+                    <p className="text-justify leading-loose">
+                      <strong>
+                         {explanationSpecialSubtitles.some(s => reading.explicacao_catolica.includes(s))
+                           ? '4. Para Meditar'
+                           : '3. Para Meditar'}
+                      </strong>
+                    </p>
                     {meditation.split('\n').map((p, i) => <p key={`m-${i}`} className="text-justify leading-loose">{p}</p>)}
                    </div>
                 )}

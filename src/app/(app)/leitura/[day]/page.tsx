@@ -32,7 +32,8 @@ const SHOW_CONGRATS_TOAST = 'showCongratsToast';
 
 export default function ReadingPage() {
   const router = useRouter();
-  const day = parseInt((useParams() || {}).day as string, 10);
+  const params = useParams();
+  const day = parseInt(params.day as string, 10);
   const { toast } = useToast();
 
   const [reading, setReading] = useState<ReadingDay | null>(null);
@@ -294,6 +295,3 @@ export default function ReadingPage() {
     </>
   );
 }
-
-    
-    

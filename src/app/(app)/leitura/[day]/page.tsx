@@ -217,6 +217,8 @@ export default function ReadingPage() {
   }
 
   const getExplanationParts = (explanation: string) => {
+      const cleanNumber = (text?: string) => text ? text.replace(/^\d\.\s*/, '').trim() : undefined;
+
       const findPart = (text: string, start: string, end: string | null) => {
           const startIndex = text.indexOf(start);
           if (startIndex === -1) return undefined;
@@ -242,11 +244,11 @@ export default function ReadingPage() {
           return {
               synthesis: undefined,
               catechetical: undefined,
-              meditation,
+              meditation: cleanNumber(meditation),
               heart,
-              keyPassage,
-              doctrine,
-              apologetics
+              keyPassage: cleanNumber(keyPassage),
+              doctrine: cleanNumber(doctrine),
+              apologetics: cleanNumber(apologetics),
           };
       }
 
@@ -255,9 +257,9 @@ export default function ReadingPage() {
       const meditation = findPart(explanation, "Para Meditar", null);
       
       return {
-          synthesis,
-          catechetical,
-          meditation,
+          synthesis: cleanNumber(synthesis),
+          catechetical: cleanNumber(catechetical),
+          meditation: cleanNumber(meditation),
           heart: undefined,
           keyPassage: undefined,
           doctrine: undefined,
@@ -367,7 +369,7 @@ export default function ReadingPage() {
                       {meditation && (
                           <div className="mt-4">
                             <p className="text-justify leading-loose"><strong>Para Meditar</strong></p>
-                            {meditation.replace(/^4\.\s*/, '').split('\n').map((p, i) => p.trim() && <p key={`m-${i}`} className="text-justify leading-loose">{p}</p>)}
+                            {meditation.split('\n').map((p, i) => p.trim() && <p key={`m-${i}`} className="text-justify leading-loose">{p}</p>)}
                           </div>
                       )}
                   </div>
@@ -381,14 +383,14 @@ export default function ReadingPage() {
                     )}
                     {catechetical && (
                       <div>
-                        <p className="text-justify leading-loose"><strong>2. Explicação Catequética</strong></p>
+                        <p className="text-justify leading-loose"><strong>Explicação Catequética</strong></p>
                         {catechetical.split('\n').filter(p => p.trim()).map((p, i, arr) => formatExplanationContent(p, i, arr.length, `cat-${i}`))}
                       </div>
                     )}
                     {meditation && (
                       <div className="mt-4">
                         <p className="text-justify leading-loose"><strong>Para Meditar</strong></p>
-                        {meditation.replace(/^3\.\s*/, '').split('\n').map((p, i) => p.trim() && <p key={`m-${i}`} className="text-justify leading-loose">{p}</p>)}
+                        {meditation.split('\n').map((p, i) => p.trim() && <p key={`m-${i}`} className="text-justify leading-loose">{p}</p>)}
                       </div>
                     )}
                   </div>

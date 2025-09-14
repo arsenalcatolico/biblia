@@ -321,11 +321,11 @@ export default function ReadingPage() {
         </div>
 
         <div className="flex items-center gap-4">
-          <Button onClick={() => navigateDay(-1)} disabled={day <= 0} variant="outline" className="flex-1">
+          <Button onClick={() => navigateDay(-1)} disabled={day <= 0} variant="secondary" className="flex-1">
             <ArrowLeft className="mr-2 h-4 w-4" /> 
             {day === 1 ? 'Introdução' : 'Dia Anterior'}
           </Button>
-          <Button onClick={handleNextDayClick} disabled={day >= 365} variant="outline" className="flex-1">
+          <Button onClick={handleNextDayClick} disabled={day >= 365} variant="secondary" className="flex-1">
             Próximo Dia <ArrowRight className="ml-2 h-4 w-4" />
           </Button>
         </div>
@@ -353,5 +353,7 @@ export default function ReadingPage() {
     </>
   );
 }
+
+    
 
     

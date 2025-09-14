@@ -249,6 +249,8 @@ export default function ReadingPage() {
       </>
     );
   }
+  
+  let isFirstChapter = true;
 
   return (
     <>
@@ -280,7 +282,9 @@ export default function ReadingPage() {
                     return <br key={`br-${i}`} />;
                 }
                 if (isChapterTitle(trimmedParagraph)) {
-                  return <p key={`tb-h-${i}`} className="text-justify leading-loose"><strong>{trimmedParagraph}</strong></p>
+                  const isFirst = isFirstChapter;
+                  isFirstChapter = false;
+                  return <p key={`tb-h-${i}`} className={cn("text-justify leading-loose", !isFirst && "mt-6")}><strong>{trimmedParagraph}</strong></p>
                 }
                 return <p key={`tb-p-${i}`} className="text-justify leading-loose">{trimmedParagraph}</p>
               })}
@@ -363,4 +367,5 @@ export default function ReadingPage() {
     
 
     
+
 

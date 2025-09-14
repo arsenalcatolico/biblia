@@ -31,7 +31,7 @@ export default function HomePage() {
           <h1 className="text-3xl font-bold font-headline text-primary dark:text-primary-foreground">
             Olá, Católico(a)!
           </h1>
-          <p className="text-muted-foreground">Pronto para a jornada de hoje?</p>
+          <p className="text-muted-foreground">Pronto(a) para sua jornada bíblica de hoje?</p>
         </header>
 
         <Card className="shadow-md">

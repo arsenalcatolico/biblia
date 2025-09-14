@@ -306,7 +306,7 @@ export default function ReadingPage() {
                 if (isChapterTitle(trimmedParagraph)) {
                   const isFirst = isFirstChapter;
                   isFirstChapter = false;
-                  return <p key={`tb-h-${i}`} className={cn("text-justify leading-loose", !isFirst && "mt-6")}><strong>{trimmedParagraph}</strong></p>
+                  return <p key={`tb-h-${i}`} className={cn("text-justify leading-loose", !isFirst && "mt-4")}><strong>{trimmedParagraph}</strong></p>
                 }
                 return <p key={`tb-p-${i}`} className="text-justify leading-loose">{trimmedParagraph}</p>
               })}

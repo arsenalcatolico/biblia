@@ -201,7 +201,7 @@ export default function ReadingPage() {
 
   const isExplanationSubtitle = (text: string) => {
     const trimmedText = text.trim();
-    return /^\d+\.\s?.+$/.test(trimmedText) || explanationSpecialSubtitles.includes(trimmedText);
+    return /^\d\.\s?.+$/.test(trimmedText) || explanationSpecialSubtitles.includes(trimmedText);
   };
   
   const formatExplanationContent = (paragraph: string, index: number) => {
@@ -226,6 +226,20 @@ export default function ReadingPage() {
 
       return <p key={`ec-p-${index}`} className="text-justify leading-loose">{trimmedParagraph}</p>;
   }
+
+  const getExplanationParts = (explanation: string) => {
+    const sections = explanation.split(/\n(?=\d\.\s)/);
+    
+    const synthesis = sections.find(s => s.startsWith("1. Síntese da Leitura"))?.replace("1. Síntese da Leitura\n", "") || "";
+    const catechetical = sections.find(s => s.startsWith("2. Explicação Catequética")) || sections.find(s => s.startsWith("Aprofundamento Catequético e Apologético"));
+    const meditation = sections.find(s => s.startsWith("3. Para Meditar")) || sections.find(s => s.startsWith("4. Para Meditar")) || sections.find(s => s.startsWith("Para Meditar"));
+    
+    return {
+      synthesis,
+      catechetical: catechetical?.replace(/^\d\.\s/, "").replace("Explicação Catequética\n", "") || "",
+      meditation: meditation?.replace(/^\d\.\s/, "").replace("Para Meditar\n", "") || "",
+    };
+  };
 
 
   if (loading) {
@@ -252,14 +266,7 @@ export default function ReadingPage() {
   
   let isFirstChapter = true;
 
-  const getExplanationParts = () => {
-    const parts = reading.explicacao_catolica.split(/\n\d\.\s/);
-    const synthesis = parts[0].replace(/^1\.\sSíntese da Leitura\n/, '');
-    const rest = parts.slice(1).map((part, index) => `${index + 2}. ${part}`);
-    return { synthesis, rest: rest.join('\n') };
-  };
-
-  const { synthesis, rest: explanationContent } = getExplanationParts();
+  const { synthesis, catechetical, meditation } = getExplanationParts(reading.explicacao_catolica);
 
   return (
     <>
@@ -302,9 +309,30 @@ export default function ReadingPage() {
             {reading.explicacao_catolica && (
               <section>
                 <h2 className="font-headline text-xl font-semibold text-left">Explicação Católica</h2>
-                <p className="text-justify leading-loose"><strong>1. Síntese da Leitura</strong></p>
-                <p className="text-justify leading-loose">{synthesis}</p>
-                {explanationContent.split('\n').map((p, i) => formatExplanationContent(p, i))}
+                
+                {synthesis && (
+                  <>
+                    <p className="text-justify leading-loose"><strong>1. Síntese da Leitura</strong></p>
+                    {synthesis.split('\n').map((p, i) => <p key={`s-${i}`} className="text-justify leading-loose">{p}</p>)}
+                  </>
+                )}
+                
+                {catechetical && (
+                  <>
+                    {catechetical.startsWith("Aprofundamento") ? 
+                       <p className="text-justify leading-loose"><strong>{catechetical.split('\n')[0]}</strong></p>
+                       : <p className="text-justify leading-loose"><strong>2. Explicação Catequética</strong></p>
+                    }
+                    {catechetical.split('\n').slice(1).map((p, i) => formatExplanationContent(p, i))}
+                  </>
+                )}
+
+                {meditation && (
+                   <>
+                    <p className="text-justify leading-loose"><strong>{meditation.startsWith("Para Meditar") ? "Para Meditar" : "3. Para Meditar"}</strong></p>
+                    {meditation.replace("Para Meditar\n", "").split('\n').map((p, i) => <p key={`m-${i}`} className="text-justify leading-loose">{p}</p>)}
+                   </>
+                )}
               </section>
             )}
 

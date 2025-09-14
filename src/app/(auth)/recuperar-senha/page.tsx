@@ -6,8 +6,8 @@ export default function PasswordRecoveryPage() {
   return (
     <Card className="shadow-lg">
       <CardHeader className="text-center">
-        <CardTitle className="text-3xl font-headline text-primary">Recuperar Senha</CardTitle>
-        <CardDescription>Enviaremos um link para seu e-mail para redefinir sua senha.</CardDescription>
+        <CardTitle className="text-3xl font-headline text-primary">Bíblia Católica em 1 Ano</CardTitle>
+        <CardDescription>Recupere sua senha para continuar.</CardDescription>
       </CardHeader>
       <CardContent>
         <PasswordRecoveryForm />

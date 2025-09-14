@@ -6,8 +6,8 @@ export default function LoginPage() {
   return (
     <Card className="shadow-lg">
       <CardHeader className="text-center p-6">
-        <CardTitle className="text-3xl font-headline text-primary">Bíblia 365</CardTitle>
-        <CardDescription>Faça login para continuar sua jornada de leitura.</CardDescription>
+        <CardTitle className="text-3xl font-headline text-primary">Bíblia Católica em 1 Ano</CardTitle>
+        <CardDescription>Explicada</CardDescription>
       </CardHeader>
       <CardContent className="p-6 pt-0">
         <LoginForm />

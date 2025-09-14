@@ -7,8 +7,8 @@ import { ProgressProvider } from '@/contexts/ProgressContext';
 import { Toaster } from "@/components/ui/toaster"
 
 export const metadata: Metadata = {
-  title: 'Bíblia 365',
-  description: 'Bíblia Católica em 1 Ano Explicada',
+  title: 'Bíblia Católica em 1 Ano',
+  description: 'Explicada',
 };
 
 export default function RootLayout({

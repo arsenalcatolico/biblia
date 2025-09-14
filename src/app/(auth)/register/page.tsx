@@ -6,8 +6,8 @@ export default function RegisterPage() {
   return (
     <Card className="shadow-lg">
       <CardHeader className="text-center">
-        <CardTitle className="text-3xl font-headline text-primary">Crie sua Conta</CardTitle>
-        <CardDescription>Comece sua jornada de leitura bíblica diária.</CardDescription>
+        <CardTitle className="text-3xl font-headline text-primary">Bíblia Católica em 1 Ano</CardTitle>
+        <CardDescription>Crie sua conta para começar a jornada.</CardDescription>
       </CardHeader>
       <CardContent>
         <RegisterForm />

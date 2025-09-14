@@ -57,7 +57,7 @@ export default function HomePage() {
             </div>
           </CardContent>
           <CardFooter className="p-6 pt-0">
-             <Button asChild size="lg" className="shadow-lg w-full text-lg h-14">
+             <Button asChild size="lg" className="shadow-lg w-full text-lg h-14 animate-pulse-subtle">
               <Link href={buttonLink}>
                  <BookOpen className="mr-2 h-5 w-5" />
                  {buttonText}

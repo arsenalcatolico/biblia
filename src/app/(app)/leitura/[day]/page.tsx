@@ -1,5 +1,4 @@
 
-
 "use client";
 
 import { useEffect, useState, use } from 'react';
@@ -200,7 +199,6 @@ export default function ReadingPage() {
     if (!paragraph) return null;
     const trimmedParagraph = paragraph.trim();
 
-    // Ignore paragraphs that are just numbers (e.g., "3.", "4.")
     if (/^\d+\.\s*$/.test(trimmedParagraph)) {
         return null;
     }
@@ -223,7 +221,7 @@ export default function ReadingPage() {
     return <p key={`${keyPrefix}-${index}`} className={pClassName}>{trimmedParagraph}</p>;
   }
 
-  const getExplanationParts = (explanation: string) => {
+ const getExplanationParts = (explanation: string) => {
       const cleanText = (text?: string) => text ? text.trim() : undefined;
 
       const findPart = (text: string, start: string, end: string | null) => {
@@ -241,7 +239,6 @@ export default function ReadingPage() {
       
       const cleanMeditationNumber = (text: string | undefined) => {
         if (!text) return undefined;
-        // Removes "3. ", "4. ", etc. from the beginning of the meditation text
         return text.replace(/^\d+\.\s*/, '').trim();
       }
 

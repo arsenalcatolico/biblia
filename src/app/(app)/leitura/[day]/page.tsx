@@ -217,6 +217,7 @@ export default function ReadingPage() {
   }
 
   const getExplanationParts = (explanation: string) => {
+      const cleanText = (text?: string) => text ? text.trim() : undefined;
       const cleanMeditationNumber = (text?: string) => text ? text.replace(/^\d+\.\s*/, '').trim() : undefined;
 
       const findPart = (text: string, start: string, end: string | null) => {
@@ -246,19 +247,19 @@ export default function ReadingPage() {
               catechetical: undefined,
               meditation: cleanMeditationNumber(meditation),
               heart,
-              keyPassage: keyPassage?.replace(/^1\.\s*/, '').trim(),
-              doctrine: doctrine?.replace(/^2\.\s*/, '').trim(),
-              apologetics: apologetics?.replace(/^3\.\s*/, '').trim(),
+              keyPassage: cleanText(keyPassage),
+              doctrine: cleanText(doctrine),
+              apologetics: cleanText(apologetics),
           };
       }
 
-      const synthesis = findPart(explanation, "Síntese da Leitura", "Explicação Catequética");
-      const catechetical = findPart(explanation, "Explicação Catequética", "Para Meditar");
+      const synthesis = findPart(explanation, "1. Síntese da Leitura", "2. Explicação Catequética");
+      const catechetical = findPart(explanation, "2. Explicação Catequética", "Para Meditar");
       const meditation = findPart(explanation, "Para Meditar", null);
       
       return {
-          synthesis: synthesis?.replace(/^1\.\s*/, '').trim(),
-          catechetical: catechetical?.replace(/^2\.\s*/, '').trim(),
+          synthesis: cleanText(synthesis),
+          catechetical: cleanText(catechetical),
           meditation: cleanMeditationNumber(meditation),
           heart: undefined,
           keyPassage: undefined,

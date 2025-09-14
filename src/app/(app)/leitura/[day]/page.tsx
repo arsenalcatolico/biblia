@@ -194,56 +194,51 @@ export default function ReadingPage() {
     return /^([IVXLCDM]+\s)?([A-Za-zçãéúíóâêô]+\s?)+(\d+)?(\s\(.*\))?$/.test(text.trim());
   };
   
-  const formatExplanationContent = (paragraph: string, index: number) => {
+  const formatExplanationContent = (paragraph: string) => {
+    if (!paragraph) return null;
     const trimmedParagraph = paragraph.trim();
-    if (!trimmedParagraph) {
-        return null; // Don't render empty paragraphs
-    }
-    
     const match = trimmedParagraph.match(/^(.+?:)(.*)$/);
     if (match) {
         const subtitle = match[1];
         const content = match[2];
         return (
-            <p key={`ec-p-${index}`} className="text-justify leading-loose">
+            <p className="text-justify leading-loose">
                 <strong><em>{subtitle}</em></strong>{content}
             </p>
         );
     }
-
-    return <p key={`ec-p-${index}`} className="text-justify leading-loose">{trimmedParagraph}</p>;
+    return <p className="text-justify leading-loose">{trimmedParagraph}</p>;
   }
 
   const getExplanationParts = (explanation: string) => {
       const parts: { [key: string]: string | undefined } = {};
-      const specialStructure = explanation.includes("Aprofundamento Catequético e Apologético");
+      
+      const hasSpecialStructure = explanation.includes("Aprofundamento Catequético e Apologético");
 
-      const allTitles = specialStructure 
-        ? ["O Coração da Leitura", "Aprofundamento Catequético e Apologético", "1. Passagem-Chave:", "2. Doutrina e Catecismo:", "3. Conexão Apologética (Defendendo a Fé):", "Para Meditar"]
+      const allTitles = hasSpecialStructure 
+        ? ["O Coração da Leitura", "1. Passagem-Chave:", "2. Doutrina e Catecismo:", "3. Conexão Apologética (Defendendo a Fé):", "Para Meditar"]
         : ["Síntese da Leitura", "Explicação Catequética", "Para Meditar"];
-  
-      const allTitlesRegex = allTitles.map(t => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
-      const regex = new RegExp(`(?<=\\n|^)(${allTitlesRegex.join('|')})(?=\\n|:|$)`, 'gm');
-      const sections = explanation.split(regex);
-  
+      
+      // Create a regex that finds any of the titles at the beginning of a line
+      const regex = new RegExp(`(^|\\n)(${allTitles.map(t => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|')})`, 'g');
+      const sections = explanation.split(regex).filter(s => s && s.trim() !== '');
+
       let currentTitle: string | null = null;
       let tempContent = '';
-  
-      for (const section of sections) {
-          if (!section) continue;
 
-          const trimmedSection = section.trim();
-          const isTitle = allTitles.some(title => title.trim() === trimmedSection);
+      for (let i = 0; i < sections.length; i++) {
+        const section = sections[i].trim();
+        const isTitle = allTitles.includes(section);
 
-          if (isTitle) {
-              if (currentTitle) {
-                  parts[currentTitle] = tempContent.trim();
-              }
-              currentTitle = trimmedSection;
-              tempContent = '';
-          } else {
-              tempContent += section;
+        if (isTitle) {
+          if (currentTitle) {
+            parts[currentTitle] = tempContent.trim();
           }
+          currentTitle = section;
+          tempContent = '';
+        } else {
+          tempContent += (tempContent ? '\n' : '') + section;
+        }
       }
       if (currentTitle) {
           parts[currentTitle] = tempContent.trim();
@@ -254,7 +249,6 @@ export default function ReadingPage() {
           catechetical: parts["Explicação Catequética"],
           meditation: parts["Para Meditar"],
           heart: parts["O Coração da Leitura"],
-          deepening: parts["Aprofundamento Catequético e Apologético"],
           keyPassage: parts["1. Passagem-Chave:"],
           doctrine: parts["2. Doutrina e Catecismo:"],
           apologetics: parts["3. Conexão Apologética (Defendendo a Fé):"]
@@ -286,7 +280,7 @@ export default function ReadingPage() {
   let isFirstChapter = true;
 
   const hasSpecialStructure = reading.explicacao_catolica.includes("Aprofundamento Catequético e Apologético");
-  const { synthesis, catechetical, meditation, heart, deepening, keyPassage, doctrine, apologetics } = getExplanationParts(reading.explicacao_catolica);
+  const { synthesis, catechetical, meditation, heart, keyPassage, doctrine, apologetics } = getExplanationParts(reading.explicacao_catolica);
 
 
   return (
@@ -340,7 +334,9 @@ export default function ReadingPage() {
                           </div>
                       )}
                       
-                      <p className="text-justify leading-loose"><strong>Aprofundamento Catequético e Apologético</strong></p>
+                      <div>
+                        <p className="text-justify leading-loose"><strong>Aprofundamento Catequético e Apologético</strong></p>
+                      </div>
 
                       {keyPassage && (
                           <div>
@@ -351,13 +347,13 @@ export default function ReadingPage() {
                       {doctrine && (
                           <div>
                               <p className="text-justify leading-loose"><strong>2. Doutrina e Catecismo:</strong></p>
-                              {doctrine.split('\n').map((p, i) => formatExplanationContent(p, i))}
+                              {doctrine.split('\n').map((p, i) => p.trim() && formatExplanationContent(p))}
                           </div>
                       )}
                       {apologetics && (
                           <div>
                               <p className="text-justify leading-loose"><strong>3. Conexão Apologética (Defendendo a Fé):</strong></p>
-                              {apologetics.split('\n').map((p, i) => formatExplanationContent(p, i))}
+                              {apologetics.split('\n').map((p, i) => p.trim() && formatExplanationContent(p))}
                           </div>
                       )}
                       {meditation && (
@@ -378,7 +374,7 @@ export default function ReadingPage() {
                     {catechetical && (
                       <div>
                         <p className="text-justify leading-loose"><strong>2. Explicação Catequética</strong></p>
-                        {catechetical.split('\n').map((p, i) => formatExplanationContent(p, i))}
+                        {catechetical.split('\n').map((p, i) => p.trim() && formatExplanationContent(p))}
                       </div>
                     )}
                     {meditation && (

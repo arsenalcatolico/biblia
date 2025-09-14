@@ -194,15 +194,15 @@ export default function ReadingPage() {
     return /^([IVXLCDM]+\s)?([A-Za-zçãéúíóâêô]+\s?)+(\d+)?(\s\(.*\))?$/.test(text.trim());
   };
   
-  const explanationSpecialSubtitles = [
+  const specialSubtitles = [
     "O Coração da Leitura",
-    "Aprofundamento Catequético e Apologético"
+    "Aprofundamento Catequético e Apologético",
+    "Conexão Apologética (Defendendo a Fé)",
   ];
 
-  const isExplanationSubtitle = (text: string) => {
+  const isSpecialSubtitle = (text: string) => {
     const trimmedText = text.trim();
-    // Regex for "1. Title" and exact match for special subtitles
-    return /^\d\.\s?.+$/.test(trimmedText) || explanationSpecialSubtitles.includes(trimmedText);
+    return /^\d\.\s?.+$/.test(trimmedText) || specialSubtitles.some(s => trimmedText.startsWith(s));
   };
   
   const formatExplanationContent = (paragraph: string, index: number) => {
@@ -212,8 +212,7 @@ export default function ReadingPage() {
       }
       
       const match = trimmedParagraph.match(/^(.+?:)(.*)$/);
-      // Check if it's a subtitle-like format but not one of the main subtitles
-      if (match && !isExplanationSubtitle(trimmedParagraph)) {
+      if (match && !isSpecialSubtitle(trimmedParagraph)) {
           const subtitle = match[1];
           const content = match[2];
           return (
@@ -227,25 +226,35 @@ export default function ReadingPage() {
   }
 
   const getExplanationParts = (explanation: string) => {
-    const specialStructure = explanationSpecialSubtitles.some(s => explanation.includes(s));
-    let parts: { [key: string]: string | undefined } = {};
-
-    if (specialStructure) {
-      const sections = explanation.split(/\n(?=O Coração da Leitura|Aprofundamento Catequético e Apologético|Para Meditar|\d\.\s)/);
-      parts.heart = sections.find(s => s.trim().startsWith("O Coração da Leitura"))?.replace(/^O Coração da Leitura\s*\n?/, "").trim();
-      parts.catechetical = sections.find(s => s.trim().startsWith("Aprofundamento Catequético e Apologético"))?.replace(/^Aprofundamento Catequético e Apologético\s*\n?/, "").trim();
-      parts.meditation = sections.find(s => s.trim().match(/(\d\.\s)?Para Meditar/))?.replace(/(\d\.\s)?Para Meditar\s*\n?/, "").trim();
-    } else {
-      const sections = explanation.split(/\n(?=\d\.\s)/);
-      parts.synthesis = sections.find(s => s.trim().startsWith("1. Síntese da Leitura"))?.replace(/^1\.\s*Síntese da Leitura\s*\n?/, "").trim();
-      parts.catechetical = sections.find(s => s.trim().startsWith("2. Explicação Catequética"))?.replace(/^2\.\s*Explicação Catequética\s*\n?/, "").trim();
-      parts.meditation = sections.find(s => s.trim().startsWith("3. Para Meditar"))?.replace(/^3\.\s*Para Meditar\s*\n?/, "").trim();
-    }
-    
-    return {
-      isSpecial: specialStructure,
-      ...parts,
-    };
+      const allTitles = ["Síntese da Leitura", "Explicação Catequética", "Para Meditar", ...specialSubtitles];
+      const regex = new RegExp(`(?<=\\n)(?=(${allTitles.map(t => `(\\d+\\.\\s)?${t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}`).join('|')}))`, 'g');
+      const rawSections = explanation.split(regex);
+  
+      const parts = {
+          synthesis: undefined as string | undefined,
+          catechetical: undefined as string | undefined,
+          meditation: undefined as string | undefined,
+          heart: undefined as string | undefined,
+      };
+  
+      const findAndClean = (start: string, num: string = '') => {
+          const found = rawSections.find(s => s.trim().startsWith(num ? `${num}. ${start}` : start));
+          return found?.replace(new RegExp(`^(${num}\\.\\s)?${start}\\s*\\n?`), "").trim();
+      };
+  
+      const specialStructure = specialSubtitles.some(s => explanation.includes(s));
+  
+      if (specialStructure) {
+          parts.heart = findAndClean("O Coração da Leitura");
+          parts.catechetical = rawSections.filter(s => specialSubtitles.some(sub => s.trim().startsWith(sub)) && !s.trim().startsWith("O Coração da Leitura") && !s.trim().match(/Para Meditar/)).join('\n');
+          parts.meditation = findAndClean("Para Meditar", "4");
+      } else {
+          parts.synthesis = findAndClean("Síntese da Leitura", "1");
+          parts.catechetical = findAndClean("Explicação Catequética", "2");
+          parts.meditation = findAndClean("Para Meditar", "3");
+      }
+      
+      return parts;
   };
 
 
@@ -273,7 +282,7 @@ export default function ReadingPage() {
   
   let isFirstChapter = true;
 
-  const { isSpecial, synthesis, catechetical, meditation, heart } = getExplanationParts(reading.explicacao_catolica);
+  const { synthesis, catechetical, meditation, heart } = getExplanationParts(reading.explicacao_catolica);
 
   return (
     <>
@@ -314,55 +323,30 @@ export default function ReadingPage() {
             </section>
             
             {reading.explicacao_catolica && (
-              <section className="space-y-4">
-                <h2 className="font-headline text-xl font-semibold text-left">Explicação Católica</h2>
+               <section className="space-y-4">
+                 <h2 className="font-headline text-xl font-semibold text-left">Explicação Católica</h2>
                  
-                 {isSpecial ? (
-                    <>
-                      {heart && (
-                        <div>
-                          <p className="text-justify leading-loose"><strong>O Coração da Leitura</strong></p>
-                          {heart.split('\n').map((p, i) => <p key={`h-${i}`} className="text-justify leading-loose">{p}</p>)}
-                        </div>
-                      )}
-                    </>
-                 ) : (
-                    <>
-                      {synthesis && (
-                        <div>
-                          <p className="text-justify leading-loose"><strong>1. Síntese da Leitura</strong></p>
-                          {synthesis.split('\n').map((p, i) => <p key={`s-${i}`} className="text-justify leading-loose">{p}</p>)}
-                        </div>
-                      )}
-                    </>
-                 )}
+                  {(synthesis || heart) && (
+                    <div>
+                      <p className="text-justify leading-loose"><strong>{heart ? 'O Coração da Leitura' : '1. Síntese da Leitura'}</strong></p>
+                      {(synthesis || heart)?.split('\n').map((p, i) => <p key={`s-h-${i}`} className="text-justify leading-loose">{p}</p>)}
+                    </div>
+                  )}
 
-                {catechetical && (
-                  <div>
-                    <p className="text-justify leading-loose">
-                      <strong>
-                        {isSpecial 
-                          ? 'Aprofundamento Catequético e Apologético' 
-                          : '2. Explicação Catequética'}
-                      </strong>
-                    </p>
-                    {catechetical.split('\n').map((p, i) => formatExplanationContent(p, i))}
-                  </div>
-                )}
+                  {catechetical && (
+                    <div>
+                        <p className="text-justify leading-loose"><strong>{specialSubtitles.some(s => reading.explicacao_catolica.includes(s)) ? 'Aprofundamento Catequético e Apologético' : '2. Explicação Catequética'}</strong></p>
+                        {catechetical.split('\n').map((p, i) => formatExplanationContent(p, i))}
+                    </div>
+                  )}
 
-                {meditation && (
-                   <div>
-                    <p className="text-justify leading-loose">
-                      <strong>
-                         {isSpecial
-                           ? '4. Para Meditar'
-                           : '3. Para Meditar'}
-                      </strong>
-                    </p>
-                    {meditation.split('\n').map((p, i) => <p key={`m-${i}`} className="text-justify leading-loose">{p}</p>)}
-                   </div>
-                )}
-              </section>
+                  {meditation && (
+                     <div>
+                      <p className="text-justify leading-loose"><strong>{specialSubtitles.some(s => reading.explicacao_catolica.includes(s)) ? '4. Para Meditar' : '3. Para Meditar'}</strong></p>
+                      {meditation.split('\n').map((p, i) => <p key={`m-${i}`} className="text-justify leading-loose">{p}</p>)}
+                     </div>
+                  )}
+               </section>
             )}
 
           </CardContent>

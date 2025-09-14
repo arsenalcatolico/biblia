@@ -195,20 +195,25 @@ export default function ReadingPage() {
     return /^([IVXLCDM]+\s)?([A-Za-zçãéúíóâêô]+\s?)+(\d+)?(\s\(.*\))?$/.test(text.trim());
   };
   
-  const formatExplanationContent = (paragraph: string, key: string) => {
+  const formatExplanationContent = (paragraph: string, index: number, total: number) => {
     if (!paragraph) return null;
     const trimmedParagraph = paragraph.trim();
     const match = trimmedParagraph.match(/^(.+?:)(.*)$/);
+    const pClassName = cn(
+      "text-justify leading-loose",
+      { "mb-4": index < total - 1 }
+    );
+
     if (match) {
         const subtitle = match[1];
         const content = match[2];
         return (
-            <p key={key} className="text-justify leading-loose">
+            <p key={index} className={pClassName}>
                 <strong><em>{subtitle}</em></strong>{content}
             </p>
         );
     }
-    return <p key={key} className="text-justify leading-loose">{trimmedParagraph}</p>;
+    return <p key={index} className={pClassName}>{trimmedParagraph}</p>;
   }
 
   const getExplanationParts = (explanation: string) => {
@@ -220,28 +225,21 @@ export default function ReadingPage() {
         ? ["O Coração da Leitura", "1. Passagem-Chave:", "2. Doutrina e Catecismo:", "3. Conexão Apologética (Defendendo a Fé):", "Para Meditar"]
         : ["Síntese da Leitura", "Explicação Catequética", "Para Meditar"];
       
-      const regex = new RegExp(`(^|\\n)(${allTitles.map(t => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|')})`, 'g');
-      const sections = explanation.split(regex).filter(s => s && s.trim() !== '');
+      let tempExplanation = explanation;
 
-      let currentTitle: string | null = null;
-      let tempContent = '';
+      for (let i = 0; i < allTitles.length; i++) {
+        const currentTitle = allTitles[i];
+        const nextTitle = i + 1 < allTitles.length ? allTitles[i+1] : null;
 
-      for (let i = 0; i < sections.length; i++) {
-        const section = sections[i].trim();
-        const isTitle = allTitles.includes(section);
+        let startIndex = tempExplanation.indexOf(currentTitle);
+        if(startIndex === -1) continue;
+        startIndex += currentTitle.length;
 
-        if (isTitle) {
-          if (currentTitle) {
-            parts[currentTitle] = tempContent.trim();
-          }
-          currentTitle = section;
-          tempContent = '';
-        } else {
-          tempContent += (tempContent ? '\n' : '') + section;
+        let endIndex;
+        if(nextTitle) {
+          endIndex = tempExplanation.indexOf(nextTitle, startIndex);
         }
-      }
-      if (currentTitle) {
-          parts[currentTitle] = tempContent.trim();
+        parts[currentTitle] = tempExplanation.substring(startIndex, endIndex).trim();
       }
       
       return {
@@ -345,13 +343,13 @@ export default function ReadingPage() {
                       {doctrine && (
                           <div>
                               <p className="text-justify leading-loose"><strong>2. Doutrina e Catecismo:</strong></p>
-                              {doctrine.split('\n').map((p, i) => p.trim() && formatExplanationContent(p, `dc-${i}`))}
+                              {doctrine.split('\n').map((p, i, arr) => p.trim() && formatExplanationContent(p, i, arr.length))}
                           </div>
                       )}
                       {apologetics && (
                           <div>
                               <p className="text-justify leading-loose"><strong>3. Conexão Apologética (Defendendo a Fé):</strong></p>
-                              {apologetics.split('\n').map((p, i) => p.trim() && formatExplanationContent(p, `ap-${i}`))}
+                              {apologetics.split('\n').map((p, i, arr) => p.trim() && formatExplanationContent(p, i, arr.length))}
                           </div>
                       )}
                       {meditation && (
@@ -372,7 +370,7 @@ export default function ReadingPage() {
                     {catechetical && (
                       <div>
                         <p className="text-justify leading-loose"><strong>2. Explicação Catequética</strong></p>
-                        {catechetical.split('\n').map((p, i) => p.trim() && formatExplanationContent(p, `c-${i}`))}
+                        {catechetical.split('\n').map((p, i, arr) => p.trim() && formatExplanationContent(p, i, arr.length))}
                       </div>
                     )}
                     {meditation && (
@@ -453,5 +451,6 @@ export default function ReadingPage() {
     </>
   );
 }
+
 
 

@@ -330,9 +330,9 @@ export default function ReadingPage() {
                               {heart.split('\n').map((p, i) => p.trim() && <p key={`h-${i}`} className="text-justify leading-loose">{p}</p>)}
                           </div>
                       )}
-
-                      <p className="text-justify leading-loose"><strong>Aprofundamento Catequético e Apologético</strong></p>
                       
+                      <p className="text-justify leading-loose"><strong>Aprofundamento Catequético e Apologético</strong></p>
+
                       {keyPassage && (
                           <div>
                               <p className="text-justify leading-loose"><strong>1. Passagem-Chave:</strong></p>
@@ -450,6 +450,7 @@ export default function ReadingPage() {
     </>
   );
 }
+
 
 
 

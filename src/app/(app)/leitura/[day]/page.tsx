@@ -217,7 +217,7 @@ export default function ReadingPage() {
   }
 
   const getExplanationParts = (explanation: string) => {
-      const cleanNumber = (text?: string) => text ? text.replace(/^\d\.\s*/, '').trim() : undefined;
+      const cleanMeditationNumber = (text?: string) => text ? text.replace(/^\d+\.\s*/, '').trim() : undefined;
 
       const findPart = (text: string, start: string, end: string | null) => {
           const startIndex = text.indexOf(start);
@@ -244,11 +244,11 @@ export default function ReadingPage() {
           return {
               synthesis: undefined,
               catechetical: undefined,
-              meditation: cleanNumber(meditation),
+              meditation: cleanMeditationNumber(meditation),
               heart,
-              keyPassage: cleanNumber(keyPassage),
-              doctrine: cleanNumber(doctrine),
-              apologetics: cleanNumber(apologetics),
+              keyPassage: keyPassage?.replace(/^1\.\s*/, '').trim(),
+              doctrine: doctrine?.replace(/^2\.\s*/, '').trim(),
+              apologetics: apologetics?.replace(/^3\.\s*/, '').trim(),
           };
       }
 
@@ -257,9 +257,9 @@ export default function ReadingPage() {
       const meditation = findPart(explanation, "Para Meditar", null);
       
       return {
-          synthesis: cleanNumber(synthesis),
-          catechetical: cleanNumber(catechetical),
-          meditation: cleanNumber(meditation),
+          synthesis: synthesis?.replace(/^1\.\s*/, '').trim(),
+          catechetical: catechetical?.replace(/^2\.\s*/, '').trim(),
+          meditation: cleanMeditationNumber(meditation),
           heart: undefined,
           keyPassage: undefined,
           doctrine: undefined,
@@ -383,7 +383,7 @@ export default function ReadingPage() {
                     )}
                     {catechetical && (
                       <div>
-                        <p className="text-justify leading-loose"><strong>Explicação Catequética</strong></p>
+                        <p className="text-justify leading-loose"><strong>2. Explicação Catequética</strong></p>
                         {catechetical.split('\n').filter(p => p.trim()).map((p, i, arr) => formatExplanationContent(p, i, arr.length, `cat-${i}`))}
                       </div>
                     )}
@@ -465,3 +465,4 @@ export default function ReadingPage() {
     </>
   );
 }
+

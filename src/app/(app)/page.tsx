@@ -30,8 +30,8 @@ export default function HomePage() {
   }
   
   return (
-    <div className="container mx-auto max-w-3xl px-4">
-      <div className="space-y-8">
+    <div className="container mx-auto flex h-full max-w-3xl flex-col items-center justify-center px-4">
+      <div className="w-full space-y-8">
         <header className="text-center">
           <h1 className="text-3xl font-bold font-headline text-primary dark:text-primary-foreground">
             Olá, Católico(a)!

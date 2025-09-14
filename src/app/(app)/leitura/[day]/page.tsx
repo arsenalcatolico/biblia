@@ -195,7 +195,7 @@ export default function ReadingPage() {
     return /^([IVXLCDM]+\s)?([A-Za-zçãéúíóâêô]+\s?)+(\d+)?(\s\(.*\))?$/.test(text.trim());
   };
   
-  const formatExplanationContent = (paragraph: string, index: number, total: number) => {
+  const formatExplanationContent = (paragraph: string, index: number, total: number, keyPrefix: string) => {
     if (!paragraph) return null;
     const trimmedParagraph = paragraph.trim();
     const match = trimmedParagraph.match(/^(.+?:)(.*)$/);
@@ -208,12 +208,12 @@ export default function ReadingPage() {
         const subtitle = match[1];
         const content = match[2];
         return (
-            <p key={index} className={pClassName}>
+            <p key={`${keyPrefix}-${index}`} className={pClassName}>
                 <strong><em>{subtitle}</em></strong>{content}
             </p>
         );
     }
-    return <p key={index} className={pClassName}>{trimmedParagraph}</p>;
+    return <p key={`${keyPrefix}-${index}`} className={pClassName}>{trimmedParagraph}</p>;
   }
 
   const getExplanationParts = (explanation: string) => {
@@ -342,19 +342,19 @@ export default function ReadingPage() {
                       {doctrine && (
                           <div>
                               <p className="text-justify leading-loose"><strong>2. Doutrina e Catecismo:</strong></p>
-                              {doctrine.split('\n').filter(p => p.trim()).map((p, i, arr) => formatExplanationContent(p, i, arr.length))}
+                              {doctrine.split('\n').filter(p => p.trim()).map((p, i, arr) => formatExplanationContent(p, i, arr.length, `doc-${i}`))}
                           </div>
                       )}
                       {apologetics && (
                           <div>
                               <p className="text-justify leading-loose"><strong>3. Conexão Apologética (Defendendo a Fé):</strong></p>
-                              {apologetics.split('\n').filter(p => p.trim()).map((p, i, arr) => formatExplanationContent(p, i, arr.length))}
+                              {apologetics.split('\n').filter(p => p.trim()).map((p, i, arr) => formatExplanationContent(p, i, arr.length, `ap-${i}`))}
                           </div>
                       )}
                       {meditation && (
                           <div className="mt-4">
-                              <p className="text-justify leading-loose"><strong>Para Meditar</strong></p>
-                              {meditation.split('\n').map((p, i) => p.trim() && <p key={`m-${i}`} className="text-justify leading-loose">{p.replace(/^4\.\s*/, '')}</p>)}
+                            <p className="text-justify leading-loose"><strong>Para Meditar</strong></p>
+                            {meditation.replace(/^4\.\s*/, '').split('\n').map((p, i) => p.trim() && <p key={`m-${i}`} className="text-justify leading-loose">{p}</p>)}
                           </div>
                       )}
                   </div>
@@ -369,13 +369,13 @@ export default function ReadingPage() {
                     {catechetical && (
                       <div>
                         <p className="text-justify leading-loose"><strong>2. Explicação Catequética</strong></p>
-                        {catechetical.split('\n').filter(p => p.trim()).map((p, i, arr) => formatExplanationContent(p, i, arr.length))}
+                        {catechetical.split('\n').filter(p => p.trim()).map((p, i, arr) => formatExplanationContent(p, i, arr.length, `cat-${i}`))}
                       </div>
                     )}
                     {meditation && (
-                      <div>
+                      <div className="mt-4">
                         <p className="text-justify leading-loose"><strong>Para Meditar</strong></p>
-                        {meditation.split('\n').map((p, i) => p.trim() && <p key={`m-${i}`} className="text-justify leading-loose">{p.replace(/^3\.\s*/, '')}</p>)}
+                        {meditation.replace(/^3\.\s*/, '').split('\n').map((p, i) => p.trim() && <p key={`m-${i}`} className="text-justify leading-loose">{p}</p>)}
                       </div>
                     )}
                   </div>
@@ -450,6 +450,7 @@ export default function ReadingPage() {
     </>
   );
 }
+
 
 
 

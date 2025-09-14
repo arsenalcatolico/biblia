@@ -191,7 +191,7 @@ export default function ReadingPage() {
   );
 
   const isChapterTitle = (text: string) => {
-    return /^(I|II|III)?\s?([A-Za-zçãéúíóâêô]+\s?)+\d+(\s\(.*\))?$/.test(text.trim());
+    return /^(I|II|III)?\s?([A-Za-zçãéúíóâêô]+\s?)+(\d+)?(\s\(.*\))?$/.test(text.trim());
   }
 
   const isExplanationSubtitle = (text: string) => {
@@ -240,7 +240,7 @@ export default function ReadingPage() {
           <CardHeader className="p-0">
             <CardTitle className="font-headline text-2xl text-primary dark:text-primary-foreground text-left px-2 pt-6">{reading.leitura_dia}</CardTitle>
           </CardHeader>
-          <CardContent className="space-y-4 prose prose-lg max-w-none dark:prose-invert p-0 pt-6 px-2">
+          <CardContent className="space-y-4 prose prose-lg max-w-none dark:prose-invert p-0 pt-6 px-2 pb-6">
             
             <section>
               <h2 className="font-headline text-xl font-semibold text-left">Texto Bíblico</h2>

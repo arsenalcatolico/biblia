@@ -191,7 +191,7 @@ export default function ReadingPage() {
   );
 
   const isChapterTitle = (text: string) => {
-    return /^(I|II|III)?\s?[A-Za-zçãéúíóâêô]+\s\d+(\s\(.*\))?$/.test(text.trim());
+    return /^(I|II|III)?\s?([A-Za-zçãéúíóâêô]+\s?)+\d+(\s\(.*\))?$/.test(text.trim());
   }
 
   const isExplanationSubtitle = (text: string) => {
@@ -338,3 +338,5 @@ export default function ReadingPage() {
     </>
   );
 }
+
+    

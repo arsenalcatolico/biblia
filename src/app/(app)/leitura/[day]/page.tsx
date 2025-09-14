@@ -272,15 +272,20 @@ export default function ReadingPage() {
               </section>
             )}
 
-            {reading.conclusao && (
-              <section>
-                {reading.conclusao.split('\n').filter(p => p.trim()).map((paragraph, i) => <p key={`c-${i}`} className="text-justify leading-loose">{paragraph}</p>)}
-              </section>
-            )}
-
           </CardContent>
         </Card>
         
+        {reading.conclusao_titulo && reading.conclusao && (
+          <Card className="bg-accent/10 border-accent">
+            <CardHeader className="pb-2 pt-6 px-2">
+              <CardTitle className="font-headline text-xl text-accent-foreground/90">{reading.conclusao_titulo}</CardTitle>
+            </CardHeader>
+            <CardContent className="px-2 pb-6 text-accent-foreground/80">
+              <p className="text-justify leading-loose">{reading.conclusao}</p>
+            </CardContent>
+          </Card>
+        )}
+
         <div className="flex flex-col items-center gap-2">
           {isCompleted ? (
             <div className="w-full space-y-4">

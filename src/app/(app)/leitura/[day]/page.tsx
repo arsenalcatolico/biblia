@@ -228,7 +228,7 @@ export default function ReadingPage() {
   const getExplanationParts = (explanation: string) => {
       const allTitles = ["Síntese da Leitura", "Explicação Catequética", "Para Meditar", ...specialSubtitles];
       const regex = new RegExp(`(?<=\\n)(?=(${allTitles.map(t => `(\\d+\\.\\s)?${t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}`).join('|')}))`, 'g');
-      const rawSections = explanation.split(regex);
+      const rawSections = explanation.split(regex).filter(Boolean);
   
       const parts = {
           synthesis: undefined as string | undefined,
@@ -238,7 +238,7 @@ export default function ReadingPage() {
       };
   
       const findAndClean = (start: string, num: string = '') => {
-          const found = rawSections.find(s => s.trim().startsWith(num ? `${num}. ${start}` : start));
+          const found = rawSections.find(s => s && s.trim().startsWith(num ? `${num}. ${start}` : start));
           return found?.replace(new RegExp(`^(${num}\\.\\s)?${start}\\s*\\n?`), "").trim();
       };
   
@@ -246,8 +246,8 @@ export default function ReadingPage() {
   
       if (specialStructure) {
           parts.heart = findAndClean("O Coração da Leitura");
-          parts.catechetical = rawSections.filter(s => specialSubtitles.some(sub => s.trim().startsWith(sub)) && !s.trim().startsWith("O Coração da Leitura") && !s.trim().match(/Para Meditar/)).join('\n');
-          parts.meditation = findAndClean("Para Meditar", "4");
+          parts.catechetical = rawSections.filter(s => s && specialSubtitles.some(sub => s.trim().startsWith(sub)) && !s.trim().startsWith("O Coração da Leitura") && !s.trim().match(/Para Meditar/)).join('\n');
+          parts.meditation = findAndClean("Para Meditar", "4") || findAndClean("Para Meditar");
       } else {
           parts.synthesis = findAndClean("Síntese da Leitura", "1");
           parts.catechetical = findAndClean("Explicação Catequética", "2");

@@ -13,13 +13,13 @@ export default function HomePage() {
   const { completedDays, lastCompletedDay, loading } = useProgress();
 
   const progressPercentage = (completedDays.length / 365) * 100;
-  const startDay = lastCompletedDay > 0 ? lastCompletedDay + 1 : 0;
-  const nextDay = Math.min(365, startDay);
+  const nextDay = lastCompletedDay > 0 ? Math.min(365, lastCompletedDay + 1) : 1;
   
-  const buttonText = lastCompletedDay > 0 ? `Ir para a Leitura: Dia ${nextDay}` : 'Começar a Jornada: Dia 1';
+  const buttonText = lastCompletedDay > 0 ? `Continuar Leitura: Dia ${nextDay}` : 'Iniciar Jornada';
+  const buttonLink = lastCompletedDay > 0 ? `/leitura/${nextDay}` : '/leitura/0';
   const descriptionText = lastCompletedDay > 0 
     ? `Você já completou ${completedDays.length} de 365 dias. Continue firme em sua jornada!`
-    : "Sua jornada de 365 dias pela Palavra de Deus começa agora.";
+    : "Sua jornada de 365 dias pela Palavra de Deus começa aqui. Clique abaixo para começar.";
 
   if (loading) {
     return (
@@ -43,7 +43,7 @@ export default function HomePage() {
 
         <Card className="shadow-lg text-center">
           <CardHeader className="p-6">
-            <CardTitle className="text-2xl font-headline">Leitura de Hoje</CardTitle>
+            <CardTitle className="text-2xl font-headline">Seu Progresso</CardTitle>
              <CardDescription className="text-base pt-2">
               {descriptionText}
             </CardDescription>
@@ -52,13 +52,13 @@ export default function HomePage() {
              <div className="space-y-2">
                 <Progress value={progressPercentage} className="w-full" />
                 <p className="text-sm font-medium text-primary">
-                  Progresso: {Math.round(progressPercentage)}%
+                  {completedDays.length} de 365 dias concluídos ({Math.round(progressPercentage)}%)
                 </p>
             </div>
           </CardContent>
           <CardFooter className="p-6 pt-0">
              <Button asChild size="lg" className="shadow-lg w-full text-lg h-14">
-              <Link href={`/leitura/${nextDay}`}>
+              <Link href={buttonLink}>
                  <BookOpen className="mr-2 h-5 w-5" />
                  {buttonText}
               </Link>

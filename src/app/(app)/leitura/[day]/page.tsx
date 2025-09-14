@@ -204,7 +204,7 @@ export default function ReadingPage() {
     return /^\d+\.\s?.+$/.test(trimmedText) || explanationSpecialSubtitles.includes(trimmedText);
   };
   
-  const formatExplanationParagraph = (paragraph: string, index: number) => {
+  const formatExplanationContent = (paragraph: string, index: number) => {
       const trimmedParagraph = paragraph.trim();
       if (!trimmedParagraph) {
           return <br key={`br-ec-${index}`} />;
@@ -252,6 +252,15 @@ export default function ReadingPage() {
   
   let isFirstChapter = true;
 
+  const getExplanationParts = () => {
+    const parts = reading.explicacao_catolica.split(/\n\d\.\s/);
+    const synthesis = parts[0].replace(/^1\.\sSíntese da Leitura\n/, '');
+    const rest = parts.slice(1).map((part, index) => `${index + 2}. ${part}`);
+    return { synthesis, rest: rest.join('\n') };
+  };
+
+  const { synthesis, rest: explanationContent } = getExplanationParts();
+
   return (
     <>
       <ReadingHeader title={`Dia ${day}`} />
@@ -293,7 +302,9 @@ export default function ReadingPage() {
             {reading.explicacao_catolica && (
               <section>
                 <h2 className="font-headline text-xl font-semibold text-left">Explicação Católica</h2>
-                 {reading.explicacao_catolica.split('\n').map((p, i) => formatExplanationParagraph(p, i))}
+                <p className="text-justify leading-loose"><strong>1. Síntese da Leitura</strong></p>
+                <p className="text-justify leading-loose">{synthesis}</p>
+                {explanationContent.split('\n').map((p, i) => formatExplanationContent(p, i))}
               </section>
             )}
 
@@ -363,9 +374,3 @@ export default function ReadingPage() {
     </>
   );
 }
-
-    
-
-    
-
-

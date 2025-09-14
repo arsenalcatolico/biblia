@@ -223,7 +223,7 @@ export default function ReadingPage() {
         
         {reading.intro_titulo && reading.intro && (
           <Card className="bg-accent/10 border-accent">
-            <CardHeader className="p-6 pb-2 px-2">
+            <CardHeader className="pb-2 pt-6 px-2">
               <CardTitle className="font-headline text-xl text-accent-foreground/90">{reading.intro_titulo}</CardTitle>
             </CardHeader>
             <CardContent className="px-2 pb-6 text-accent-foreground/80">
@@ -253,6 +253,7 @@ export default function ReadingPage() {
             </section>
             
             <section>
+              <h2 className="font-headline text-xl font-semibold text-left">Explicação Católica</h2>
               {reading.explicacao_catolica.split('\n').filter(p => p.trim()).map((paragraph, i) => <p key={`ec-${i}`} className="text-justify leading-loose">{paragraph}</p>)}
             </section>
 

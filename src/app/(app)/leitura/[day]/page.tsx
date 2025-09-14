@@ -191,7 +191,7 @@ export default function ReadingPage() {
   );
 
   const isChapterTitle = (text: string) => {
-    return /^(I|II|III)?\s?[A-Za-zçãéúíóâêô]+\s\d+$/.test(text.trim());
+    return /^(I|II|III)?\s?[A-Za-zçãéúíóâêô]+\s\d+(\s\(.*\))?$/.test(text.trim());
   }
 
   const isExplanationSubtitle = (text: string) => {
@@ -256,19 +256,21 @@ export default function ReadingPage() {
               })}
             </section>
             
-            <section>
-              <h2 className="font-headline text-xl font-semibold text-left">Explicação Católica</h2>
-              {reading.explicacao_catolica.split('\n').map((paragraph, i) => {
-                const trimmedParagraph = paragraph.trim();
-                 if (!trimmedParagraph) {
-                    return <br key={`br-ec-${i}`} />;
-                }
-                if (isExplanationSubtitle(trimmedParagraph)) {
-                  return <p key={`ec-h-${i}`} className="text-justify leading-loose"><strong>{trimmedParagraph}</strong></p>
-                }
-                return <p key={`ec-p-${i}`} className="text-justify leading-loose">{trimmedParagraph}</p>
-              })}
-            </section>
+            {reading.explicacao_catolica && (
+              <section>
+                <h2 className="font-headline text-xl font-semibold text-left">Explicação Católica</h2>
+                {reading.explicacao_catolica.split('\n').map((paragraph, i) => {
+                  const trimmedParagraph = paragraph.trim();
+                  if (!trimmedParagraph) {
+                      return <br key={`br-ec-${i}`} />;
+                  }
+                  if (isExplanationSubtitle(trimmedParagraph)) {
+                    return <p key={`ec-h-${i}`} className="text-justify leading-loose"><strong>{trimmedParagraph}</strong></p>
+                  }
+                  return <p key={`ec-p-${i}`} className="text-justify leading-loose">{trimmedParagraph}</p>
+                })}
+              </section>
+            )}
 
             {reading.conclusao && (
               <section>

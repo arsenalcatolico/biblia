@@ -5,14 +5,14 @@ import Link from 'next/link';
 export default function PasswordRecoveryPage() {
   return (
     <Card className="shadow-lg">
-      <CardHeader className="text-center">
+      <CardHeader className="text-center p-6">
         <CardTitle className="text-3xl font-headline text-primary">Bíblia Católica em 1 Ano</CardTitle>
-        <CardDescription>Recupere sua senha para continuar.</CardDescription>
+        <CardDescription className="text-lg">Recupere sua senha para continuar.</CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="p-6 pt-0">
         <PasswordRecoveryForm />
       </CardContent>
-       <CardFooter>
+       <CardFooter className="p-6 pt-0">
          <p className="w-full text-center text-sm text-muted-foreground">
           Lembrou a senha?{' '}
           <Link href="/login" className="font-semibold text-primary hover:underline">

@@ -198,6 +198,12 @@ export default function ReadingPage() {
   const formatExplanationContent = (paragraph: string, index: number, total: number, keyPrefix: string) => {
     if (!paragraph) return null;
     const trimmedParagraph = paragraph.trim();
+
+    // Ignore paragraphs that are just numbers (e.g., "3.", "4.")
+    if (/^\d+\.\s*$/.test(trimmedParagraph)) {
+        return null;
+    }
+
     const match = trimmedParagraph.match(/^(.+?:)(.*)$/);
     const pClassName = cn(
       "text-justify leading-loose",
@@ -218,7 +224,6 @@ export default function ReadingPage() {
 
   const getExplanationParts = (explanation: string) => {
       const cleanText = (text?: string) => text ? text.trim() : undefined;
-      const cleanMeditationNumber = (text?: string) => text ? text.replace(/^\d+\.\s*/, '').trim() : undefined;
 
       const findPart = (text: string, start: string, end: string | null) => {
           const startIndex = text.indexOf(start);
@@ -245,7 +250,7 @@ export default function ReadingPage() {
           return {
               synthesis: undefined,
               catechetical: undefined,
-              meditation: cleanMeditationNumber(meditation),
+              meditation: meditation?.replace(/^\d+\.\s*/, '').trim(),
               heart,
               keyPassage: cleanText(keyPassage),
               doctrine: cleanText(doctrine),
@@ -260,7 +265,7 @@ export default function ReadingPage() {
       return {
           synthesis: cleanText(synthesis),
           catechetical: cleanText(catechetical),
-          meditation: cleanMeditationNumber(meditation),
+          meditation: meditation?.replace(/^\d+\.\s*/, '').trim(),
           heart: undefined,
           keyPassage: undefined,
           doctrine: undefined,

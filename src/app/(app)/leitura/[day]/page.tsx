@@ -194,15 +194,6 @@ export default function ReadingPage() {
     return /^([IVXLCDM]+\s)?([A-Za-zçãéúíóâêô]+\s?)+(\d+)?(\s\(.*\))?$/.test(text.trim());
   };
   
-  const specialSubtitles = [
-      "O Coração da Leitura",
-      "Aprofundamento Catequético e Apologético",
-      "1. Passagem-Chave:",
-      "2. Doutrina e Catecismo:",
-      "3. Conexão Apologética (Defendendo a Fé):",
-      "Para Meditar"
-  ];
-  
   const formatExplanationContent = (paragraph: string, index: number) => {
       const trimmedParagraph = paragraph.trim();
       if (!trimmedParagraph) {
@@ -225,12 +216,14 @@ export default function ReadingPage() {
 
   const getExplanationParts = (explanation: string) => {
       const parts: { [key: string]: string | undefined } = {};
-      const allTitles = [
-          "Síntese da Leitura", "Explicação Catequética", "Para Meditar",
-          ...specialSubtitles
-      ].map(t => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+      const specialStructure = explanation.includes("Aprofundamento Catequético e Apologético");
+
+      const allTitles = specialStructure 
+        ? ["O Coração da Leitura", "Aprofundamento Catequético e Apologético", "1. Passagem-Chave:", "2. Doutrina e Catecismo:", "3. Conexão Apologética (Defendendo a Fé):", "Para Meditar"]
+        : ["Síntese da Leitura", "Explicação Catequética", "Para Meditar"];
   
-      const regex = new RegExp(`(?<=\\n|^)((${allTitles.join('|')}))(?=\\n|$)`, 'g');
+      const allTitlesRegex = allTitles.map(t => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+      const regex = new RegExp(`(?<=\\n|^)(${allTitlesRegex.join('|')})(?=\\n|:|$)`, 'gm');
       const sections = explanation.split(regex);
   
       let currentTitle: string | null = null;
@@ -238,9 +231,10 @@ export default function ReadingPage() {
   
       for (const section of sections) {
           if (!section) continue;
+
           const trimmedSection = section.trim();
-          const isTitle = allTitles.some(titleRegex => new RegExp(`^${titleRegex}$`).test(trimmedSection));
-  
+          const isTitle = allTitles.some(title => title.trim() === trimmedSection);
+
           if (isTitle) {
               if (currentTitle) {
                   parts[currentTitle] = tempContent.trim();
@@ -339,37 +333,37 @@ export default function ReadingPage() {
 
                 {hasSpecialStructure ? (
                   <div className="space-y-4">
-                    {heart && (
-                      <div>
-                        <p className="text-justify leading-loose"><strong>O Coração da Leitura</strong></p>
-                        {heart.split('\n').map((p, i) => p.trim() && <p key={`h-${i}`} className="text-justify leading-loose">{p}</p>)}
-                      </div>
-                    )}
-                    {deepening && <p className="text-justify leading-loose"><strong>Aprofundamento Catequético e Apologético</strong></p>}
-                    {keyPassage && (
-                      <div>
-                        <p className="text-justify leading-loose"><strong>1. Passagem-Chave:</strong></p>
-                        {keyPassage.split('\n').map((p, i) => p.trim() && <p key={`kp-${i}`} className="text-justify leading-loose">{p}</p>)}
-                      </div>
-                    )}
-                    {doctrine && (
-                      <div>
-                        <p className="text-justify leading-loose"><strong>2. Doutrina e Catecismo:</strong></p>
-                        {doctrine.split('\n').map((p, i) => p.trim() && <p key={`d-${i}`} className="text-justify leading-loose">{p}</p>)}
-                      </div>
-                    )}
-                    {apologetics && (
-                      <div>
-                        <p className="text-justify leading-loose"><strong>3. Conexão Apologética (Defendendo a Fé):</strong></p>
-                        {apologetics.split('\n').map((p, i) => p.trim() && <p key={`a-${i}`} className="text-justify leading-loose">{p}</p>)}
-                      </div>
-                    )}
-                    {meditation && (
-                      <div>
-                        <p className="text-justify leading-loose"><strong>Para Meditar</strong></p>
-                        {meditation.split('\n').map((p, i) => p.trim() && <p key={`m-${i}`} className="text-justify leading-loose">{p}</p>)}
-                      </div>
-                    )}
+                      {heart && (
+                          <div className="space-y-4">
+                              <p className="text-justify leading-loose"><strong>O Coração da Leitura</strong></p>
+                              {heart.split('\n').map((p, i) => p.trim() && <p key={`h-${i}`} className="text-justify leading-loose">{p}</p>)}
+                          </div>
+                      )}
+                      {deepening && <p className="text-justify leading-loose"><strong>Aprofundamento Catequético e Apologético</strong></p>}
+                      {keyPassage && (
+                          <div className="space-y-4">
+                              <p className="text-justify leading-loose"><strong>1. Passagem-Chave:</strong></p>
+                              {keyPassage.split('\n').map((p, i) => p.trim() && <p key={`kp-${i}`} className="text-justify leading-loose">{p}</p>)}
+                          </div>
+                      )}
+                      {doctrine && (
+                          <div className="space-y-4">
+                              <p className="text-justify leading-loose"><strong>2. Doutrina e Catecismo:</strong></p>
+                              {doctrine.split('\n').map((p, i) => p.trim() && <p key={`d-${i}`} className="text-justify leading-loose">{p}</p>)}
+                          </div>
+                      )}
+                      {apologetics && (
+                          <div className="space-y-4">
+                              <p className="text-justify leading-loose"><strong>3. Conexão Apologética (Defendendo a Fé):</strong></p>
+                              {apologetics.split('\n').map((p, i) => p.trim() && <p key={`a-${i}`} className="text-justify leading-loose">{p}</p>)}
+                          </div>
+                      )}
+                      {meditation && (
+                          <div className="space-y-4">
+                              <p className="text-justify leading-loose"><strong>Para Meditar</strong></p>
+                              {meditation.split('\n').map((p, i) => p.trim() && <p key={`m-${i}`} className="text-justify leading-loose">{p}</p>)}
+                          </div>
+                      )}
                   </div>
                 ) : (
                   <div className="space-y-4">
@@ -380,13 +374,13 @@ export default function ReadingPage() {
                       </div>
                     )}
                     {catechetical && (
-                      <div>
+                      <div className="mt-4">
                         <p className="text-justify leading-loose"><strong>2. Explicação Catequética</strong></p>
                         {catechetical.split('\n').map((p, i) => formatExplanationContent(p, i))}
                       </div>
                     )}
                     {meditation && (
-                      <div>
+                      <div className="mt-4">
                         <p className="text-justify leading-loose"><strong>3. Para Meditar</strong></p>
                         {meditation.split('\n').map((p, i) => p.trim() && <p key={`m-${i}`} className="text-justify leading-loose">{p}</p>)}
                       </div>
@@ -463,5 +457,3 @@ export default function ReadingPage() {
     </>
   );
 }
-
-    

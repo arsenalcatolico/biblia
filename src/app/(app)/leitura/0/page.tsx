@@ -59,7 +59,7 @@ export default function IntroductionPage() {
               Seja bem-vindo à sua Jornada de Fé!
             </CardTitle>
           </CardHeader>
-          <CardContent className="prose prose-lg max-w-none space-y-4 dark:prose-invert p-0 pt-6 px-2">
+          <CardContent className="prose prose-lg max-w-none space-y-4 dark:prose-invert p-0 pt-6 px-2 pb-6">
             <p className="text-justify leading-loose">
               Quantas vezes você começou a ler a Bíblia cheio de entusiasmo… mas
               parou em Levítico? Ou ficou perdido entre genealogias e leis
@@ -188,7 +188,7 @@ export default function IntroductionPage() {
               <ArrowRight className="ml-2 h-5 w-5" />
             </Link>
           </Button>
-          <Button asChild variant="secondary">
+          <Button asChild variant="secondary" className="border">
             <Link href="/">
               <Home className="mr-2 h-4 w-4" />
                Voltar ao Início

@@ -217,38 +217,51 @@ export default function ReadingPage() {
   }
 
   const getExplanationParts = (explanation: string) => {
-      const parts: { [key: string]: string | undefined } = {};
-      const hasSpecialStructure = explanation.includes("Aprofundamento Catequético e Apologético");
-
-      const allTitles = hasSpecialStructure
-        ? ["O Coração da Leitura", "Aprofundamento Catequético e Apologético", "1. Passagem-Chave:", "2. Doutrina e Catecismo:", "3. Conexão Apologética (Defendendo a Fé):", "Para Meditar"]
-        : ["Síntese da Leitura", "Explicação Catequética", "Para Meditar"];
+      const findPart = (text: string, start: string, end: string | null) => {
+          const startIndex = text.indexOf(start);
+          if (startIndex === -1) return undefined;
+          
+          let endIndex: number | undefined = undefined;
+          if (end) {
+              endIndex = text.indexOf(end, startIndex);
+              if (endIndex === -1) endIndex = undefined;
+          }
+          
+          return text.substring(startIndex + start.length, endIndex).trim();
+      };
       
-      let tempExplanation = explanation;
+      const hasSpecialStructure = explanation.includes("Aprofundamento Catequético e Apologético");
+      
+      if (hasSpecialStructure) {
+          const heart = findPart(explanation, "O Coração da Leitura", "Aprofundamento Catequético e Apologético");
+          const keyPassage = findPart(explanation, "1. Passagem-Chave:", "2. Doutrina e Catecismo:");
+          const doctrine = findPart(explanation, "2. Doutrina e Catecismo:", "3. Conexão Apologética (Defendendo a Fé):");
+          const apologetics = findPart(explanation, "3. Conexão Apologética (Defendendo a Fé):", "Para Meditar");
+          const meditation = findPart(explanation, "Para Meditar", null);
 
-      for (let i = 0; i < allTitles.length; i++) {
-        const currentTitle = allTitles[i];
-        const nextTitle = i + 1 < allTitles.length ? allTitles[i+1] : null;
-
-        let startIndex = tempExplanation.indexOf(currentTitle);
-        if(startIndex === -1) continue;
-        startIndex += currentTitle.length;
-
-        let endIndex;
-        if(nextTitle) {
-          endIndex = tempExplanation.indexOf(nextTitle, startIndex);
-        }
-        parts[currentTitle] = tempExplanation.substring(startIndex, endIndex).trim();
+          return {
+              synthesis: undefined,
+              catechetical: undefined,
+              meditation,
+              heart,
+              keyPassage,
+              doctrine,
+              apologetics
+          };
       }
+
+      const synthesis = findPart(explanation, "Síntese da Leitura", "Explicação Catequética");
+      const catechetical = findPart(explanation, "Explicação Catequética", "Para Meditar");
+      const meditation = findPart(explanation, "Para Meditar", null);
       
       return {
-          synthesis: parts["Síntese da Leitura"],
-          catechetical: parts["Explicação Catequética"],
-          meditation: parts["Para Meditar"],
-          heart: parts["O Coração da Leitura"],
-          keyPassage: parts["1. Passagem-Chave:"],
-          doctrine: parts["2. Doutrina e Catecismo:"],
-          apologetics: parts["3. Conexão Apologética (Defendendo a Fé):"]
+          synthesis,
+          catechetical,
+          meditation,
+          heart: undefined,
+          keyPassage: undefined,
+          doctrine: undefined,
+          apologetics: undefined,
       };
   };
 
@@ -450,10 +463,3 @@ export default function ReadingPage() {
     </>
   );
 }
-
-
-
-
-
-
-

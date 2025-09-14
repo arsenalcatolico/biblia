@@ -358,13 +358,13 @@ export default function ReadingPage() {
                       {doctrine && (
                           <div>
                               <p className="text-justify leading-loose"><strong>2. Doutrina e Catecismo:</strong></p>
-                              {doctrine.split('\n').filter(p => p.trim()).map((p, i, arr) => formatExplanationContent(p, i, arr.length, `doc-${i}`))}
+                              {doctrine.split('\n').filter(p => p.trim()).map((p, i, arr) => formatExplanationContent(p, i, arr.length, `doc`))}
                           </div>
                       )}
                       {apologetics && (
                           <div>
                               <p className="text-justify leading-loose"><strong>3. Conexão Apologética (Defendendo a Fé):</strong></p>
-                              {apologetics.split('\n').filter(p => p.trim()).map((p, i, arr) => formatExplanationContent(p, i, arr.length, `ap-${i}`))}
+                              {apologetics.split('\n').filter(p => p.trim()).map((p, i, arr) => formatExplanationContent(p, i, arr.length, `ap`))}
                           </div>
                       )}
                       {meditation && (
@@ -385,7 +385,7 @@ export default function ReadingPage() {
                     {catechetical && (
                       <div>
                         <p className="text-justify leading-loose"><strong>2. Explicação Catequética</strong></p>
-                        {catechetical.split('\n').filter(p => p.trim()).map((p, i, arr) => formatExplanationContent(p, i, arr.length, `cat-${i}`))}
+                        {catechetical.split('\n').filter(p => p.trim()).map((p, i, arr) => formatExplanationContent(p, i, arr.length, `cat`))}
                       </div>
                     )}
                     {meditation && (

@@ -12,14 +12,6 @@ export default function LoginPage() {
       <CardContent className="p-6 pt-0">
         <LoginForm />
       </CardContent>
-      <CardFooter className="flex-col items-center gap-2 p-6 pt-0">
-         <p className="text-center text-sm text-muted-foreground">
-          Não tem uma conta?{' '}
-          <Link href="/register" className="font-semibold text-primary hover:underline">
-            Registre-se
-          </Link>
-        </p>
-      </CardFooter>
     </Card>
   );
 }

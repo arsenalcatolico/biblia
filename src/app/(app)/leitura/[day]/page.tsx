@@ -192,7 +192,7 @@ export default function ReadingPage() {
   );
 
   const isChapterTitle = (text: string) => {
-    return /^([IVXLCDM]+\s)?([A-Za-zçãéúíóâêô]+\s?)+(\d+)?(\s\(.*\))?$/.test(text.trim());
+    return /^([IVXLCDM123ªº\s]*)?([A-Za-zçãéúíóâêô]+\s?)+(\d+)?(\s\(.*\))?$/.test(text.trim());
   };
   
   const formatExplanationContent = (paragraph: string, index: number, total: number, keyPrefix: string) => {
@@ -249,7 +249,7 @@ export default function ReadingPage() {
           const keyPassage = findPart(explanation, "1. Passagem-Chave:", "2. Doutrina e Catecismo:");
           const doctrine = findPart(explanation, "2. Doutrina e Catecismo:", "3. Conexão Apologética (Defendendo a Fé):");
           const apologetics = findPart(explanation, "3. Conexão Apologética (Defendendo a Fé):", "Para Meditar");
-          const meditation = findPart(explanation, "Para Meditar", null);
+          const meditation = findPart(explanation, "Para Meditar", "Conclusão do Módulo");
 
           return {
               synthesis: undefined,
@@ -264,7 +264,7 @@ export default function ReadingPage() {
 
       const synthesis = findPart(explanation, "1. Síntese da Leitura", "2. Explicação Catequética");
       const catechetical = findPart(explanation, "2. Explicação Catequética", "Para Meditar");
-      const meditation = findPart(explanation, "Para Meditar", null);
+      const meditation = findPart(explanation, "Para Meditar", "Conclusão do Módulo");
       
       return {
           synthesis: cleanText(synthesis),
@@ -301,7 +301,6 @@ export default function ReadingPage() {
   
   let isFirstChapter = true;
 
-  const hasSpecialStructure = reading.explicacao_catolica.includes("Aprofundamento Catequético e Apologético");
   const { synthesis, catechetical, meditation, heart, keyPassage, doctrine, apologetics } = getExplanationParts(reading.explicacao_catolica);
 
 
@@ -347,7 +346,7 @@ export default function ReadingPage() {
               <section className="space-y-4">
                 <h2 className="font-headline text-xl font-semibold text-left">Explicação Católica</h2>
 
-                {hasSpecialStructure ? (
+                {heart || keyPassage || doctrine || apologetics ? (
                   <div className="space-y-4">
                       {heart && (
                           <div>
@@ -356,7 +355,7 @@ export default function ReadingPage() {
                           </div>
                       )}
                       
-                      <p className="text-justify leading-loose"><strong>Aprofundamento Catequético e Apologético</strong></p>
+                      {(keyPassage || doctrine || apologetics) && <p className="text-justify leading-loose"><strong>Aprofundamento Catequético e Apologético</strong></p>}
 
                       {keyPassage && (
                           <div>
@@ -376,15 +375,6 @@ export default function ReadingPage() {
                               {apologetics.split('\n').filter(p => p.trim()).map((p, i, arr) => formatExplanationContent(p, i, arr.length, `ap`))}
                           </div>
                       )}
-                      {meditation && (
-                          <>
-                            <Separator className="my-6" />
-                            <div className="mt-4">
-                              <p className="text-justify leading-loose"><strong>Para Meditar</strong></p>
-                              {meditation.split('\n').map((p, i) => p.trim() && <p key={`m-${i}`} className="text-justify leading-loose">{p}</p>)}
-                            </div>
-                          </>
-                      )}
                   </div>
                 ) : (
                   <div className="space-y-4">
@@ -400,16 +390,16 @@ export default function ReadingPage() {
                         {catechetical.split('\n').filter(p => p.trim()).map((p, i, arr) => formatExplanationContent(p, i, arr.length, `cat`))}
                       </div>
                     )}
-                    {meditation && (
-                      <>
-                        <Separator className="my-6" />
-                        <div className="mt-4">
-                          <p className="text-justify leading-loose"><strong>Para Meditar</strong></p>
-                          {meditation.split('\n').map((p, i) => p.trim() && <p key={`m-${i}`} className="text-justify leading-loose">{p}</p>)}
-                        </div>
-                      </>
-                    )}
                   </div>
+                )}
+                {meditation && (
+                  <>
+                    <Separator className="my-6" />
+                    <div className="mt-4">
+                      <p className="text-justify leading-loose"><strong>Para Meditar</strong></p>
+                      {meditation.split('\n').map((p, i) => p.trim() && <p key={`m-${i}`} className="text-justify leading-loose">{p}</p>)}
+                    </div>
+                  </>
                 )}
               </section>
             )}

@@ -1,3 +1,4 @@
+
 import { NextRequest, NextResponse } from 'next/server';
 import { adminAuth } from '@/lib/firebase/admin-config';
 
@@ -6,8 +7,8 @@ const DEFAULT_PASSWORD = process.env.WEBHOOK_DEFAULT_PASSWORD || 'Mudar@123';
 export async function POST(req: NextRequest) {
   const source = req.nextUrl.searchParams.get('source');
   
-  if (!source || !['hotmart', 'cartpanda'].includes(source)) {
-    return NextResponse.json({ success: false, message: 'Source parameter is missing or invalid. Use "hotmart" or "cartpanda".' }, { status: 400 });
+  if (!source || !['hotmart', 'cartpanda', 'n8n'].includes(source)) {
+    return NextResponse.json({ success: false, message: 'Source parameter is missing or invalid. Use "hotmart", "cartpanda", or "n8n".' }, { status: 400 });
   }
 
   try {
@@ -16,17 +17,18 @@ export async function POST(req: NextRequest) {
 
     // Adapt the payload based on the source
     if (source === 'hotmart') {
-      // This is an example structure for Hotmart.
-      // You MUST verify the actual payload structure from Hotmart's documentation.
+      // Example structure for Hotmart. Verify with actual payload.
       email = payload?.data?.buyer?.email;
     } else if (source === 'cartpanda') {
-      // This is an example structure for Cartpanda.
-      // You MUST verify the actual payload structure from Cartpanda's documentation.
+      // Example structure for Cartpanda. Verify with actual payload.
       email = payload?.customer?.email;
+    } else if (source === 'n8n') {
+      // Simplified structure for n8n or other direct integrations
+      email = payload?.email;
     }
 
     if (!email) {
-      return NextResponse.json({ success: false, message: 'Email not found in webhook payload.' }, { status: 400 });
+      return NextResponse.json({ success: false, message: 'Email not found in webhook payload for the given source.' }, { status: 400 });
     }
 
     // Create the user in Firebase Authentication
@@ -37,14 +39,14 @@ export async function POST(req: NextRequest) {
         emailVerified: true, // Assuming a paid user's email is legitimate
       });
       
-      console.log(`User created successfully: ${email}`);
+      console.log(`User created successfully via ${source}: ${email}`);
       
       // Respond with success
       return NextResponse.json({ success: true, message: `User ${email} created.` });
 
     } catch (error: any) {
       if (error.code === 'auth/email-already-exists') {
-        console.log(`Email ${email} already exists. No action taken.`);
+        console.log(`Email ${email} already exists (from ${source}). No action taken.`);
         // Respond with success to avoid the webhook provider from retrying
         return NextResponse.json({ success: true, message: 'User already exists.' });
       }

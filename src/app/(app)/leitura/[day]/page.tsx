@@ -192,7 +192,11 @@ export default function ReadingPage() {
   );
 
   const isChapterTitle = (text: string) => {
-    return /^([IVXLCDM123ªº\s]*)?([A-Za-zçãéúíóâêô]+\s?)+(\d+)?(\s\(.*\))?$/.test(text.trim());
+    const trimmedText = text.trim();
+    // Regex to match a book name (like "Gálatas", "1 Reis", "I Tessalonicenses") followed by a number.
+    // Handles Roman numerals (I, II, III), Arabic numerals (1, 2, 3) at the start of the book name.
+    const regex = /^(I{1,3}\s|II?\s|\d\s)?[A-Za-zçãéúíóâêô]+\s\d+$/;
+    return regex.test(trimmedText);
   };
   
   const formatExplanationContent = (paragraph: string, index: number, total: number, keyPrefix: string) => {

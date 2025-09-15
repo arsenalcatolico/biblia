@@ -193,6 +193,9 @@ export default function ReadingPage() {
 
   const isChapterTitle = (text: string) => {
     const trimmedText = text.trim();
+    if (trimmedText.startsWith('Salmos')) { // Handle Psalms specifically
+      return /^(Salmos)\s\d+/.test(trimmedText);
+    }
     const regex = /^(I{1,3}\s|II?\s|\d\s)?[A-Za-zçãéúíóâêô\s]+\s\d+([,:]\d+([-\d]+)?)?(\s\(.+\))?$/;
     return regex.test(trimmedText);
   };
@@ -248,7 +251,7 @@ export default function ReadingPage() {
       
       if (hasSpecialStructure) {
           const heart = findPart(explanation, "O Coração da Leitura", "Aprofundamento Catequético e Apologético");
-          const keyPassage = findPart(explanation, "1. Passagem-Chave:", "2. Doutrina e Catecismo:");
+          const keyPassage = findPart(explanation, "1. Passagens-Chave:", "2. Doutrina e Catecismo:");
           const doctrine = findPart(explanation, "2. Doutrina e Catecismo:", "3. Conexão Apologética (Defendendo a Fé):");
           const apologetics = findPart(explanation, "3. Conexão Apologética (Defendendo a Fé):", "Para Meditar");
           const meditation = findPart(explanation, "Para Meditar", "Conclusão do Módulo");
@@ -336,9 +339,9 @@ export default function ReadingPage() {
                     return <br key={`br-${i}`} />;
                 }
                 if (isChapterTitle(trimmedParagraph)) {
-                  const isFirst = isFirstChapter;
-                  isFirstChapter = false;
-                  return <p key={`tb-h-${i}`} className={cn("text-justify leading-loose", !isFirst && "mt-4")}><strong>{trimmedParagraph}</strong></p>
+                   const isFirst = isFirstChapter;
+                   isFirstChapter = false;
+                   return <p key={`tb-h-${i}`} className={cn("text-justify leading-loose", !isFirst && "pt-4")}><strong>{trimmedParagraph}</strong></p>
                 }
                 return <p key={`tb-p-${i}`} className="text-justify leading-loose">{trimmedParagraph}</p>
               })}
@@ -361,7 +364,7 @@ export default function ReadingPage() {
 
                       {keyPassage && (
                           <div>
-                              <p className="text-justify leading-loose"><strong>1. Passagem-Chave:</strong></p>
+                              <p className="text-justify leading-loose"><strong>1. Passagens-Chave:</strong></p>
                               {keyPassage.split('\n').map((p, i) => p.trim() && <p key={`kp-${i}`} className="text-justify leading-loose">{p}</p>)}
                           </div>
                       )}

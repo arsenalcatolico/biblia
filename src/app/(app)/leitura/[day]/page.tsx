@@ -335,9 +335,8 @@ export default function ReadingPage() {
               <h2 className="font-headline text-xl font-semibold text-left">Texto Bíblico</h2>
               {reading.texto_biblico.split('\n').map((paragraph, i) => {
                 const trimmedParagraph = paragraph.trim();
-                if (!trimmedParagraph) {
-                    return <br key={`br-${i}`} />;
-                }
+                if (!trimmedParagraph) return null;
+
                 if (isChapterTitle(trimmedParagraph)) {
                    const isFirst = isFirstChapter;
                    isFirstChapter = false;

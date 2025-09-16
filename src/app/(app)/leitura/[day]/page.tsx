@@ -2,7 +2,7 @@
 "use client";
 
 import { useEffect, useState, use } from 'react';
-import { useParams, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { ReadingDay } from '@/types';
 import { useSettings } from '@/contexts/SettingsContext';
 import { useProgress } from '@/contexts/ProgressContext';
@@ -31,10 +31,10 @@ import { Separator } from '@/components/ui/separator';
 
 const SHOW_CONGRATS_TOAST = 'showCongratsToast';
 
-export default function ReadingPage() {
+export default function ReadingPage({ params }: { params: { day: string } }) {
   const router = useRouter();
-  const params = useParams();
-  const day = parseInt(params.day as string, 10);
+  const { day: dayParam } = use(params ? Promise.resolve(params) : Promise.resolve({ day: '0' }));
+  const day = parseInt(dayParam, 10);
   const { toast } = useToast();
 
   const [reading, setReading] = useState<ReadingDay | null>(null);

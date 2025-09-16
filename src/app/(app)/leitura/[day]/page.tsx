@@ -194,10 +194,11 @@ export default function ReadingPage() {
   const isChapterTitle = (text: string) => {
     const trimmedText = text.trim();
     if (trimmedText.startsWith('Salmos')) { // Handle Psalms specifically
-        const psalmsRegex = /^(Salmos)\s\d+(\s\(Salmos\s\d+\sVulgata\))?/;
+        const psalmsRegex = /^(Salmos)\s\d+(\s\(Salmos\s\d+\sVulgata\))?$/;
         return psalmsRegex.test(trimmedText);
     }
-    const regex = /^(I{1,3}\s|II?\s|\d\s)?[A-Za-zçãéúíóâêô\s]+\s\d+([,:]\d+([-\d]+)?)?(\s\(.+\))?$/;
+    // Updated regex to include Ê in Êxodo.
+    const regex = /^(I{1,3}\s|II?\s|\d\s)?[A-Za-zçãéúíóâêôÊ\s]+\s\d+([,:]\d+([-\d]+)?)?(\s\(.+\))?$/;
     return regex.test(trimmedText) && !/^\d+\./.test(trimmedText);
   };
   

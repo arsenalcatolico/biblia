@@ -32,10 +32,11 @@ import { Separator } from '@/components/ui/separator';
 const SHOW_CONGRATS_TOAST = 'showCongratsToast';
 
 export default function ReadingPage({ params }: { params: { day: string } }) {
-  const router = useRouter();
   // use() is the modern way to resolve promise-like props in Client Components.
   const resolvedParams = use(params);
   const day = parseInt(resolvedParams.day || "0", 10);
+  
+  const router = useRouter();
   const { toast } = useToast();
 
   const [reading, setReading] = useState<ReadingDay | null>(null);

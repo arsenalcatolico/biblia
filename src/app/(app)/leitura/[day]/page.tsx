@@ -193,11 +193,11 @@ export default function ReadingPage() {
 
   const isChapterTitle = (text: string) => {
     const trimmedText = text.trim();
-    if (trimmedText.startsWith('Salmos')) {
-        const psalmsRegex = /^Salmos\s[\d, -]+(\s\(Salmos\s[\d, -]+ Vulgata\))?$/;
-        return psalmsRegex.test(trimmedText);
+    const psalmsRegex = /^Salmos\s[\d, -]+(\s\(Salmos\s[\d, -]+ Vulgata\))?$/;
+    if (psalmsRegex.test(trimmedText)) {
+      return true;
     }
-    const regex = /^(I{1,3}\s|II?\s|\d\s)?[A-Za-zçãéúíóâêôÊ\s]+\s\d+([,:]\d+([-\d]+)?)?(\s\(.+\))?$/;
+    const regex = /^(I{1,3}\s|II?\s|\d\s)?[A-ZÀ-Úa-zçãéúíóâêôÊ\s]+\s\d+([,:]\d+([-\d]+)?)?(\s\(.+\))?$/;
     return regex.test(trimmedText) && !/^\d+\./.test(trimmedText);
   };
   

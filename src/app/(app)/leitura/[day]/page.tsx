@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, use } from 'react';
 import { useRouter } from 'next/navigation';
 import type { ReadingDay } from '@/types';
 import { useSettings } from '@/contexts/SettingsContext';
@@ -33,7 +33,9 @@ const SHOW_CONGRATS_TOAST = 'showCongratsToast';
 
 export default function ReadingPage({ params }: { params: { day: string } }) {
   const router = useRouter();
-  const day = parseInt(params.day || "0", 10);
+  // use() is the modern way to resolve promise-like props in Client Components.
+  const resolvedParams = use(params);
+  const day = parseInt(resolvedParams.day || "0", 10);
   const { toast } = useToast();
 
   const [reading, setReading] = useState<ReadingDay | null>(null);

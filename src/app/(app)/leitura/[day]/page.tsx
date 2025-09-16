@@ -194,10 +194,11 @@ export default function ReadingPage() {
   const isChapterTitle = (text: string) => {
     const trimmedText = text.trim();
     if (trimmedText.startsWith('Salmos')) { // Handle Psalms specifically
-      return /^(Salmos)\s\d+/.test(trimmedText);
+        const psalmsRegex = /^(Salmos)\s\d+(\s\(Salmos\s\d+\sVulgata\))?/;
+        return psalmsRegex.test(trimmedText);
     }
     const regex = /^(I{1,3}\s|II?\s|\d\s)?[A-Za-zçãéúíóâêô\s]+\s\d+([,:]\d+([-\d]+)?)?(\s\(.+\))?$/;
-    return regex.test(trimmedText);
+    return regex.test(trimmedText) && !/^\d+\./.test(trimmedText);
   };
   
   const formatExplanationContent = (paragraph: string, index: number, total: number, keyPrefix: string) => {
@@ -333,14 +334,13 @@ export default function ReadingPage() {
             
             <section>
               <h2 className="font-headline text-xl font-semibold text-left">Texto Bíblico</h2>
-              {reading.texto_biblico.split('\n').map((paragraph, i) => {
+              {reading.texto_biblico.split('\n').filter(p => p.trim()).map((paragraph, i) => {
                 const trimmedParagraph = paragraph.trim();
-                if (!trimmedParagraph) return null;
 
                 if (isChapterTitle(trimmedParagraph)) {
                    const isFirst = isFirstChapter;
                    isFirstChapter = false;
-                   return <p key={`tb-h-${i}`} className={cn("text-justify leading-loose", !isFirst && "pt-4")}><strong>{trimmedParagraph}</strong></p>
+                   return <p key={`tb-h-${i}`} className={cn("text-justify leading-loose font-bold", !isFirst && "pt-4")}>{trimmedParagraph}</p>
                 }
                 return <p key={`tb-p-${i}`} className="text-justify leading-loose">{trimmedParagraph}</p>
               })}

@@ -31,8 +31,8 @@ import { Separator } from '@/components/ui/separator';
 
 const SHOW_CONGRATS_TOAST = 'showCongratsToast';
 
-function ReadingPageContents({ params }: { params: { day: string } }) {
-  const day = parseInt(params.day || "0", 10);
+function ReadingPageContents({ day: dayParam }: { day: string }) {
+  const day = parseInt(dayParam || "0", 10);
   
   const router = useRouter();
   const { toast } = useToast();
@@ -193,13 +193,19 @@ function ReadingPageContents({ params }: { params: { day: string } }) {
 
   const isChapterTitle = (text: string) => {
     const trimmedText = text.trim();
+  
+    if (trimmedText.startsWith('Lamentações')) {
+      return true;
+    }
+  
     const psalmsRegex = /^Salmos\s[\d, -]+(\s\(Salmos\s[\d, -]+ Vulgata\))?$/;
     if (psalmsRegex.test(trimmedText)) {
       return true;
     }
-    // Updated regex to better match book names followed by chapter numbers.
+  
+    // Regex for general book names followed by chapter numbers.
     const regex = /^(I{1,3}\s|II?\s|\d\s)?[A-ZÀ-Úa-zçãéúíóâêôÊ\s]+\s\d+([,:]\d*([-\s\d]+)?)?(\s\(.+\))?$/;
-    return regex.test(trimmedText) && !/^\d+\./.test(trimmedText) && trimmedText.split(' ').length < 5;
+    return regex.test(trimmedText) && !/^\d+\./.test(trimmedText) && trimmedText.split(' ').length < 7;
   };
   
   const formatExplanationContent = (paragraph: string, index: number, total: number, keyPrefix: string) => {
@@ -298,9 +304,10 @@ function ReadingPageContents({ params }: { params: { day: string } }) {
   if (error || !reading) {
     return (
       <>
-        <div className="container mx-auto text-center">
-          <p className="text-destructive">{error}</p>
-          <Button onClick={() => router.push('/')} className="mt-4">Voltar ao Início</Button>
+        <ReadingHeader title={`Dia ${day}`} />
+        <div className="container mx-auto text-center p-4">
+          <p className="text-destructive mb-4">{error}</p>
+          <Button onClick={() => router.push('/')}>Voltar ao Início</Button>
         </div>
       </>
     );
@@ -479,7 +486,6 @@ function ReadingPageContents({ params }: { params: { day: string } }) {
 
 export default function ReadingPage({ params }: { params: { day: string } }) {
   const resolvedParams = use(params);
-  return <ReadingPageContents params={resolvedParams} />;
+  // It's safe to use the resolved `day` param here.
+  return <ReadingPageContents day={resolvedParams.day} />;
 }
-
-    

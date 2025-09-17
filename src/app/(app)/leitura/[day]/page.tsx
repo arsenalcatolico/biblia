@@ -198,8 +198,8 @@ function ReadingPageContents({ params }: { params: { day: string } }) {
       return true;
     }
     // Updated regex to better match book names followed by chapter numbers.
-    const regex = /^(I{1,3}\s|II?\s|\d\s)?[A-ZÀ-Úa-zçãéúíóâêôÊ\s]+\s\d+([,:]\d*([-\d]+)?)?(\s\(.+\))?$/;
-    return regex.test(trimmedText) && !/^\d+\./.test(trimmedText);
+    const regex = /^(I{1,3}\s|II?\s|\d\s)?[A-ZÀ-Úa-zçãéúíóâêôÊ\s]+\s\d+([,:]\d*([-\s\d]+)?)?(\s\(.+\))?$/;
+    return regex.test(trimmedText) && !/^\d+\./.test(trimmedText) && trimmedText.split(' ').length < 5;
   };
   
   const formatExplanationContent = (paragraph: string, index: number, total: number, keyPrefix: string) => {

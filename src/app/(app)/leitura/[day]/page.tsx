@@ -31,10 +31,8 @@ import { Separator } from '@/components/ui/separator';
 
 const SHOW_CONGRATS_TOAST = 'showCongratsToast';
 
-export default function ReadingPage({ params }: { params: { day: string } }) {
-  // use() is the modern way to resolve promise-like props in Client Components.
-  const resolvedParams = use(params);
-  const day = parseInt(resolvedParams.day || "0", 10);
+function ReadingPageContents({ params }: { params: { day: string } }) {
+  const day = parseInt(params.day || "0", 10);
   
   const router = useRouter();
   const { toast } = useToast();
@@ -476,4 +474,9 @@ export default function ReadingPage({ params }: { params: { day: string } }) {
       </AlertDialog>
     </>
   );
+}
+
+export default function ReadingPage({ params }: { params: { day: string } }) {
+  const resolvedParams = use(params);
+  return <ReadingPageContents params={resolvedParams} />;
 }

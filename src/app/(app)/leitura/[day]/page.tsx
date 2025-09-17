@@ -485,7 +485,15 @@ function ReadingPageContents({ day: dayParam }: { day: string }) {
 }
 
 export default function ReadingPage({ params }: { params: { day: string } }) {
+  // ReadingPage is a Client Component, and we can't use `Object.keys(params)`
+  // to check for the presence of the `day` parameter. Instead, we can
+  // directly use the `day` parameter.
+  //
+  // The `use` hook is still required here to resolve the `params` object.
   const resolvedParams = use(params);
+
   // It's safe to use the resolved `day` param here.
   return <ReadingPageContents day={resolvedParams.day} />;
 }
+
+    

@@ -197,7 +197,8 @@ function ReadingPageContents({ params }: { params: { day: string } }) {
     if (psalmsRegex.test(trimmedText)) {
       return true;
     }
-    const regex = /^(I{1,3}\s|II?\s|\d\s)?[A-ZÀ-Úa-zçãéúíóâêôÊ\s]+\s\d+([,:]\d+([-\d]+)?)?(\s\(.+\))?$/;
+    // Updated regex to better match book names followed by chapter numbers.
+    const regex = /^(I{1,3}\s|II?\s|\d\s)?[A-ZÀ-Úa-zçãéúíóâêôÊ\s]+\s\d+([,:]\d*([-\d]+)?)?(\s\(.+\))?$/;
     return regex.test(trimmedText) && !/^\d+\./.test(trimmedText);
   };
   
@@ -480,3 +481,5 @@ export default function ReadingPage({ params }: { params: { day: string } }) {
   const resolvedParams = use(params);
   return <ReadingPageContents params={resolvedParams} />;
 }
+
+    

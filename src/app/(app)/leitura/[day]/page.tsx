@@ -234,7 +234,7 @@ function ReadingPageContents({ day: dayParam }: { day: string }) {
     return <p key={`${keyPrefix}-${index}`} className={pClassName}>{trimmedParagraph}</p>;
   }
 
- const getExplanationParts = (explanation: string) => {
+ const getExplanationParts = (explanation: string = "") => {
       const cleanText = (text?: string) => text ? text.trim() : undefined;
 
       const findPart = (text: string, start: string, end: string | null) => {
@@ -495,5 +495,3 @@ export default function ReadingPage({ params }: { params: { day: string } }) {
   // It's safe to use the resolved `day` param here.
   return <ReadingPageContents day={resolvedParams.day} />;
 }
-
-    

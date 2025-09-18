@@ -8,7 +8,7 @@ import { useSettings } from '@/contexts/SettingsContext';
 import { useProgress } from '@/contexts/ProgressContext';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Loader2, CheckCircle, ArrowLeft, ArrowRight, Sun, Moon, Minus, Plus, Undo2, PartyPopper } from 'lucide-react';
+import { Loader2, CheckCircle, ArrowLeft, ArrowRight, Sun, Moon, Minus, Plus, Undo2, PartyPopper, Calendar, Home } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import {
@@ -41,6 +41,8 @@ function ReadingPageContents({ day: dayParam }: { day: string }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isNextDayAlertOpen, setIsNextDayAlertOpen] = useState(false);
+  const [isFinalDayCongratsOpen, setIsFinalDayCongratsOpen] = useState(false);
+
 
   const { theme, setTheme, fontSize, increaseFontSize, decreaseFontSize } = useSettings();
   const { completedDays, markDayAsComplete, unmarkDayAsComplete } = useProgress();
@@ -110,14 +112,14 @@ function ReadingPageContents({ day: dayParam }: { day: string }) {
       await markDayAsComplete(day);
       setIsCompleted(true);
       
-      try {
-        localStorage.setItem(SHOW_CONGRATS_TOAST, 'true');
-      } catch (error) {
-        console.error("Could not access local storage", error);
-      }
-
-
-      if (day < 365) {
+      if (day === 365) {
+        setIsFinalDayCongratsOpen(true);
+      } else {
+        try {
+          localStorage.setItem(SHOW_CONGRATS_TOAST, 'true');
+        } catch (error) {
+          console.error("Could not access local storage", error);
+        }
         router.push(`/leitura/${day + 1}`);
       }
     } catch (e) {
@@ -444,8 +446,8 @@ function ReadingPageContents({ day: dayParam }: { day: string }) {
               </Button>
             </div>
           ) : (
-            <Button onClick={handleMarkAsComplete} size="lg" className="w-full shadow-lg">
-              Concluir Leitura e Avançar
+             <Button onClick={handleMarkAsComplete} size="lg" className="w-full shadow-lg">
+                {day === 365 ? 'Concluir a Jornada!' : 'Concluir Leitura e Avançar'}
             </Button>
           )}
         </div>
@@ -476,6 +478,28 @@ function ReadingPageContents({ day: dayParam }: { day: string }) {
             </AlertDialogAction>
             <AlertDialogAction onClick={handleMarkAsComplete}>
               Concluir e avançar
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+      
+      <AlertDialog open={isFinalDayCongratsOpen} onOpenChange={setIsFinalDayCongratsOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle className="text-center text-2xl font-bold text-accent">
+                <PartyPopper className="mx-auto h-12 w-12 text-accent mb-4" />
+                Laus Tibi, Christe!
+            </AlertDialogTitle>
+            <AlertDialogDescription className="text-center text-base">
+                Parabéns! Você completou a jornada de 365 dias através da Palavra de Deus, guiado pela fé da Igreja. Que as sementes plantadas em seu coração deem frutos abundantes para a glória de Deus e a salvação das almas.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter className="flex-col sm:flex-row gap-2 pt-4">
+            <AlertDialogAction className="w-full" onClick={() => router.push('/calendario')}>
+                <Calendar className="mr-2 h-4 w-4" /> Ver Calendário
+            </AlertDialogAction>
+            <AlertDialogAction className="w-full" onClick={() => router.push('/')}>
+               <Home className="mr-2 h-4 w-4" /> Voltar ao Início
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

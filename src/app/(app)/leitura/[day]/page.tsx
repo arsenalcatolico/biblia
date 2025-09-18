@@ -8,7 +8,7 @@ import { useSettings } from '@/contexts/SettingsContext';
 import { useProgress } from '@/contexts/ProgressContext';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Loader2, CheckCircle, ArrowLeft, ArrowRight, Sun, Moon, Minus, Plus, Undo2, PartyPopper, Calendar, Home } from 'lucide-react';
+import { Loader2, CheckCircle, ArrowLeft, ArrowRight, Sun, Moon, Minus, Plus, Undo2, PartyPopper, Calendar, Home, X } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import {
@@ -494,13 +494,16 @@ function ReadingPageContents({ day: dayParam }: { day: string }) {
                 Parabéns! Você completou a jornada de 365 dias através da Palavra de Deus, guiado pela fé da Igreja. Que as sementes plantadas em seu coração deem frutos abundantes para a glória de Deus e a salvação das almas.
             </AlertDialogDescription>
           </AlertDialogHeader>
-          <AlertDialogFooter className="flex-col sm:flex-row gap-2 pt-4">
+          <AlertDialogFooter className="flex-col-reverse sm:grid sm:grid-cols-2 gap-2 pt-4">
             <AlertDialogAction className="w-full" onClick={() => router.push('/calendario')}>
                 <Calendar className="mr-2 h-4 w-4" /> Ver Calendário
             </AlertDialogAction>
             <AlertDialogAction className="w-full" onClick={() => router.push('/')}>
                <Home className="mr-2 h-4 w-4" /> Voltar ao Início
             </AlertDialogAction>
+            <AlertDialogCancel variant="secondary" className="col-span-2 mt-2">
+                <X className="mr-2 h-4 w-4"/> Fechar
+            </AlertDialogCancel>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

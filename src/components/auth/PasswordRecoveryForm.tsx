@@ -17,7 +17,6 @@ const formSchema = z.object({
 });
 
 export function PasswordRecoveryForm() {
-  const { toast } = useToast();
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -30,36 +29,8 @@ export function PasswordRecoveryForm() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
-    try {
-      const response = await fetch('/api/check-user', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email: values.email }),
-      });
-
-      const result = await response.json();
-
-      if (response.ok && result.exists) {
-        router.push(`/recuperar-senha/instrucoes?email=${encodeURIComponent(values.email)}`);
-      } else {
-        toast({
-          variant: 'destructive',
-          title: 'E-mail não encontrado',
-          description: 'Nenhum usuário foi encontrado com este endereço de e-mail.',
-        });
-      }
-    } catch (error) {
-      console.error("Password recovery check error:", error);
-      toast({
-        variant: 'destructive',
-        title: 'Erro na verificação',
-        description: 'Não foi possível verificar o e-mail. Verifique sua conexão ou tente novamente.',
-      });
-    } finally {
-      setIsLoading(false);
-    }
+    // Simplesmente redireciona para a página de instruções, passando o e-mail.
+    router.push(`/recuperar-senha/instrucoes?email=${encodeURIComponent(values.email)}`);
   }
 
   return (

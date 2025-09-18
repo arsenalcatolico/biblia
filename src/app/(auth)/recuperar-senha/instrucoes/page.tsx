@@ -14,24 +14,6 @@ function InstructionsContent() {
     const defaultPassword = 'biblia@catolica365';
     const { toast } = useToast();
 
-    if (!email) {
-        return (
-             <Card className="shadow-lg">
-                <CardHeader className="text-center p-6">
-                    <CardTitle className="text-2xl font-headline text-destructive">Erro</CardTitle>
-                    <CardDescription>
-                        Nenhum e-mail foi fornecido. Por favor, volte e tente novamente.
-                    </CardDescription>
-                </CardHeader>
-                 <CardFooter className="p-6 pt-0">
-                     <Button onClick={() => router.push('/recuperar-senha')} className="w-full">
-                        Voltar
-                    </Button>
-                </CardFooter>
-            </Card>
-        )
-    }
-
     const copyToClipboard = (text: string, field: string) => {
         navigator.clipboard.writeText(text);
         toast({
@@ -56,12 +38,14 @@ function InstructionsContent() {
             </CardHeader>
             <CardContent className="space-y-4 p-6 pt-0">
                 <div className="space-y-1">
-                    <p className="text-sm font-medium text-muted-foreground">Seu E-mail:</p>
+                    <p className="text-sm font-medium text-muted-foreground">Seu E-mail de compra:</p>
                     <div className="flex items-center gap-2">
-                        <p className="font-mono text-base font-semibold p-2 bg-secondary rounded-md flex-1">{email}</p>
-                        <Button variant="ghost" size="icon" onClick={() => copyToClipboard(email, 'E-mail')} aria-label="Copiar e-mail">
-                            <Copy className="h-5 w-5" />
-                        </Button>
+                        <p className="font-mono text-base font-semibold p-2 bg-secondary rounded-md flex-1">{email || 'seu@email.com'}</p>
+                        {email && (
+                            <Button variant="ghost" size="icon" onClick={() => copyToClipboard(email, 'E-mail')} aria-label="Copiar e-mail">
+                                <Copy className="h-5 w-5" />
+                            </Button>
+                        )}
                     </div>
                 </div>
                  <div className="space-y-1">
@@ -74,7 +58,7 @@ function InstructionsContent() {
                     </div>
                 </div>
                  <p className="text-xs text-muted-foreground text-center pt-2">
-                    Por segurança, recomendamos que você altere sua senha no seu perfil após o primeiro login.
+                    Lembre-se de que o e-mail acima deve ser o mesmo utilizado no momento da compra para que o acesso funcione.
                 </p>
             </CardContent>
             <CardFooter className="p-6 pt-0">

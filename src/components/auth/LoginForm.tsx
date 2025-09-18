@@ -59,7 +59,12 @@ export function LoginForm({ defaultEmail = '', defaultPassword = '' }: LoginForm
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+      <form 
+        onSubmit={form.handleSubmit(onSubmit)} 
+        className="space-y-6"
+        action="/login" 
+        method="POST"
+      >
         <FormField
           control={form.control}
           name="email"
@@ -82,7 +87,7 @@ export function LoginForm({ defaultEmail = '', defaultPassword = '' }: LoginForm
                 <FormLabel>Senha</FormLabel>
                 <Link
                   href="/recuperar-senha"
-                  className="text-sm font-semibold text-primary hover:underline"
+                  className="font-semibold text-primary hover:underline"
                 >
                   Esqueceu a senha?
                 </Link>

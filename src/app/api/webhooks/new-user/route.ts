@@ -3,17 +3,17 @@ import { NextRequest, NextResponse } from 'next/server';
 import { adminAuth } from '@/lib/firebase/admin-config';
 
 const DEFAULT_PASSWORD = process.env.WEBHOOK_DEFAULT_PASSWORD || 'Mudar@123';
-const N8N_WEBHOOK_SECRET = process.env.N8N_WEBHOOK_SECRET;
+// Usaremos uma chave padrão se a variável de ambiente não estiver definida, para facilitar o teste.
+const N8N_WEBHOOK_SECRET = process.env.N8N_WEBHOOK_SECRET || "n8n_secret_key_for_testing";
 
 export async function POST(req: NextRequest) {
   // --- Verificação de Segurança ---
-  if (N8N_WEBHOOK_SECRET) {
-    const authorizationHeader = req.headers.get('Authorization');
-    const sentToken = authorizationHeader?.split(' ')[1]; // Espera "Bearer <token>"
+  // A chave secreta agora está ativa por padrão para o teste.
+  const authorizationHeader = req.headers.get('Authorization');
+  const sentToken = authorizationHeader?.split(' ')[1]; // Espera "Bearer <token>"
 
-    if (sentToken !== N8N_WEBHOOK_SECRET) {
-      return NextResponse.json({ success: false, message: 'Unauthorized' }, { status: 401 });
-    }
+  if (sentToken !== N8N_WEBHOOK_SECRET) {
+    return NextResponse.json({ success: false, message: 'Unauthorized: Invalid or missing secret key.' }, { status: 401 });
   }
   // ------------------------------
 

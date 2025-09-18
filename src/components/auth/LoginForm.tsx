@@ -23,9 +23,10 @@ const formSchema = z.object({
 
 interface LoginFormProps {
   defaultEmail?: string;
+  defaultPassword?: string;
 }
 
-export function LoginForm({ defaultEmail = '' }: LoginFormProps) {
+export function LoginForm({ defaultEmail = '', defaultPassword = '' }: LoginFormProps) {
   const router = useRouter();
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
@@ -34,7 +35,7 @@ export function LoginForm({ defaultEmail = '' }: LoginFormProps) {
     resolver: zodResolver(formSchema),
     defaultValues: {
       email: defaultEmail,
-      password: '',
+      password: defaultPassword,
     },
   });
 

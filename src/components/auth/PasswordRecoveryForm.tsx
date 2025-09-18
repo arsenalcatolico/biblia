@@ -47,24 +47,14 @@ export function PasswordRecoveryForm() {
         });
       }
     } catch (error: any) {
-      // The most common error is auth/network-request-failed if the rules are blocking,
-      // but if the email doesn't exist, it can also throw an auth/invalid-email error on some configurations,
-      // although it is less common. Let's treat any error as "user not found" for security.
-      if (error.code === 'auth/user-not-found' || error.code === 'auth/invalid-email') {
-         toast({
-          variant: 'destructive',
-          title: 'E-mail não encontrado',
-          description: 'Nenhum usuário foi encontrado com este endereço de e-mail.',
-        });
-      } else {
-        // For other potential errors (like network issues), give a more generic message.
-        console.error("Password recovery check error:", error);
-        toast({
-          variant: 'destructive',
-          title: 'Erro',
-          description: 'Ocorreu um erro ao verificar seu e-mail. Verifique sua conexão ou tente novamente mais tarde.',
-        });
-      }
+      console.error("Password recovery check error:", error);
+      // This can happen due to network issues or restrictive security rules.
+      // For the user, the outcome is the same: we can't confirm the email.
+      toast({
+        variant: 'destructive',
+        title: 'Erro na verificação',
+        description: 'Não foi possível verificar o e-mail. Verifique sua conexão ou tente novamente.',
+      });
     } finally {
       setIsLoading(false);
     }

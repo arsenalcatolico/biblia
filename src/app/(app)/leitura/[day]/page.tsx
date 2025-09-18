@@ -494,7 +494,7 @@ function ReadingPageContents({ day: dayParam }: { day: string }) {
                 Parabéns! Você completou a jornada de 365 dias através da Palavra de Deus, guiado pela fé da Igreja. Que as sementes plantadas em seu coração deem frutos abundantes para a glória de Deus e a salvação das almas.
             </AlertDialogDescription>
           </AlertDialogHeader>
-          <AlertDialogFooter className="flex-col-reverse sm:grid sm:grid-cols-2 gap-2 pt-4">
+          <AlertDialogFooter className="flex-col sm:grid sm:grid-cols-2 gap-2 pt-4">
             <AlertDialogAction className="w-full" onClick={() => router.push('/calendario')}>
                 <Calendar className="mr-2 h-4 w-4" /> Ver Calendário
             </AlertDialogAction>

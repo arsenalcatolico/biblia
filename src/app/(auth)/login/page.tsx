@@ -1,8 +1,16 @@
+
+"use client";
+
+import { Suspense } from 'react';
 import { LoginForm } from '@/components/auth/LoginForm';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 
-export default function LoginPage() {
+function LoginPageContent() {
+  const searchParams = useSearchParams();
+  const email = searchParams.get('email');
+
   return (
     <Card className="shadow-lg">
       <CardHeader className="text-center p-6">
@@ -10,8 +18,16 @@ export default function LoginPage() {
         <CardDescription className="text-3xl font-semibold">Explicada</CardDescription>
       </CardHeader>
       <CardContent className="p-6 pt-0">
-        <LoginForm />
+        <LoginForm defaultEmail={email || ''} />
       </CardContent>
     </Card>
   );
+}
+
+export default function LoginPage() {
+    return (
+        <Suspense fallback={<div>Carregando...</div>}>
+            <LoginPageContent />
+        </Suspense>
+    )
 }

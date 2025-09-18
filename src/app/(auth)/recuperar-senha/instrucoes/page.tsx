@@ -28,6 +28,14 @@ function InstructionsContent() {
         });
     }
 
+    const handleGoToLogin = () => {
+        const params = new URLSearchParams();
+        if (email) {
+            params.set('email', email);
+        }
+        router.push(`/login?${params.toString()}`);
+    }
+
     return (
         <Card className="shadow-lg">
             <CardHeader className="text-center p-6">
@@ -62,7 +70,7 @@ function InstructionsContent() {
                 </p>
             </CardContent>
             <CardFooter className="p-6 pt-0">
-                <Button onClick={() => router.push('/login')} className="w-full">
+                <Button onClick={handleGoToLogin} className="w-full">
                     Ir para o Login
                 </Button>
             </CardFooter>

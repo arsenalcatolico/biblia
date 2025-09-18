@@ -20,7 +20,11 @@ const formSchema = z.object({
   password: z.string().min(6, { message: 'A senha deve ter pelo menos 6 caracteres.' }),
 });
 
-export function LoginForm() {
+interface LoginFormProps {
+  defaultEmail?: string;
+}
+
+export function LoginForm({ defaultEmail = '' }: LoginFormProps) {
   const router = useRouter();
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
@@ -28,7 +32,7 @@ export function LoginForm() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: '',
+      email: defaultEmail,
       password: '',
     },
   });

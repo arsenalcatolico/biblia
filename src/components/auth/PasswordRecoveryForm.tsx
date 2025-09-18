@@ -4,8 +4,10 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { sendPasswordResetEmail } from 'firebase/auth';
+import { fetchSignInMethodsForEmail } from 'firebase/auth';
 import { auth } from '@/lib/firebase/config';
+import { useRouter } from 'next/navigation';
+
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
@@ -18,8 +20,8 @@ const formSchema = z.object({
 
 export function PasswordRecoveryForm() {
   const { toast } = useToast();
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
-  const [isSent, setIsSent] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -31,29 +33,28 @@ export function PasswordRecoveryForm() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
     try {
-      await sendPasswordResetEmail(auth, values.email);
-      setIsSent(true);
-      toast({
-        title: 'E-mail enviado!',
-        description: 'Verifique sua caixa de entrada para o link de recuperação.',
-      });
+      const signInMethods = await fetchSignInMethodsForEmail(auth, values.email);
+      if (signInMethods.length > 0) {
+        // Email exists, redirect to instructions page
+        router.push(`/recuperar-senha/instrucoes?email=${encodeURIComponent(values.email)}`);
+      } else {
+        // Email does not exist
+        toast({
+          variant: 'destructive',
+          title: 'E-mail não encontrado',
+          description: 'Nenhum usuário foi encontrado com este endereço de e-mail.',
+        });
+      }
     } catch (error: any) {
+      console.error("Password recovery check error:", error);
       toast({
         variant: 'destructive',
         title: 'Erro',
-        description: 'Não foi possível enviar o e-mail. Verifique o endereço e tente novamente.',
+        description: 'Ocorreu um erro ao verificar seu e-mail. Tente novamente.',
       });
     } finally {
       setIsLoading(false);
     }
-  }
-
-  if (isSent) {
-    return (
-      <div className="text-center text-muted-foreground">
-        <p>Se um conta com este e-mail existir, um link para redefinir a senha foi enviado. Por favor, verifique sua caixa de entrada e pasta de spam.</p>
-      </div>
-    );
   }
 
   return (
@@ -64,17 +65,17 @@ export function PasswordRecoveryForm() {
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>E-mail</FormLabel>
+              <FormLabel>Seu e-mail de compra</FormLabel>
               <FormControl>
                 <Input placeholder="seu@email.com" {...field} />
               </FormControl>
-              <FormMessage />
+               <FormMessage />
             </FormItem>
           )}
         />
         <Button type="submit" className="w-full" disabled={isLoading}>
           {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-          Enviar link de recuperação
+          Recuperar Acesso
         </Button>
       </form>
     </Form>

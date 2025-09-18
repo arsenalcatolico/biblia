@@ -6,8 +6,10 @@ export default function PasswordRecoveryPage() {
   return (
     <Card className="shadow-lg">
       <CardHeader className="text-center p-6">
-        <CardTitle className="text-3xl font-headline text-primary">Bíblia Católica em 1 Ano</CardTitle>
-        <CardDescription className="text-3xl font-semibold">Explicada</CardDescription>
+        <CardTitle className="text-2xl font-headline text-primary">Recuperar Acesso</CardTitle>
+        <CardDescription className="pt-2">
+          Insira o e-mail que você usou na compra para ver as instruções de acesso.
+        </CardDescription>
       </CardHeader>
       <CardContent className="p-6 pt-0">
         <PasswordRecoveryForm />

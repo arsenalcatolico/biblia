@@ -38,8 +38,13 @@ export function RegisterForm() {
     setIsLoading(true);
     try {
       await createUserWithEmailAndPassword(auth, values.email, values.password);
-      router.push('/');
-      router.refresh();
+      toast({
+        title: 'Usuário Criado com Sucesso!',
+        description: `O usuário ${values.email} foi registrado e já pode fazer login.`,
+        className: "border-green-500 bg-green-100 text-green-900 dark:bg-green-900/30 dark:text-green-200",
+      });
+      // Limpa o formulário para o próximo registro
+      form.reset({ email: '', password: 'biblia@catolica365' });
     } catch (error: any) {
        let description = 'Ocorreu um erro. Tente novamente.';
        if (error.code) {
@@ -104,8 +109,9 @@ export function RegisterForm() {
                   size="icon" 
                   className="absolute inset-y-0 right-0 h-full px-3 text-muted-foreground"
                   onClick={() => setShowPassword(!showPassword)}
+                  tabIndex={-1}
                 >
-                  {showPassword ? <EyeOff /> : <Eye />}
+                  {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
                 </Button>
               </div>
               <FormMessage />

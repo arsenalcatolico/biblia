@@ -102,8 +102,9 @@ export function LoginForm({ defaultEmail = '', defaultPassword = '' }: LoginForm
                   size="icon" 
                   className="absolute inset-y-0 right-0 h-full px-3 text-muted-foreground"
                   onClick={() => setShowPassword(!showPassword)}
+                  tabIndex={-1}
                 >
-                  {showPassword ? <EyeOff /> : <Eye />}
+                  {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
                 </Button>
               </div>
               <FormMessage />

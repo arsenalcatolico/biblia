@@ -33,6 +33,7 @@ function InstructionsContent() {
         if (email) {
             params.set('email', email);
         }
+        params.set('password', defaultPassword);
         router.push(`/login?${params.toString()}`);
     }
 

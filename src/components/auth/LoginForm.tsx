@@ -13,7 +13,7 @@ import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
-import { Loader2 } from 'lucide-react';
+import { Loader2, Eye, EyeOff } from 'lucide-react';
 import Link from 'next/link';
 
 const formSchema = z.object({
@@ -30,6 +30,7 @@ export function LoginForm({ defaultEmail = '', defaultPassword = '' }: LoginForm
   const router = useRouter();
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -86,9 +87,25 @@ export function LoginForm({ defaultEmail = '', defaultPassword = '' }: LoginForm
                   Esqueceu a senha?
                 </Link>
               </div>
-              <FormControl>
-                <Input type="password" placeholder="••••••••" {...field} />
-              </FormControl>
+              <div className="relative">
+                <FormControl>
+                  <Input 
+                    type={showPassword ? "text" : "password"} 
+                    placeholder="••••••••" 
+                    className="pr-10"
+                    {...field} 
+                  />
+                </FormControl>
+                <Button 
+                  type="button" 
+                  variant="ghost" 
+                  size="icon" 
+                  className="absolute inset-y-0 right-0 h-full px-3 text-muted-foreground"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? <EyeOff /> : <Eye />}
+                </Button>
+              </div>
               <FormMessage />
             </FormItem>
           )}

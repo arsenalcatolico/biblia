@@ -4,8 +4,6 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { fetchSignInMethodsForEmail } from 'firebase/auth';
-import { auth } from '@/lib/firebase/config';
 import { useRouter } from 'next/navigation';
 
 import { Button } from '@/components/ui/button';
@@ -33,23 +31,27 @@ export function PasswordRecoveryForm() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
     try {
-      const signInMethods = await fetchSignInMethodsForEmail(auth, values.email);
-      
-      if (signInMethods && signInMethods.length > 0) {
-        // Email exists, redirect to instructions page
+      const response = await fetch('/api/check-user', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email: values.email }),
+      });
+
+      const result = await response.json();
+
+      if (response.ok && result.exists) {
         router.push(`/recuperar-senha/instrucoes?email=${encodeURIComponent(values.email)}`);
       } else {
-        // Email does not exist
         toast({
           variant: 'destructive',
           title: 'E-mail não encontrado',
           description: 'Nenhum usuário foi encontrado com este endereço de e-mail.',
         });
       }
-    } catch (error: any) {
+    } catch (error) {
       console.error("Password recovery check error:", error);
-      // This can happen due to network issues or restrictive security rules.
-      // For the user, the outcome is the same: we can't confirm the email.
       toast({
         variant: 'destructive',
         title: 'Erro na verificação',

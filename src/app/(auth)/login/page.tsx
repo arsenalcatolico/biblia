@@ -16,7 +16,7 @@ function LoginPageContent() {
   const { canInstall, installPwa } = usePwaInstall();
 
   return (
-    <div className="space-y-4">
+    <>
       <Card className="shadow-lg">
         <CardHeader className="text-center p-6">
           <BookMarked className="mx-auto h-16 w-16 text-primary mb-4" />
@@ -45,7 +45,7 @@ function LoginPageContent() {
           </Card>
       )}
 
-    </div>
+    </>
   );
 }
 

@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from 'react';
@@ -28,7 +29,7 @@ export function RegisterForm() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       email: '',
-      password: '',
+      password: 'biblia@catolica365',
     },
   });
 

@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from 'react';
@@ -22,10 +23,9 @@ const formSchema = z.object({
 
 interface LoginFormProps {
   defaultEmail?: string;
-  defaultPassword?: string;
 }
 
-export function LoginForm({ defaultEmail = '', defaultPassword = '' }: LoginFormProps) {
+export function LoginForm({ defaultEmail = '' }: LoginFormProps) {
   const router = useRouter();
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
@@ -34,7 +34,7 @@ export function LoginForm({ defaultEmail = '', defaultPassword = '' }: LoginForm
     resolver: zodResolver(formSchema),
     defaultValues: {
       email: defaultEmail,
-      password: defaultPassword,
+      password: '',
     },
   });
 

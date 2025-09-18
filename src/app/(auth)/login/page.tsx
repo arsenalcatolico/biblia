@@ -10,7 +10,6 @@ import { useSearchParams } from 'next/navigation';
 function LoginPageContent() {
   const searchParams = useSearchParams();
   const email = searchParams.get('email');
-  const password = searchParams.get('password');
 
   return (
     <Card className="shadow-lg">
@@ -19,7 +18,7 @@ function LoginPageContent() {
         <CardDescription className="text-3xl font-semibold">Explicada</CardDescription>
       </CardHeader>
       <CardContent className="p-6 pt-0">
-        <LoginForm defaultEmail={email || ''} defaultPassword={password || ''} />
+        <LoginForm defaultEmail={email || ''} />
       </CardContent>
     </Card>
   );

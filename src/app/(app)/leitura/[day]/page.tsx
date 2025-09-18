@@ -194,7 +194,7 @@ function ReadingPageContents({ day: dayParam }: { day: string }) {
   const isChapterTitle = (text: string) => {
     const trimmedText = text.trim();
   
-    if (trimmedText.startsWith('Lamentações')) {
+    if (trimmedText.startsWith('Lamentações') || trimmedText.startsWith('Eclesiástico')) {
       return true;
     }
   

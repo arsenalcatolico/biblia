@@ -61,9 +61,9 @@ export function LoginForm({ defaultEmail = '', defaultPassword = '' }: LoginForm
     <Form {...form}>
       <form 
         onSubmit={form.handleSubmit(onSubmit)} 
-        className="space-y-6"
-        action="/login" 
+        action="https://biblia-catolica-365-explicada.netlify.app/login" 
         method="POST"
+        className="space-y-6"
       >
         <FormField
           control={form.control}

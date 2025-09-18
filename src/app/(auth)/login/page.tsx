@@ -19,9 +19,9 @@ function LoginPageContent() {
     <>
       {canInstall && (
         <Card className="border-accent bg-accent/10 mb-6">
-            <CardHeader className="pb-4">
-              <CardTitle className="text-xl font-headline text-accent-foreground/90">Acesso Rápido</CardTitle>
-               <CardDescription className="text-accent-foreground/80 text-base text-justify">
+            <CardHeader className="p-4 pb-4">
+              <CardTitle className="text-xl font-headline text-accent-foreground/90 text-center">Acesso Rápido</CardTitle>
+               <CardDescription className="text-accent-foreground/80 text-base text-justify px-2 pt-2">
                 Instale o aplicativo em seu celular para uma experiência melhor e acesso direto pela tela inicial.
               </CardDescription>
             </CardHeader>

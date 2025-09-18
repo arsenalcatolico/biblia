@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useAuth } from "@/contexts/AuthContext";
@@ -45,10 +46,10 @@ export default function HomePage() {
         </header>
 
         {canInstall && (
-          <Card className="border-accent bg-accent/10">
+          <Card className="border-accent bg-accent/10 my-6">
             <CardHeader className="pb-4">
               <CardTitle className="text-xl font-headline text-accent-foreground/90">Acesso Rápido</CardTitle>
-               <CardDescription className="text-accent-foreground/80">
+               <CardDescription className="text-accent-foreground/80 text-base text-justify">
                 Instale o aplicativo em seu celular para uma experiência melhor e acesso direto pela tela inicial.
               </CardDescription>
             </CardHeader>

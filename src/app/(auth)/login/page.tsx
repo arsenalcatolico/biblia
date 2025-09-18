@@ -17,11 +17,22 @@ function LoginPageContent() {
 
   return (
     <div className="space-y-4">
+      <Card className="shadow-lg">
+        <CardHeader className="text-center p-6">
+          <BookMarked className="mx-auto h-16 w-16 text-primary mb-4" />
+          <CardTitle className="text-3xl font-headline text-primary">Bíblia Católica em 1 Ano</CardTitle>
+          <CardDescription className="text-3xl font-semibold">Explicada</CardDescription>
+        </CardHeader>
+        <CardContent className="p-6 pt-0">
+          <LoginForm defaultEmail={email || ''} defaultPassword={password || ''} />
+        </CardContent>
+      </Card>
+      
       {canInstall && (
-        <Card className="border-accent bg-accent/10">
+        <Card className="border-accent bg-accent/10 my-6">
             <CardHeader className="pb-4">
               <CardTitle className="text-xl font-headline text-accent-foreground/90">Acesso Rápido</CardTitle>
-               <CardDescription className="text-accent-foreground/80">
+               <CardDescription className="text-accent-foreground/80 text-base text-justify">
                 Instale o aplicativo em seu celular para uma experiência melhor e acesso direto pela tela inicial.
               </CardDescription>
             </CardHeader>
@@ -34,16 +45,6 @@ function LoginPageContent() {
           </Card>
       )}
 
-      <Card className="shadow-lg">
-        <CardHeader className="text-center p-6">
-          <BookMarked className="mx-auto h-16 w-16 text-primary mb-4" />
-          <CardTitle className="text-3xl font-headline text-primary">Bíblia Católica em 1 Ano</CardTitle>
-          <CardDescription className="text-3xl font-semibold">Explicada</CardDescription>
-        </CardHeader>
-        <CardContent className="p-6 pt-0">
-          <LoginForm defaultEmail={email || ''} defaultPassword={password || ''} />
-        </CardContent>
-      </Card>
     </div>
   );
 }

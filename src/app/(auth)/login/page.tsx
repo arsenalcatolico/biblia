@@ -28,7 +28,7 @@ function LoginPageContent() {
             <CardFooter className="p-4 pt-0">
               <Button onClick={installPwa} className="w-full bg-accent text-accent-foreground hover:bg-accent/90 shadow-md">
                 <Download className="mr-2 h-5 w-5" />
-                Instalar Aplicativo
+                Instalar no Android
               </Button>
             </CardFooter>
           </Card>

@@ -12,23 +12,12 @@ if (serviceAccountKeyBase64) {
   } catch (error) {
     console.error('Failed to parse FIREBASE_PRIVATE_KEY_BASE64:', error);
   }
-} else {
-    // Tenta usar as variáveis individuais se a de base64 não estiver definida
-    const privateKey = (process.env.FIREBASE_PRIVATE_KEY || '').replace(/\\n/g, '\n');
-    if (process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID && process.env.FIREBASE_CLIENT_EMAIL && privateKey) {
-        serviceAccount = {
-            projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-            clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-            privateKey: privateKey,
-        };
-    }
 }
-
 
 if (!admin.apps.length) {
   try {
     if (!serviceAccount) {
-        console.error('Firebase admin credentials are not fully set in environment variables.');
+        console.error('Firebase admin credentials are not fully set in environment variables. FIREBASE_PRIVATE_KEY_BASE64 is missing or invalid.');
         throw new Error('Firebase admin credentials are not set in environment variables.');
     }
     

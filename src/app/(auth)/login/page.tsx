@@ -15,7 +15,13 @@ function LoginPageContent() {
   const { canInstall, installPwa, isIos } = usePwaInstall();
 
   return (
-    <>
+    <div className="space-y-6">
+      <PwaInstallBanner
+          canInstall={canInstall}
+          isIos={isIos}
+          onInstall={installPwa}
+      />
+
       <Card className="shadow-lg">
         <CardHeader className="text-center p-6">
           <AppLogo className="mx-auto h-28 w-28 mb-4" />
@@ -26,14 +32,7 @@ function LoginPageContent() {
           <LoginForm defaultEmail={email || ''} />
         </CardContent>
       </Card>
-      
-      <PwaInstallBanner
-          canInstall={canInstall}
-          isIos={isIos}
-          onInstall={installPwa}
-          className="mt-6"
-      />
-    </>
+    </div>
   );
 }
 

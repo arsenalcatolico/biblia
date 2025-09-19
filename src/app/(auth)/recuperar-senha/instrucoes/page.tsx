@@ -5,7 +5,7 @@ import { Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { CheckCircle, Mail } from 'lucide-react';
+import { Mail, KeyRound } from 'lucide-react';
 
 function InstructionsContent() {
     const searchParams = useSearchParams();
@@ -24,24 +24,26 @@ function InstructionsContent() {
         <Card className="shadow-lg">
             <CardHeader className="text-center p-6">
                 <CardTitle className="text-2xl font-headline text-primary">Instruções de Acesso</CardTitle>
-                <CardDescription>
-                    Seu acesso é feito com o e-mail que você usou na compra.
-                </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4 p-6 pt-0">
-                <div className="space-y-1">
-                    <p className="text-sm font-medium text-muted-foreground">Seu E-mail de compra é:</p>
-                    <div className="flex items-center gap-2">
-                        <p className="font-mono text-base font-semibold p-3 bg-secondary rounded-md flex-1 break-all">{email || 'seu@email.com'}</p>
-                    </div>
+            <CardContent className="space-y-6 p-6 pt-0">
+                <div className="space-y-2">
+                    <p className="flex items-center gap-2 text-left font-medium"><Mail className="h-5 w-5 text-primary"/> E-mail de Acesso:</p>
+                    <p className="text-muted-foreground text-left text-sm">
+                        Seu acesso é feito com o e-mail que você usou na compra:
+                    </p>
+                    <div className="font-mono text-base font-semibold p-3 bg-secondary rounded-md text-center break-all">{email || 'seu@email.com'}</div>
                 </div>
-                 <p className="text-xs text-muted-foreground text-center pt-2">
-                    A senha já está configurada. Basta usar o e-mail acima para entrar.
-                </p>
+
+                 <div className="space-y-2">
+                    <p className="flex items-center gap-2 text-left font-medium"><KeyRound className="h-5 w-5 text-primary"/> Senha Padrão:</p>
+                     <p className="text-muted-foreground text-left text-sm">
+                        A sua senha já vem configurada. Na tela de login, basta inserir seu e-mail, e nós cuidamos do resto.
+                    </p>
+                </div>
             </CardContent>
             <CardFooter className="p-6 pt-0">
                 <Button onClick={handleGoToLogin} className="w-full">
-                    Ir para o Login
+                    Entendi, ir para o Login
                 </Button>
             </CardFooter>
         </Card>

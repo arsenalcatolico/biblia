@@ -7,8 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle }from '@/components/ui/card';
 import { auth } from '@/lib/firebase/config';
 import { signOut } from 'firebase/auth';
 import { useRouter } from 'next/navigation';
-import { Loader2, LogOut, Mail, BarChart3, CheckCircle, UserPlus } from 'lucide-react';
-import Link from 'next/link';
+import { Loader2, LogOut, Mail, BarChart3, CheckCircle } from 'lucide-react';
 
 export default function ProfilePage() {
   const { user } = useAuth();
@@ -25,8 +24,6 @@ export default function ProfilePage() {
     return null; // Layout guard will redirect
   }
   
-  const isAdmin = user.email === 'allannakaya@gmail.com';
-
   const progressPercentage = ((completedDays.length / 365) * 100).toFixed(1);
 
   return (
@@ -50,24 +47,6 @@ export default function ProfilePage() {
         </CardContent>
       </Card>
       
-      {isAdmin && (
-        <Card>
-          <CardHeader className="p-6">
-            <CardTitle className="flex items-center gap-2">
-              <UserPlus className="h-5 w-5 text-primary" />
-              Administração
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="p-6 pt-0">
-             <Button asChild>
-                <Link href="/admin/register">
-                    Registrar Novo Usuário
-                </Link>
-            </Button>
-          </CardContent>
-        </Card>
-      )}
-
       <Card>
         <CardHeader className="p-6">
           <CardTitle className="flex items-center gap-2">

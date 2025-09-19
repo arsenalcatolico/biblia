@@ -23,6 +23,7 @@ const formSchema = z.object({
 
 const defaultPassword = 'biblia@catolica365';
 const adminEmail = 'allannakaya@gmail.com';
+const whatsappNumber = '5512992045561';
 
 interface LoginFormProps {
   defaultEmail?: string;
@@ -39,7 +40,7 @@ export function LoginForm({ defaultEmail = '' }: LoginFormProps) {
     resolver: zodResolver(formSchema),
     defaultValues: {
       email: defaultEmail,
-      password: '', // Corrigido: Inicializa a senha como string vazia
+      password: '',
     },
   });
 
@@ -48,6 +49,13 @@ export function LoginForm({ defaultEmail = '' }: LoginFormProps) {
   useEffect(() => {
     setIsAdmin(emailValue.toLowerCase() === adminEmail);
   }, [emailValue]);
+
+  const generateWhatsAppLink = () => {
+    const baseMessage = `Olá, Ana! Estou com dificuldades para acessar o aplicativo 'Bíblia Católica em 1 Ano'.`;
+    const emailMessage = emailValue ? ` Meu e-mail de compra é ${emailValue}.` : ``;
+    const fullMessage = `${baseMessage}${emailMessage} Pode me ajudar?`;
+    return `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(fullMessage)}`;
+  };
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
@@ -70,7 +78,7 @@ export function LoginForm({ defaultEmail = '' }: LoginFormProps) {
     } catch (error: any) {
       let errorMessage = 'E-mail não encontrado. Verifique se é o mesmo e-mail usado na compra.';
       if (error.code === 'auth/wrong-password') {
-          errorMessage = 'A senha está incorreta. Tente novamente.';
+          errorMessage = isAdmin ? 'A senha está incorreta. Tente novamente.' : 'E-mail não encontrado ou erro de acesso.';
       }
 
       toast({
@@ -78,10 +86,6 @@ export function LoginForm({ defaultEmail = '' }: LoginFormProps) {
         title: 'Erro de acesso',
         description: errorMessage,
       });
-
-      if (!isAdmin) {
-          router.push(`/recuperar-senha?email=${encodeURIComponent(values.email)}`);
-      }
     } finally {
       setIsLoading(false);
     }
@@ -95,7 +99,7 @@ export function LoginForm({ defaultEmail = '' }: LoginFormProps) {
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Seu e-mail</FormLabel>
+              <FormLabel>Seu e-mail de compra</FormLabel>
               <FormControl>
                 <Input placeholder="seu@email.com" {...field} />
               </FormControl>
@@ -145,9 +149,14 @@ export function LoginForm({ defaultEmail = '' }: LoginFormProps) {
         {!isAdmin && (
             <p className="w-full text-center text-sm text-muted-foreground pt-2">
                 Problemas com o acesso?{' '}
-                <Link href={`/recuperar-senha${emailValue ? `?email=${encodeURIComponent(emailValue)}` : ''}`} className="font-semibold text-primary hover:underline">
-                    Recuperar acesso
-                </Link>
+                <a 
+                  href={generateWhatsAppLink()} 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-semibold text-primary hover:underline"
+                >
+                    Falar com a Ana
+                </a>
             </p>
         )}
       </form>

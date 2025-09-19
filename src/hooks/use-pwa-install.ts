@@ -18,11 +18,29 @@ export function usePwaInstall() {
   const [isIos, setIsIos] = useState(false);
 
   useEffect(() => {
-    // Detect iOS
+    // --- START DEBUGGING LOGIC ---
+    try {
+      const urlParams = new URLSearchParams(window.location.search);
+      const forcePwaView = urlParams.get('force_pwa_view');
+      
+      if (forcePwaView === 'ios') {
+        setIsIos(true);
+        setCanInstall(false);
+        return; // Skip real detection
+      }
+      if (forcePwaView === 'android') {
+        setIsIos(false);
+        setCanInstall(true);
+        return; // Skip real detection
+      }
+    } catch (e) {
+      // Silently ignore errors in case of non-browser environment
+    }
+    // --- END DEBUGGING LOGIC ---
+
     const isIosDevice = /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream;
     const isInStandaloneMode = 'standalone' in window.navigator && (window.navigator as any).standalone;
     
-    // Only show iOS instructions if it's an iOS device and not already installed
     if (isIosDevice && !isInStandaloneMode) {
       setIsIos(true);
     }
@@ -31,7 +49,6 @@ export function usePwaInstall() {
       event.preventDefault();
       const pwaEvent = event as BeforeInstallPromptEvent;
       setInstallPrompt(pwaEvent);
-      // Only show install button if not already installed (via display-mode)
       if (!window.matchMedia('(display-mode: standalone)').matches) {
         setCanInstall(true);
       }
@@ -53,6 +70,16 @@ export function usePwaInstall() {
   }, []);
 
   const installPwa = useCallback(async () => {
+    // Debugging override
+     try {
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('force_pwa_view') === 'android') {
+            alert('Simulação: O prompt de instalação do Android apareceria agora.');
+            return;
+        }
+    } catch(e) {}
+
+
     if (!installPrompt) {
       return;
     }

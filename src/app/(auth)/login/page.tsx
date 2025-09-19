@@ -16,13 +16,6 @@ function LoginPageContent() {
 
   return (
     <>
-      <PwaInstallBanner
-          canInstall={canInstall}
-          isIos={isIos}
-          onInstall={installPwa}
-          className="mb-6"
-      />
-
       <Card className="shadow-lg">
         <CardHeader className="text-center p-6">
           <AppLogo className="mx-auto h-28 w-28 mb-4" />
@@ -33,6 +26,13 @@ function LoginPageContent() {
           <LoginForm defaultEmail={email || ''} />
         </CardContent>
       </Card>
+      
+      <PwaInstallBanner
+          canInstall={canInstall}
+          isIos={isIos}
+          onInstall={installPwa}
+          className="mt-6"
+      />
     </>
   );
 }

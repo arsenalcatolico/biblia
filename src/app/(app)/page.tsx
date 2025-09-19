@@ -47,12 +47,6 @@ export default function HomePage() {
           </p>
         </header>
 
-        <PwaInstallBanner 
-          canInstall={canInstall}
-          isIos={isIos}
-          onInstall={installPwa}
-        />
-
         <Card className="shadow-lg text-center">
           <CardHeader className="p-6">
             <CardTitle className="text-2xl font-headline">Seu Progresso</CardTitle>
@@ -77,6 +71,12 @@ export default function HomePage() {
             </Button>
           </CardFooter>
         </Card>
+        
+        <PwaInstallBanner 
+          canInstall={canInstall}
+          isIos={isIos}
+          onInstall={installPwa}
+        />
 
       </div>
     </div>

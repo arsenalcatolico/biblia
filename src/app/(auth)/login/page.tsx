@@ -36,7 +36,7 @@ function LoginPageContent() {
 
       <Card className="shadow-lg">
         <CardHeader className="text-center p-6">
-          <AppLogo className="mx-auto h-24 w-24 mb-4" />
+          <AppLogo className="mx-auto h-28 w-28 mb-4" />
           <CardTitle className="text-3xl font-headline text-primary">Bíblia Católica em 1 Ano</CardTitle>
           <CardDescription className="text-3xl font-semibold">Explicada</CardDescription>
         </CardHeader>

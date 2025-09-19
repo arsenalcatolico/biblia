@@ -37,7 +37,7 @@ export default function HomePage() {
     <div className="container mx-auto max-w-3xl px-4 pt-12 md:pt-20">
       <div className="w-full space-y-8">
         <header className="text-center">
-          <AppLogo className="mx-auto h-16 w-16 mb-4" />
+          <AppLogo className="mx-auto h-20 w-20 mb-4" />
           <h1 className="text-3xl font-bold font-headline text-primary dark:text-primary-foreground">
             Olá, Católico(a)!
           </h1>

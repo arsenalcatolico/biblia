@@ -4,7 +4,7 @@ import { adminAuth } from '@/lib/firebase/admin-config';
 
 const DEFAULT_PASSWORD = process.env.WEBHOOK_DEFAULT_PASSWORD || 'Mudar@123';
 // Chave secreta para autenticar o webhook vindo do n8n.
-const N8N_WEBHOOK_SECRET = process.env.N8N_WEBHOOK_SECRET || "a3b8d9c1-f2e4-4a5b-8c7d-6e9f0a1b2c3d";
+const N8N_WEBHOOK_SECRET = process.env.N8N_WEBHOOK_SECRET || "change-this-secret-if-not-set";
 
 export async function POST(req: NextRequest) {
   // --- Verificação de Segurança ---

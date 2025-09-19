@@ -30,10 +30,12 @@ export const AppLogo = (props: SVGProps<SVGSVGElement>) => (
       {/* Page Lines Hint */}
       <path d="M 72 25 L 72 75 M 70 25 L 70 75 M 68 25 L 68 75" stroke="hsl(var(--primary-foreground))" strokeWidth="0.5" opacity="0.3" />
       
-      {/* Cross on the cover */}
+      {/* Latin Cross on the cover */}
       <g fill="hsl(var(--accent))">
-        <rect x="46" y="38" width="8" height="24" rx="1.5" />
-        <rect x="39" y="47" width="22" height="6" rx="1.5" />
+        {/* Vertical bar */}
+        <rect x="47" y="35" width="6" height="30" rx="1.5" />
+        {/* Horizontal bar */}
+        <rect x="42" y="42" width="16" height="5" rx="1.5" />
       </g>
       
       {/* Bookmark Ribbon */}

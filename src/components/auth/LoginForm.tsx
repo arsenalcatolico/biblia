@@ -51,7 +51,7 @@ export function LoginForm({ defaultEmail = '' }: LoginFormProps) {
   }, [emailValue]);
 
   const generateWhatsAppLink = () => {
-    const baseMessage = `Olá, Ana! Estou com dificuldades para acessar o aplicativo 'Bíblia Católica em 1 Ano'.`;
+    const baseMessage = `Olá! Estou com dificuldades para acessar o aplicativo 'Bíblia Católica em 1 Ano'.`;
     const emailMessage = emailValue ? ` Meu e-mail de compra é ${emailValue}.` : ``;
     const fullMessage = `${baseMessage}${emailMessage} Pode me ajudar?`;
     return `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(fullMessage)}`;
@@ -61,7 +61,7 @@ export function LoginForm({ defaultEmail = '' }: LoginFormProps) {
     setIsLoading(true);
     const password = isAdmin ? values.password : defaultPassword;
 
-    if (isAdmin && (!password || password.length < 6)) {
+    if (!password || (isAdmin && password.length < 6)) {
         toast({
             variant: 'destructive',
             title: 'Senha Inválida',
@@ -155,7 +155,7 @@ export function LoginForm({ defaultEmail = '' }: LoginFormProps) {
                   rel="noopener noreferrer"
                   className="font-semibold text-primary hover:underline"
                 >
-                    Falar com a Ana
+                    Falar com o Suporte
                 </a>
             </p>
         )}

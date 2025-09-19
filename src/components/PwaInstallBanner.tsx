@@ -9,6 +9,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Download, ArrowUpFromDot } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -50,15 +51,25 @@ export const PwaInstallBanner = ({ canInstall, isIos, onInstall, className }: Pw
   );
 
   const AndroidInstallButton = () => (
-    <Button onClick={onInstall} className="w-full bg-accent text-accent-foreground hover:bg-accent/90 shadow-md">
-      <Download className="mr-2 h-5 w-5" />
-      Instalar Aplicativo
-    </Button>
+    <Card className="bg-accent/10 border-accent/50 text-center">
+      <CardHeader className="p-4 pb-2">
+        <CardTitle className="text-lg font-bold text-accent-foreground/90">ACESSO RÁPIDO</CardTitle>
+        <CardDescription className="text-accent-foreground/80">
+          Para uma melhor experiência, instale este aplicativo no seu celular.
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="p-4 pt-2">
+        <Button onClick={onInstall} className="w-full bg-accent text-accent-foreground hover:bg-accent/90 shadow-md">
+          <Download className="mr-2 h-5 w-5" />
+          Instalar Aplicativo
+        </Button>
+      </CardContent>
+    </Card>
   );
 
   return (
     <div className={cn("my-6", className)}>
-        {isIos ? <IosInstructionsDialog /> : <AndroidInstallButton />}
+        {isIos ? <IosInstructionsDialog /> : (canInstall ? <AndroidInstallButton /> : null)}
     </div>
   );
 };

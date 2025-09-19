@@ -15,14 +15,24 @@ interface BeforeInstallPromptEvent extends Event {
 export function usePwaInstall() {
   const [installPrompt, setInstallPrompt] = useState<BeforeInstallPromptEvent | null>(null);
   const [canInstall, setCanInstall] = useState(false);
+  const [isIos, setIsIos] = useState(false);
 
   useEffect(() => {
+    // Detect iOS
+    const isIosDevice = /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream;
+    const isInStandaloneMode = window.matchMedia('(display-mode: standalone)').matches;
+    
+    // Only show iOS instructions if it's an iOS device and not already installed
+    if (isIosDevice && !isInStandaloneMode) {
+      setIsIos(true);
+    }
+
     const handleBeforeInstallPrompt = (event: Event) => {
       event.preventDefault();
       const pwaEvent = event as BeforeInstallPromptEvent;
       setInstallPrompt(pwaEvent);
       // Only show install button if not already installed (via display-mode)
-      if (!window.matchMedia('(display-mode: standalone)').matches) {
+      if (!isInStandaloneMode) {
         setCanInstall(true);
       }
     };
@@ -57,5 +67,5 @@ export function usePwaInstall() {
     setInstallPrompt(null);
   }, [installPrompt]);
 
-  return { canInstall, installPwa };
+  return { canInstall, installPwa, isIos };
 }

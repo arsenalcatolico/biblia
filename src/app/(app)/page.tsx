@@ -6,15 +6,16 @@ import { useProgress } from "@/contexts/ProgressContext";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { ArrowRight, BookOpen, Loader2, Download } from "lucide-react";
+import { ArrowRight, BookOpen, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { usePwaInstall } from "@/hooks/use-pwa-install";
 import { AppLogo } from "@/components/AppLogo";
+import { PwaInstallBanner } from "@/components/PwaInstallBanner";
 
 export default function HomePage() {
   const { user } = useAuth();
   const { completedDays, lastCompletedDay, loading } = useProgress();
-  const { canInstall, installPwa } = usePwaInstall();
+  const { canInstall, installPwa, isIos } = usePwaInstall();
 
   const progressPercentage = (completedDays.length / 365) * 100;
   const nextDay = lastCompletedDay > 0 ? Math.min(365, lastCompletedDay + 1) : 1;
@@ -46,22 +47,11 @@ export default function HomePage() {
           </p>
         </header>
 
-        {canInstall && (
-          <Card className="border-accent bg-accent/10 my-6">
-            <CardHeader className="p-4 pb-4">
-              <CardTitle className="text-xl font-headline text-accent-foreground/90 text-center">Acesso Rápido</CardTitle>
-               <CardDescription className="text-accent-foreground/80 text-base text-justify px-2 pt-2">
-                Instale o aplicativo em seu celular para uma experiência melhor e acesso direto pela tela inicial.
-              </CardDescription>
-            </CardHeader>
-            <CardFooter className="p-4 pt-0">
-              <Button onClick={installPwa} className="w-full bg-accent text-accent-foreground hover:bg-accent/90 shadow-md">
-                <Download className="mr-2 h-5 w-5" />
-                Instalar Aplicativo
-              </Button>
-            </CardFooter>
-          </Card>
-        )}
+        <PwaInstallBanner 
+          canInstall={canInstall}
+          isIos={isIos}
+          onInstall={installPwa}
+        />
 
         <Card className="shadow-lg text-center">
           <CardHeader className="p-6">

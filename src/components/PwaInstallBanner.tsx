@@ -3,7 +3,7 @@
 
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Download, ArrowUpFromBracket } from "lucide-react";
+import { Download, ArrowUpFromDot } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface PwaInstallBannerProps {
@@ -22,7 +22,7 @@ export const PwaInstallBanner = ({ canInstall, isIos, onInstall, className }: Pw
       </CardHeader>
       <CardContent className="px-4 pb-4">
         <p className="text-accent-foreground/80 text-sm text-center">
-          Para uma melhor experiência, adicione à sua tela de início. Toque no ícone de <ArrowUpFromBracket className="inline-block h-4 w-4 mx-1" /> e depois em "Adicionar à Tela de Início".
+          Para uma melhor experiência, adicione à sua tela de início. Toque no ícone de <ArrowUpFromDot className="inline-block h-4 w-4 mx-1" /> e depois em "Adicionar à Tela de Início".
         </p>
       </CardContent>
     </Card>

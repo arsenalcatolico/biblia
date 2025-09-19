@@ -20,7 +20,7 @@ export function usePwaInstall() {
   useEffect(() => {
     // Detect iOS
     const isIosDevice = /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream;
-    const isInStandaloneMode = window.matchMedia('(display-mode: standalone)').matches;
+    const isInStandaloneMode = 'standalone' in window.navigator && (window.navigator as any).standalone;
     
     // Only show iOS instructions if it's an iOS device and not already installed
     if (isIosDevice && !isInStandaloneMode) {
@@ -32,7 +32,7 @@ export function usePwaInstall() {
       const pwaEvent = event as BeforeInstallPromptEvent;
       setInstallPrompt(pwaEvent);
       // Only show install button if not already installed (via display-mode)
-      if (!isInStandaloneMode) {
+      if (!window.matchMedia('(display-mode: standalone)').matches) {
         setCanInstall(true);
       }
     };

@@ -3,7 +3,7 @@
 
 import { Suspense } from 'react';
 import { PasswordRecoveryForm } from '@/components/auth/PasswordRecoveryForm';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import Link from 'next/link';
 
 export default function PasswordRecoveryPage() {

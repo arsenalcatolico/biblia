@@ -6,9 +6,10 @@ import { useProgress } from "@/contexts/ProgressContext";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { ArrowRight, BookOpen, Loader2, BookMarked, Download } from "lucide-react";
+import { ArrowRight, BookOpen, Loader2, Download } from "lucide-react";
 import Link from "next/link";
 import { usePwaInstall } from "@/hooks/use-pwa-install";
+import { AppLogo } from "@/components/AppLogo";
 
 export default function HomePage() {
   const { user } = useAuth();
@@ -36,7 +37,7 @@ export default function HomePage() {
     <div className="container mx-auto max-w-3xl px-4 pt-12 md:pt-20">
       <div className="w-full space-y-8">
         <header className="text-center">
-          <BookMarked className="mx-auto h-16 w-16 text-primary mb-4" />
+          <AppLogo className="mx-auto h-16 w-16 mb-4" />
           <h1 className="text-3xl font-bold font-headline text-primary dark:text-primary-foreground">
             Olá, Católico(a)!
           </h1>

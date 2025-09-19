@@ -4,10 +4,11 @@
 import { Suspense } from 'react';
 import { LoginForm } from '@/components/auth/LoginForm';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { BookMarked, Download } from 'lucide-react';
+import { Download } from 'lucide-react';
 import { usePwaInstall } from "@/hooks/use-pwa-install";
 import { Button } from '@/components/ui/button';
 import { useSearchParams } from 'next/navigation';
+import { AppLogo } from '@/components/AppLogo';
 
 function LoginPageContent() {
   const searchParams = useSearchParams();
@@ -36,7 +37,7 @@ function LoginPageContent() {
 
       <Card className="shadow-lg">
         <CardHeader className="text-center p-6">
-          <BookMarked className="mx-auto h-16 w-16 text-primary mb-4" />
+          <AppLogo className="mx-auto h-24 w-24 mb-4" />
           <CardTitle className="text-3xl font-headline text-primary">Bíblia Católica em 1 Ano</CardTitle>
           <CardDescription className="text-3xl font-semibold">Explicada</CardDescription>
         </CardHeader>

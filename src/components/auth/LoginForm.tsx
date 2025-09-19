@@ -13,45 +13,47 @@ import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
-import { Loader2, Eye, EyeOff } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import Link from 'next/link';
 
 const formSchema = z.object({
   email: z.string().email({ message: 'Por favor, insira um e-mail válido.' }),
-  password: z.string().min(6, { message: 'A senha deve ter pelo menos 6 caracteres.' }),
 });
+
+const defaultPassword = 'biblia@catolica365';
 
 interface LoginFormProps {
   defaultEmail?: string;
-  defaultPassword?: string;
 }
 
-export function LoginForm({ defaultEmail = '', defaultPassword = '' }: LoginFormProps) {
+export function LoginForm({ defaultEmail = '' }: LoginFormProps) {
   const router = useRouter();
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
   
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       email: defaultEmail,
-      password: defaultPassword,
     },
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
     try {
-      await signInWithEmailAndPassword(auth, values.email, values.password);
+      await signInWithEmailAndPassword(auth, values.email, defaultPassword);
       router.push('/');
       router.refresh();
     } catch (error: any) {
       toast({
         variant: 'destructive',
-        title: 'Erro de login',
-        description: 'Credenciais inválidas. Por favor, tente novamente.',
+        title: 'Erro de acesso',
+        description: 'E-mail não encontrado. Verifique se é o mesmo e-mail usado na compra.',
       });
+      // Adiciona um link para a recuperação de acesso na mensagem de erro
+      setTimeout(() => {
+        router.push('/recuperar-senha');
+      }, 3000);
     } finally {
       setIsLoading(false);
     }
@@ -70,48 +72,10 @@ export function LoginForm({ defaultEmail = '', defaultPassword = '' }: LoginForm
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>E-mail</FormLabel>
+              <FormLabel>Seu e-mail de compra</FormLabel>
               <FormControl>
                 <Input placeholder="seu@email.com" {...field} />
               </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="password"
-          render={({ field }) => (
-            <FormItem>
-               <div className="flex items-center justify-between">
-                <FormLabel>Senha</FormLabel>
-                <Link
-                  href="/recuperar-senha"
-                  className="font-semibold text-primary hover:underline"
-                >
-                  Esqueceu a senha?
-                </Link>
-              </div>
-              <div className="relative">
-                <FormControl>
-                  <Input 
-                    type={showPassword ? "text" : "password"} 
-                    placeholder="••••••••" 
-                    className="pr-10"
-                    {...field} 
-                  />
-                </FormControl>
-                <Button 
-                  type="button" 
-                  variant="ghost" 
-                  size="icon" 
-                  className="absolute inset-y-0 right-0 h-full px-3 text-muted-foreground"
-                  onClick={() => setShowPassword(!showPassword)}
-                  tabIndex={-1}
-                >
-                  {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
-                </Button>
-              </div>
               <FormMessage />
             </FormItem>
           )}
@@ -120,6 +84,12 @@ export function LoginForm({ defaultEmail = '', defaultPassword = '' }: LoginForm
           {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
           Entrar
         </Button>
+        <p className="w-full text-center text-sm text-muted-foreground pt-2">
+          Não sabe seu e-mail?{' '}
+          <Link href="/recuperar-senha" className="font-semibold text-primary hover:underline">
+            Recuperar acesso
+          </Link>
+        </p>
       </form>
     </Form>
   );

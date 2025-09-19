@@ -39,6 +39,7 @@ export function LoginForm({ defaultEmail = '' }: LoginFormProps) {
     resolver: zodResolver(formSchema),
     defaultValues: {
       email: defaultEmail,
+      password: '', // Corrigido: Inicializa a senha como string vazia
     },
   });
 
